@@ -5,531 +5,1069 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>محمد - مصمم إعلانات سوشيال ميديا</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* الأساسيات */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Cairo', sans-serif;
         }
-        
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
         :root {
             --primary-white: #ffffff;
             --secondary-white: #f8f8f8;
             --primary-black: #000000;
             --secondary-black: #333333;
             --accent-color: #e0e0e0;
+            --primary-color: #3a86ff;
+            --success-color: #4CAF50;
         }
-        
+
         body {
             background-color: var(--primary-white);
             color: var(--primary-black);
             line-height: 1.6;
+            width: 100%;
         }
-        
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+            width: 100%;
         }
-        
+
+        /* الهيدر - بالعرض */
         header {
             background-color: var(--primary-white);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            width: 100%; /* إزالة التثبيت */
+            width: 100%;
             z-index: 1000;
+            position: relative;
+            padding: 15px 0;
         }
-        
+
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 0;
         }
-        
+
         .logo {
             font-size: 24px;
             font-weight: 700;
             color: var(--primary-black);
         }
-        
+
         .nav-links {
             display: flex;
             list-style: none;
+            gap: 25px;
         }
-        
+
         .nav-links li {
-            margin-left: 30px;
+            margin: 0;
         }
-        
+
         .nav-links a {
             text-decoration: none;
             color: var(--secondary-black);
             font-weight: 600;
             transition: color 0.3s;
+            font-size: 15px;
+            padding: 8px 0;
         }
-        
+
         .nav-links a:hover {
             color: var(--primary-black);
         }
-        
-        .hero {
-            padding: 150px 0 100px;
-            background-color: #000000; /* خلفية سوداء */
-            text-align: center;
-            color: #ffffff; /* نص أبيض */
+
+        /* زر القائمة للجوال */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
         }
-        
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-black);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* تبديل اللغة في الهيدر */
+        .language-switcher {
+            display: flex;
+            border: 1px solid var(--accent-color);
+            border-radius: 25px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-black);
+            color: var(--primary-white);
+        }
+
+        /* الهيرو */
+        .hero {
+            padding: 120px 0 100px;
+            background: #000000;
+            text-align: center;
+            color: #ffffff;
+            width: 100%;
+        }
+
         .hero h1 {
             font-size: 48px;
             margin-bottom: 20px;
             font-weight: 700;
         }
-        
+
         .hero p {
             font-size: 20px;
             max-width: 700px;
             margin: 0 auto 30px;
-            color: #f0f0f0; /* لون نص أفتح */
+            color: #f0f0f0;
         }
-        
+
         .hero .btn {
             background-color: var(--primary-white);
             color: var(--primary-black);
             border: 2px solid var(--primary-white);
+            border-radius: 30px;
         }
-        
+
         .hero .btn:hover {
             background-color: transparent;
             color: var(--primary-white);
         }
-        
+
+        /* الأزرار - حواف دائرية */
         .btn {
             display: inline-block;
             background-color: var(--primary-black);
             color: var(--primary-white);
             padding: 12px 30px;
-            border-radius: 4px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.3s;
             border: 2px solid var(--primary-black);
             cursor: pointer;
+            font-size: 16px;
         }
-        
+
         .btn:hover {
             background-color: transparent;
             color: var(--primary-black);
+            transform: translateY(-2px);
         }
-        
+
         .btn:disabled {
             background-color: #cccccc;
             border-color: #cccccc;
             cursor: not-allowed;
+            transform: none;
         }
-        
+
+        /* الإحصائيات - بالعرض جنب بعض */
+        .stats {
+            padding: 80px 0;
+            background: var(--primary-white);
+            color: var(--primary-black);
+            text-align: center;
+            border-top: 1px solid var(--accent-color);
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        .stats-grid {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            max-width: 800px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            padding: 20px;
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary-black);
+        }
+
+        .stat-label {
+            font-size: 18px;
+            color: var(--secondary-black);
+        }
+
+        /* واتساب عائم في اليسار */
+        .whatsapp-float {
+            position: fixed;
+            left: 30px;
+            bottom: 30px;
+            z-index: 1000;
+        }
+
+        .whatsapp-float a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: #25D366;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .whatsapp-float a:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
+            animation: none;
+        }
+
+        .whatsapp-float i {
+            font-size: 28px;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        /* الخدمات */
         .services {
             padding: 100px 0;
+            width: 100%;
         }
-        
+
         .section-title {
             text-align: center;
             font-size: 36px;
             margin-bottom: 60px;
             font-weight: 700;
+            color: var(--primary-black);
         }
-        
+
         .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background-color: var(--primary-white);
+            border: 2px dashed var(--accent-color);
+            border-radius: 12px;
+            padding: 40px 30px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .service-icon {
+            font-size: 50px;
+            margin-bottom: 25px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+        }
+
+        .service-card p {
+            color: var(--secondary-black);
+            line-height: 1.8;
+        }
+
+        /* الأسعار */
+        .pricing {
+            padding: 100px 0;
+            background-color: var(--secondary-white);
+        }
+
+        .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
-        
-        .service-card {
-            background-color: var(--primary-white);
-            border: 2px dashed var(--accent-color); /* حواف متقطعة */
-            border-radius: 8px;
-            padding: 30px;
-            transition: transform 0.3s, box-shadow 0.3s;
+
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 2px solid transparent;
         }
-        
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
         }
-        
-        .service-icon {
-            font-size: 40px;
+
+        .pricing-card.popular {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .pricing-card h3 {
+            font-size: 24px;
             margin-bottom: 20px;
+            color: var(--primary-black);
         }
-        
-        .service-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
+
+        .price {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 30px;
         }
-        
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: right;
+        }
+
+        .pricing-card li {
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+            color: var(--secondary-black);
+        }
+
+        .pricing-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* المحفظة */
         .portfolio {
             padding: 100px 0;
-            background-color: var(--secondary-white);
+            background-color: var(--primary-white);
+            width: 100%;
         }
-        
+
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 25px;
+            border: 2px solid var(--accent-color);
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .filter-btn.active {
+            background: var(--primary-black);
+            color: white;
+            border-color: var(--primary-black);
+        }
+
+        .filter-btn:hover:not(.active) {
+            border-color: var(--primary-black);
+        }
+
         .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 30px;
         }
-        
+
         .portfolio-item {
             position: relative;
             overflow: hidden;
-            border-radius: 8px;
+            border-radius: 12px;
             height: 300px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        
+
         .portfolio-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s;
+            transition: transform 0.5s ease;
         }
-        
+
         .portfolio-item:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
-        
+
         .portfolio-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+            padding: 25px;
             color: var(--primary-white);
             transform: translateY(100%);
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
         }
-        
+
         .portfolio-item:hover .portfolio-overlay {
             transform: translateY(0);
         }
-        
+
+        .portfolio-overlay h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .portfolio-overlay p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        /* الشهادات */
+        .testimonials {
+            padding: 100px 0;
+            background: var(--secondary-white);
+        }
+
+        .testimonials-slider {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .testimonial-content {
+            padding: 40px;
+        }
+
+        .testimonial-card p {
+            font-size: 18px;
+            font-style: italic;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            color: var(--secondary-black);
+        }
+
+        .client-info {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .client-info strong {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--primary-black);
+        }
+
+        .client-info span {
+            color: var(--secondary-black);
+            font-size: 14px;
+        }
+
+        /* عني */
         .about {
             padding: 100px 0;
+            width: 100%;
         }
-        
+
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 50px;
+            gap: 60px;
             align-items: center;
         }
-        
+
         .about-text h2 {
             font-size: 36px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            color: var(--primary-black);
         }
-        
+
         .about-text p {
             margin-bottom: 20px;
             color: var(--secondary-black);
+            line-height: 1.8;
+            font-size: 17px;
         }
-        
+
         .about-image {
-            border-radius: 8px;
+            border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
         }
-        
+
         .about-image img {
             width: 100%;
             height: auto;
             display: block;
+            transition: transform 0.5s ease;
         }
-        
-        .contact {
+
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* المدونة */
+        .blog {
             padding: 100px 0;
             background-color: var(--secondary-white);
         }
-        
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: var(--primary-black);
+            line-height: 1.4;
+        }
+
+        .blog-card p {
+            color: var(--secondary-black);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-block;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: var(--primary-black);
+        }
+
+        /* التواصل */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--primary-white);
+            width: 100%;
+        }
+
         .contact-header {
             text-align: center;
             margin-bottom: 60px;
         }
-        
+
         .contact-title {
-            font-size: 42px; /* خط أكبر */
+            font-size: 42px;
             margin-bottom: 15px;
             font-weight: 700;
             color: var(--primary-black);
-            width: 100%; /* عرض كامل */
+            width: 100%;
         }
-        
+
         .contact-subtitle {
-            font-size: 20px; /* خط أكبر */
+            font-size: 20px;
             color: var(--secondary-black);
-            max-width: none; /* إزالة الحد الأقصى للعرض */
+            max-width: none;
             margin: 0 auto;
-            width: 100%; /* عرض كامل */
+            width: 100%;
         }
-        
+
         .contact-form-container {
             background-color: var(--primary-white);
-            border-radius: 12px;
-            padding: 40px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--accent-color);
-            max-width: 700px;
+            max-width: 800px;
             margin: 0 auto;
         }
-        
+
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
-        
+
         .form-group label {
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             font-weight: 600;
             color: var(--secondary-black);
             font-size: 16px;
         }
-        
+
         .form-control {
             width: 100%;
-            padding: 14px 16px;
-            border: 1px solid var(--accent-color);
-            border-radius: 6px;
+            padding: 16px 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
             background-color: var(--primary-white);
             font-size: 16px;
             transition: all 0.3s;
+            font-family: 'Cairo', sans-serif;
         }
-        
+
         .form-control:focus {
-            border-color: var(--primary-black);
-            box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.1);
             outline: none;
         }
-        
+
         textarea.form-control {
             min-height: 150px;
             resize: vertical;
             line-height: 1.6;
         }
-        
+
+        /* الكابتشا */
         .captcha-container {
             background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 25px;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
             text-align: center;
-            border: 2px dashed #e8e8e8; /* حواف متقطعة */
+            border: 2px dashed #e8e8e8;
         }
-        
+
         .captcha-title {
             font-weight: 600;
             margin-bottom: 15px;
             color: var(--secondary-black);
             font-size: 16px;
         }
-        
+
         .captcha-code {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: bold;
             letter-spacing: 8px;
             background: linear-gradient(45deg, #333, #666);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            padding: 15px;
-            margin: 15px 0;
+            padding: 20px;
+            margin: 20px 0;
             border: 2px dashed #ddd;
-            border-radius: 6px;
+            border-radius: 8px;
             background-color: #fff;
+            font-family: 'Courier New', monospace;
         }
-        
+
         .captcha-input {
             text-align: center;
             font-size: 18px;
             letter-spacing: 4px;
             font-weight: 600;
+            font-family: 'Courier New', monospace;
+            border-radius: 10px;
         }
-        
+
         .captcha-input::placeholder {
             letter-spacing: normal;
             font-size: 14px;
             font-weight: normal;
+            font-family: 'Cairo', sans-serif;
         }
-        
+
+        .captcha-btn {
+            background: #666;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .captcha-btn:hover {
+            background: #555;
+            transform: translateY(-2px);
+        }
+
         .submit-section {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
+            margin-top: 40px;
+            padding-top: 30px;
             border-top: 1px solid var(--accent-color);
         }
-        
+
         .submit-btn {
             background-color: var(--primary-black);
             color: var(--primary-white);
-            padding: 14px 40px;
-            border-radius: 6px;
+            padding: 16px 50px;
+            border-radius: 30px;
             border: 2px solid var(--primary-black);
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
-            min-width: 180px;
+            min-width: 200px;
         }
-        
+
         .submit-btn:hover {
             background-color: transparent;
             color: var(--primary-black);
+            transform: translateY(-2px);
         }
-        
+
         .submit-btn:disabled {
             background-color: #cccccc;
             border-color: #cccccc;
             cursor: not-allowed;
             color: #666;
+            transform: none;
         }
-        
+
         #message_status {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 6px;
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 10px;
             text-align: center;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 16px;
         }
-        
+
         .success {
             color: #155724;
             background-color: #d4edda;
             border: 1px solid #c3e6cb;
         }
-        
+
         .error {
             color: #721c24;
             background-color: #f8d7da;
             border: 1px solid #f5c6cb;
         }
-        
-        footer {
-            background-color: var(--primary-black);
-            color: var(--primary-white);
-            padding: 50px 0 20px;
+
+        /* قائمة الخدمات العائمة */
+        .service-dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
         }
-        
+
+        .service-dropdown select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            background-color: var(--primary-white);
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .service-dropdown::after {
+            content: '▼';
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: var(--secondary-black);
+        }
+
+        /* الفوتر */
+        footer {
+            background: #000000;
+            color: var(--primary-white);
+            padding: 70px 0 30px;
+            width: 100%;
+        }
+
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
+            gap: 50px;
+            margin-bottom: 50px;
         }
-        
+
+        .footer-column {
+            text-align: center;
+        }
+
         .footer-column h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
+            font-size: 22px;
+            margin-bottom: 25px;
             position: relative;
-            padding-bottom: 10px;
+            padding-bottom: 15px;
         }
-        
+
         .footer-column h3::after {
             content: '';
             position: absolute;
             bottom: 0;
-            right: 0;
+            right: 50%;
+            transform: translateX(50%);
             width: 50px;
-            height: 2px;
+            height: 3px;
             background-color: var(--primary-white);
         }
-        
+
         .footer-links {
             list-style: none;
         }
-        
+
         .footer-links li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
-        
+
         .footer-links a {
             color: var(--accent-color);
             text-decoration: none;
             transition: color 0.3s;
         }
-        
+
         .footer-links a:hover {
             color: var(--primary-white);
         }
-        
+
         .social-links {
             display: flex;
             gap: 15px;
-            margin-top: 20px;
+            margin-top: 25px;
+            justify-content: center;
         }
-        
+
         .social-links a {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 40px;
-            height: 40px;
+            width: 45px;
+            height: 45px;
             background-color: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             color: var(--primary-white);
             text-decoration: none;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            font-size: 18px;
         }
-        
+
         .social-links a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: var(--primary-white);
+            color: var(--primary-black);
+            transform: translateY(-3px);
         }
-        
+
         .copyright {
             text-align: center;
-            padding-top: 20px;
+            padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--accent-color);
-            font-size: 14px;
+            font-size: 15px;
         }
-        
-        @media (max-width: 768px) {
+
+        /* التجاوب */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 30px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            /* تعديل الهيدر ليصبح أفقيًا قدر الإمكان */
             .header-content {
-                flex-direction: column;
-                padding: 15px 0;
+                /* flex-direction: column; <--- تم إلغاء هذه الخاصية لتجنب العرض العمودي */
+                gap: 0;
+                flex-wrap: wrap; /* تسمح بالالتفاف إذا لم يتسع السطر */
+                justify-content: space-between;
             }
             
+            /* تحديد ترتيب العناصر الأساسية في الهيدر */
+            .logo {
+                flex-basis: auto;
+                margin-inline-end: auto;
+            }
+
+            .menu-toggle {
+                display: flex;
+                order: 1;
+            }
+            
+            .language-switcher {
+                margin: 0;
+                order: 2;
+                align-self: center;
+            }
+
             .nav-links {
-                margin-top: 15px;
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                margin-top: 20px;
+                gap: 15px;
+            }
+            
+            .nav-links.active {
+                display: flex;
             }
             
             .nav-links li {
-                margin: 0 10px;
+                margin: 0;
             }
             
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .about-image {
+                order: -1;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+
+            .whatsapp-float {
+                left: 20px;
+                bottom: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
             .hero {
-                padding: 120px 0 80px;
+                padding: 100px 0 80px;
             }
             
             .hero h1 {
                 font-size: 36px;
             }
             
-            .about-content {
-                grid-template-columns: 1fr;
+            .hero p {
+                font-size: 18px;
             }
             
             .section-title {
                 font-size: 30px;
             }
             
+            .services-grid,
+            .pricing-grid,
+            .portfolio-grid,
+            .blog-grid,
+            .testimonials-slider {
+                grid-template-columns: 1fr;
+            }
+            
             .contact-form-container {
-                padding: 25px;
+                padding: 30px 25px;
             }
             
             .captcha-code {
-                font-size: 22px;
+                font-size: 24px;
                 letter-spacing: 5px;
-                padding: 12px;
+                padding: 15px;
             }
             
             .contact-title {
@@ -539,6 +1077,88 @@
             .contact-subtitle {
                 font-size: 18px;
             }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .whatsapp-float {
+                left: 15px;
+                bottom: 15px;
+            }
+
+            .whatsapp-float a {
+                width: 50px;
+                height: 50px;
+            }
+
+            .whatsapp-float i {
+                font-size: 24px;
+            }
+
+            /* تعديل الإحصائيات لتكون أفقيًا مع الالتفاف */
+            .stats-grid {
+                /* flex-direction: column; <--- تم إلغاء هذه الخاصية لتجنب العرض العمودي */
+                gap: 30px;
+                justify-content: space-around;
+            }
+
+            .stat-item {
+                min-width: unset; 
+                padding: 10px;
+                flex-basis: 30%; /* كل عنصر يأخذ حوالي ثلث مساحة الأب */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 20px;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .section-title {
+                font-size: 26px;
+            }
+            
+            .service-card,
+            .pricing-card,
+            .testimonial-card,
+            .blog-card {
+                padding: 25px 20px;
+            }
+            
+            .portfolio-filters {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 10px 18px;
+                font-size: 14px;
+            }
+            
+            .stat-number {
+                font-size: 36px;
+            }
+            
+            .price {
+                font-size: 36px;
+            }
+
+            /* تعديل الإحصائيات ليتم عرض عنصرين في السطر */
+            .stats-grid {
+                 gap: 10px;
+            }
+            .stat-item {
+                flex-basis: 45%; /* كل عنصر يأخذ حوالي 45% من المساحة (2 في السطر) */
+            }
         }
     </style>
 </head>
@@ -547,22 +1167,62 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo">محمد</div>
-                <ul class="nav-links">
+                
+                <div class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                
+                <ul class="nav-links" id="navLinks">
                     <li><a href="#home">الرئيسية</a></li>
                     <li><a href="#services">الخدمات</a></li>
+                    <li><a href="#pricing">الأسعار</a></li>
                     <li><a href="#portfolio">الأعمال</a></li>
+                    <li><a href="#testimonials">شهادات</a></li>
                     <li><a href="#about">عني</a></li>
+                    <li><a href="#blog">المدونة</a></li>
                     <li><a href="#contact">اتصل بي</a></li>
                 </ul>
+
+                <div class="language-switcher">
+                    <button class="lang-btn active" data-lang="ar">العربية</button>
+                    <button class="lang-btn" data-lang="en">English</button>
+                </div>
             </div>
         </div>
     </header>
 
+    <div class="whatsapp-float">
+        <a href="https://wa.me/20123456789" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+    </div>
+
     <section class="hero" id="home">
         <div class="container">
-            <h1>أنا محمد، مصمم إعلانات سوشيال ميديا</h1>
-            <p>بتخصص في تصميم الإعلانات اللي بتجذب الأنظار وبتخلي الجمهور يتفاعل مع المحتوى. بشتغل على كل أنواع الإعلانات لوسائل التواصل الاجتماعي المختلفة.</p>
+            <h1 class="hero-title">أنا محمد، مصمم إعلانات سوشيال ميديا</h1>
+            <p class="hero-text">بتخصص في تصميم الإعلانات اللي بتجذب الأنظار وبتخلي الجمهور يتفاعل مع المحتوى. بشتغل على كل أنواع الإعلانات لوسائل التواصل الاجتماعي المختلفة.</p>
             <a href="#portfolio" class="btn">شوف أعمالي</a>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" data-count="150">0</div>
+                    <div class="stat-label">مشروع مكتمل</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="50">0</div>
+                    <div class="stat-label">عميل سعيد</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-count="98">0%</div>
+                    <div class="stat-label">نسبة الرضا</div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -576,14 +1236,71 @@
                     <p>بتصميم إعلانات جذابة ومناسبة للجمهور المستهدف على فيسبوك وإنستجرام، علشان تزيد من التفاعل وتحقق النتائج المرجوة.</p>
                 </div>
                 <div class="service-card">
-                    <div class="service-icon">🎬</div>
-                    <h3>تصميم فيديوهات قصيرة</h3>
-                    <p>بتصميم فيديوهات إعلانية قصيرة وجذابة تناسب منصات مثل تيك توك وريلز، علشان توصل الرسالة الإعلانية بسرعة وفعالية.</p>
+                    <div class="service-icon">📸</div>
+                    <h3>تصميم ستوريات وإنستجرام</h3>
+                    <p>بتصميم ستوريات وجرافيكس تفاعلية لإنستجرام تجذب المتابعين وتزيد من التفاعل مع المحتوى.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">🎨</div>
                     <h3>تصميم هوية بصرية</h3>
                     <p>بتصميم هوية بصرية متكاملة لعلامتك التجارية على وسائل التواصل الاجتماعي، علشان تخلق انطباع قوي ومتماسك.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📊</div>
+                    <h3>تصميم إنفوجرافيك</h3>
+                    <p>بتصميم إنفوجرافيكس وجرافيكس بيانات تجعل المعلومات المعقدة سهلة الفهم وجذابة.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🖼️</div>
+                    <h3>تصميم بوستات وبانرات</h3>
+                    <p>بتصميم بوستات وبانرات إعلانية محترفة تناسب كل منصات السوشيال ميديا.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🎯</div>
+                    <h3>تصميم إعلانات متخصصة</h3>
+                    <p>بتصميم إعلانات مخصصة لكل حملة إعلانية بناءً على الجمهور المستهدف والهدف التسويقي.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing" id="pricing">
+        <div class="container">
+            <h2 class="section-title">باقات الأسعار</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>الباقة الأساسية</h3>
+                    <div class="price">١٠٠٠ ج.م</div>
+                    <ul>
+                        <li>١٠ تصميمات شهرياً</li>
+                        <li>تصميم ستوريات</li>
+                        <li>مراجعات غير محدودة</li>
+                        <li>دعم فني</li>
+                    </ul>
+                    <a href="#contact" class="btn">احجز الآن</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">الأكثر طلباً</div>
+                    <h3>الباقة المتوسطة</h3>
+                    <div class="price">٢٠٠٠ ج.م</div>
+                    <ul>
+                        <li>٢٠ تصميم شهرياً</li>
+                        <li>تصميم ستوريات وبانرات</li>
+                        <li>تصميم هوية بصرية</li>
+                        <li>دعم فني مميز</li>
+                    </ul>
+                    <a href="#contact" class="btn">احجز الآن</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>الباقة المتقدمة</h3>
+                    <div class="price">٣٥٠٠ ج.م</div>
+                    <ul>
+                        <li>تصميمات غير محدودة</li>
+                        <li>هوية بصرية متكاملة</li>
+                        <li>إنفوجرافيكس متخصصة</li>
+                        <li>دعم فني 24/7</li>
+                    </ul>
+                    <a href="#contact" class="btn">احجز الآن</a>
                 </div>
             </div>
         </div>
@@ -592,26 +1309,88 @@
     <section class="portfolio" id="portfolio">
         <div class="container">
             <h2 class="section-title">أعمالي السابقة</h2>
+            <div class="portfolio-filters">
+                <button class="filter-btn active" data-filter="all">كل الأعمال</button>
+                <button class="filter-btn" data-filter="facebook">فيسبوك</button>
+                <button class="filter-btn" data-filter="instagram">إنستجرام</button>
+                <button class="filter-btn" data-filter="branding">هوية بصرية</button>
+            </div>
             <div class="portfolio-grid">
-                <div class="portfolio-item">
+                <div class="portfolio-item" data-category="facebook">
                     <img src="https://via.placeholder.com/400x300/ffffff/000000?text=إعلان+فيسبوك" alt="إعلان فيسبوك">
                     <div class="portfolio-overlay">
                         <h3>إعلان فيسبوك لعلامة تجارية</h3>
                         <p>زيادة في التفاعل بنسبة 40%</p>
                     </div>
                 </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/400x300/ffffff/000000?text=إعلان+إنستجرام" alt="إعلان إنستجرام">
+                <div class="portfolio-item" data-category="instagram">
+                    <img src="https://via.placeholder.com/400x300/ffffff/000000?text=ستوري+إنستجرام" alt="ستوري إنستجرام">
                     <div class="portfolio-overlay">
                         <h3>كامبين إنستجرام لمطعم</h3>
                         <p>زيادة في المبيعات بنسبة 25%</p>
                     </div>
                 </div>
-                <div class="portfolio-item">
-                    <img src="https://via.placeholder.com/400x300/ffffff/000000?text=فيديو+تيك+توك" alt="فيديو تيك توك">
+                <div class="portfolio-item" data-category="branding">
+                    <img src="https://via.placeholder.com/400x300/ffffff/000000?text=هوية+بصرية" alt="هوية بصرية">
                     <div class="portfolio-overlay">
-                        <h3>فيديو تيك توك لعلامة أزياء</h3>
-                        <p>وصول لأكثر من مليون مشاهدة</p>
+                        <h3>هوية بصرية لمتجر إلكتروني</h3>
+                        <p>تعزيز الانطباع البصري</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="facebook">
+                    <img src="https://via.placeholder.com/400x300/ffffff/000000?text=بانر+إعلاني" alt="بانر إعلاني">
+                    <div class="portfolio-overlay">
+                        <h3>بانرات إعلانية لشركة عقارية</h3>
+                        <p>زيادة في الاستفسارات 60%</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="instagram">
+                    <img src="https://via.placeholder.com/400x300/ffffff/000000?text=إنفوجرافيك" alt="إنفوجرافيك">
+                    <div class="portfolio-overlay">
+                        <h3>إنفوجرافيك لشركة تقنية</h3>
+                        <p>تبسيط المعلومات المعقدة</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="branding">
+                    <img src="https://via.placeholder.com/400x300/ffffff/000000?text=بوك+تصاميم" alt="بوك تصاميم">
+                    <div class="portfolio-overlay">
+                        <h3>بوك تصاميم لعلامة أزياء</h3>
+                        <p>تعزيز الهوية البصرية</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">آراء عملائنا</h2>
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"محمد غير شكلي على السوشيال ميديا بشكل كامل! التصاميم اللي بعتها خلت التفاعل يزيد بشكل كبير"</p>
+                        <div class="client-info">
+                            <strong>أحمد محمد</strong>
+                            <span>صاحب مطعم</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"الاحترافية في التعامل وجودة التصاميم خلتني أوثق فيه تماماً. أنصح أي حد يبقي شغله على السوشيال ميديا يتعامل معاه"</p>
+                        <div class="client-info">
+                            <strong>سارة خالد</strong>
+                            <span>مديرة تسويق</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>"ما تتخيلوش الفرق من قبل محمد وبعد محمد. التصاميم بقت محترفة وجذابة والعملاء بقيوا يتفاعلوا أكتر"</p>
+                        <div class="client-info">
+                            <strong>محمود عبد الرحمن</strong>
+                            <span>صاحب متجر إلكتروني</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -623,7 +1402,7 @@
             <div class="about-content">
                 <div class="about-text">
                     <h2>شوية عني</h2>
-                    <p>أنا محمد، مصمم إعلانات سوشيال ميديا محترف، بشتغل في المجال من أكثر من 5 سنين. عندي خبرة واسعة في تصميم الإعلانات اللي بتناسب كل منصات التواصل الاجتماعي.</p>
+                    <p>أنا محمد، مصمم إعلانات سوشيال ميديا محترف، بشتغل في المجال من أكثر من 3 سنين. عندي خبرة واسعة في تصميم الإعلانات اللي بتناسب كل منصات التواصل الاجتماعي.</p>
                     <p>بعمل على تصميم إعلانات مبتكرة وجذابة بتواكب أحدث trends السوشيال ميديا، علشان أساعد العلامات التجارية في الوصول لجمهورها المستهدف وتحقيق أهدافها التسويقية.</p>
                     <p>بعتمد في شغلي على فهم عميق لسيكولوجية الجمهور وإرشادات كل منصة، علشان أضمن إن الإعلانات بتاعي توصل الرسالة المطلوبة وتحقق أعلى معدلات التفاعل.</p>
                     <a href="#contact" class="btn">كلمني علشان نشتغل مع بعض</a>
@@ -631,6 +1410,38 @@
                 <div class="about-image">
                     <img src="https://via.placeholder.com/500x600/ffffff/000000?text=Mohamed" alt="محمد مصمم إعلانات">
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog" id="blog">
+        <div class="container">
+            <h2 class="section-title">نصائح وتصميمات</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <img src="https://via.placeholder.com/400x250/ffffff/000000?text=تصميمات+السوشيال+ميديا" alt="تصميمات السوشيال ميديا">
+                    <div class="blog-content">
+                        <h3>أفضل التصميمات لإنستجرام 2024</h3>
+                        <p>تعرف على أحدث trends التصميم لإنستجرام علشان تزيد تفاعل متابعينك</p>
+                        <a href="#" class="read-more">اقرأ المزيد</a>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <img src="https://via.placeholder.com/400x250/ffffff/000000?text=ألوان+التصميم" alt="ألوان التصميم">
+                    <div class="blog-content">
+                        <h3>اختيار الألوان المناسبة للإعلانات</h3>
+                        <p>دليل شامل لاختيار palette الألوان اللي بتناسب علامتك التجارية</p>
+                        <a href="#" class="read-more">اقرأ المزيد</a>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <img src="https://via.placeholder.com/400x250/ffffff/000000?text=نصائح+التفاعل" alt="نصائح التفاعل">
+                    <div class="blog-content">
+                        <h3>كيف تزيد التفاعل على منشوراتك</h3>
+                        <p>نصائح عملية علشان تزيد engagement على تصاميمك في السوشيال ميديا</p>
+                        <a href="#" class="read-more">اقرأ المزيد</a>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -653,6 +1464,20 @@
                         <input type="tel" id="phone" name="phone" class="form-control" required placeholder="+20 123 456 7890">
                     </div>
                     <div class="form-group">
+                        <label for="service">نوع الخدمة</label>
+                        <div class="service-dropdown">
+                            <select id="service" name="service" required>
+                                <option value="">اختر الخدمة</option>
+                                <option value="facebook">تصميم إعلانات فيسبوك</option>
+                                <option value="instagram">تصميم ستوريات إنستجرام</option>
+                                <option value="branding">هوية بصرية</option>
+                                <option value="infographic">إنفوجرافيك</option>
+                                <option value="package">باقة أسعار</option>
+                                <option value="other">خدمة أخرى</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="subject">الموضوع</label>
                         <input type="text" id="subject" name="subject" class="form-control" required>
                     </div>
@@ -661,12 +1486,11 @@
                         <textarea id="message" name="message" class="form-control" required></textarea>
                     </div>
                     
-                    <!-- كابتشا -->
                     <div class="captcha-container">
                         <div class="captcha-title">من فضلك أكتب الكود الظاهر أدناه:</div>
                         <div class="captcha-code" id="captchaCode">ABCD12</div>
                         <input type="text" id="captchaInput" class="form-control captcha-input" placeholder="أدخل الكود هنا" required>
-                        <button type="button" class="btn" onclick="generateCaptcha()" style="margin-top: 10px; background: #666; color: white; border: none;">
+                        <button type="button" class="btn captcha-btn" onclick="generateCaptcha()">
                             🔄 تحديث الكود
                         </button>
                     </div>
@@ -687,10 +1511,10 @@
                     <h3>محمد</h3>
                     <p>مصمم إعلانات سوشيال ميديا محترف، بشتغل على تصميم إعلانات مبتكرة وجذابة علشان أساعدك في تحقيق أهدافك التسويقية.</p>
                     <div class="social-links">
-                        <a href="#"><span>ف</span></a>
-                        <a href="#"><span>ت</span></a>
-                        <a href="#"><span>إ</span></a>
-                        <a href="#"><span>ل</span></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 <div class="footer-column">
@@ -698,8 +1522,9 @@
                     <ul class="footer-links">
                         <li><a href="#">تصميم إعلانات فيسبوك</a></li>
                         <li><a href="#">تصميم إعلانات إنستجرام</a></li>
-                        <li><a href="#">تصميم فيديوهات قصيرة</a></li>
+                        <li><a href="#">تصميم ستوريات</a></li>
                         <li><a href="#">هوية بصرية للسوشيال ميديا</a></li>
+                        <li><a href="#">تصميم إنفوجرافيك</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
@@ -707,22 +1532,23 @@
                     <ul class="footer-links">
                         <li><a href="#home">الرئيسية</a></li>
                         <li><a href="#services">الخدمات</a></li>
+                        <li><a href="#pricing">الأسعار</a></li>
                         <li><a href="#portfolio">الأعمال</a></li>
-                        <li><a href="#about">عني</a></li>
                         <li><a href="#contact">اتصل بي</a></li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>تواصل معايا</h3>
                     <ul class="footer-links">
-                        <li>رقم الواتساب: +20 123 456 7890</li>
-                        <li>التليفون: +20 123 456 7890</li>
-                        <li>العنوان: القاهرة، مصر</li>
+                        <li><i class="fas fa-phone"></i> +20 123 456 7890</li>
+                        <li><i class="fab fa-whatsapp"></i> +20 123 456 7890</li>
+                        <li><i class="fas fa-envelope"></i> hello@mohamed.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> القاهرة، مصر</li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>جميع الحقوق محفوظة &copy; 2023 محمد - مصمم إعلانات سوشيال ميديا</p>
+                <p>جميع الحقوق محفوظة &copy; 2024 محمد - مصمم إعلانات سوشيال ميديا</p>
             </div>
         </div>
     </footer>
@@ -736,137 +1562,258 @@
                 captcha += chars.charAt(Math.floor(Math.random() * chars.length));
             }
             document.getElementById('captchaCode').textContent = captcha;
+            // حفظ الكابتشا الحالية في متغير عام
+            window.currentCaptcha = captcha;
             return captcha;
         }
-        
-        // توليد كابتشا أولي عند تحميل الصفحة
-        let currentCaptcha = generateCaptcha();
-        
-        // سكريبت علشان النافيجيشن سموث
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80, 
-                        behavior: 'smooth'
-                    });
-                }
+
+        // الترجمة للنصوص
+        const translations = {
+            ar: {
+                heroTitle: "أنا محمد، مصمم إعلانات سوشيال ميديا",
+                heroText: "بتخصص في تصميم الإعلانات اللي بتجذب الأنظار وبتخلي الجمهور يتفاعل مع المحتوى. بشتغل على كل أنواع الإعلانات لوسائل التواصل الاجتماعي المختلفة.",
+                servicesTitle: "الخدمات اللي بتقدمها",
+                pricingTitle: "باقات الأسعار",
+                portfolioTitle: "أعمالي السابقة",
+                testimonialsTitle: "آراء عملائنا",
+                aboutTitle: "شوية عني",
+                blogTitle: "نصائح وتصميمات",
+                contactTitle: "إرسال رسالة",
+                contactSubtitle: "أرسل لي رسالتك وسأرد عليك في أقرب وقت ممكن",
+                navHome: "الرئيسية",
+                navServices: "الخدمات",
+                navPricing: "الأسعار",
+                navPortfolio: "الأعمال",
+                navTestimonials: "شهادات",
+                navAbout: "عني",
+                navBlog: "المدونة",
+                navContact: "اتصل بي"
+            },
+            en: {
+                heroTitle: "I'm Mohamed, Social Media Ads Designer",
+                heroText: "Specialized in designing eye-catching ads that make audiences interact with content. I work on all types of ads for different social media platforms.",
+                servicesTitle: "Services I Provide",
+                pricingTitle: "Pricing Packages",
+                portfolioTitle: "My Previous Work",
+                testimonialsTitle: "Client Testimonials",
+                aboutTitle: "About Me",
+                blogTitle: "Tips & Designs",
+                contactTitle: "Send Message",
+                contactSubtitle: "Send me your message and I'll reply as soon as possible",
+                navHome: "Home",
+                navServices: "Services",
+                navPricing: "Pricing",
+                navPortfolio: "Portfolio",
+                navTestimonials: "Testimonials",
+                navAbout: "About",
+                navBlog: "Blog",
+                navContact: "Contact"
+            }
+        };
+
+        // تبديل اللغة - شغال 100%
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    
+                    // تحديث الأزرار النشطة
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // تغيير اتجاه الصفحة
+                    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+                    document.documentElement.lang = lang;
+                    
+                    // تحديث النصوص
+                    updateContent(lang);
+                });
             });
         });
 
-        // 🚀 الدالة لمعالجة إرسال النموذج
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            sendMessage();
-        });
-
-        function sendMessage() {
-            var messageStatus = document.getElementById('message_status');
-            var submitButton = document.getElementById('submitButton');
-
-            // 1. التحقق من صحة الكابتشا أولاً
-            const userCaptcha = document.getElementById('captchaInput').value;
-            if (userCaptcha !== currentCaptcha) {
-                messageStatus.innerHTML = "❌ كود التحقق غير صحيح. حاول مرة أخرى.";
-                messageStatus.className = 'error';
-                generateCaptcha(); // توليد كود جديد
-                document.getElementById('captchaInput').value = ''; // مسح الحقل
-                return;
-            }
-
-            // 2. إعداد الواجهة وتعطيل الزر
-            messageStatus.innerHTML = '<span style="color: #007bff;">جاري الإرسال، لحظة من فضلك...</span>';
-            messageStatus.className = '';
-            submitButton.disabled = true;
-            submitButton.innerHTML = "جاري الإرسال...";
-
-            // 3. تجميع البيانات
-            var name = document.getElementById('name').value;
-            var phone = document.getElementById('phone').value;
-            var subject = document.getElementById('subject').value;
-            var message = document.getElementById('message').value;
-
-            // 4. التحقق من البيانات
-            if (!name || !phone || !subject || !message) {
-                messageStatus.innerHTML = "❌ الرجاء تعبئة جميع الحقول المطلوبة.";
-                messageStatus.className = 'error';
-                submitButton.disabled = false;
-                submitButton.innerHTML = "إرسال الرسالة";
-                return;
-            }
-
-            // 5. إعداد البيانات للإرسال
-            const formData = {
-                id: 'msg_' + Date.now(),
-                name: name,
-                phone: phone,
-                subject: subject,
-                message: message,
-                timestamp: new Date().toISOString(),
-                source: "موقع محمد - مصمم إعلانات",
-                read: false,
-                status: "جديد"
-            };
-
-            // 6. حفظ الرسالة في localStorage للاستخدام في لوحة الرسائل
-            saveMessage(formData);
+        // تحديث المحتوى بناءً على اللغة
+        function updateContent(lang) {
+            const texts = translations[lang];
             
-            // محاكاة الإرسال الناجح
-            setTimeout(() => {
-                messageStatus.innerHTML = "✅ تم إرسال رسالتك بنجاح! هرد عليك في أقرب وقت.";
-                messageStatus.className = 'success';
-                document.getElementById('contactForm').reset();
-                generateCaptcha(); // توليد كود كابتشا جديد
-                submitButton.disabled = false;
-                submitButton.innerHTML = "إرسال الرسالة";
-                
-                // عرض رابط لإدارة الرسائل (للمطور)
-                showAdminLink();
-            }, 1500);
+            // تحديث النصوص الرئيسية
+            document.querySelector('.hero-title').textContent = texts.heroTitle;
+            document.querySelector('.hero-text').textContent = texts.heroText;
+            
+            // تحديث عناوين الأقسام
+            document.querySelectorAll('.section-title').forEach((title, index) => {
+                const keys = Object.keys(texts).filter(key => key.includes('Title') && key !== 'heroTitle');
+                if (keys[index]) {
+                    title.textContent = texts[keys[index]];
+                }
+            });
+            
+            // تحديث عناوين التواصل
+            document.querySelector('.contact-title').textContent = texts.contactTitle;
+            document.querySelector('.contact-subtitle').textContent = texts.contactSubtitle;
+            
+            // تحديث قائمة التنقل
+            const navLinks = document.querySelectorAll('.nav-links a');
+            const navKeys = ['navHome', 'navServices', 'navPricing', 'navPortfolio', 'navTestimonials', 'navAbout', 'navBlog', 'navContact'];
+            navLinks.forEach((link, index) => {
+                if (navKeys[index]) {
+                    link.textContent = texts[navKeys[index]];
+                }
+            });
         }
 
-        // 💾 حفظ الرسالة في localStorage للاستخدام في لوحة الرسائل
-        function saveMessage(formData) {
-            try {
-                // جلب الرسائل الحالية من localStorage
-                let existingMessages = JSON.parse(localStorage.getItem('mohamed_messages') || '[]');
+        // عدادات الإحصائيات
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    element.textContent = target + (target === 98 ? '%' : '');
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(start) + (target === 98 ? '%' : '');
+                }
+            }, 16);
+        }
+
+        // تهيئة كل شيء عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            // توليد كابتشا أولي
+            window.currentCaptcha = generateCaptcha();
+            
+            // تهيئة القائمة المتنقلة
+            const menuToggle = document.getElementById('menuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+
+            // النافيجيشن السلس
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        const targetPosition = targetElement.offsetTop - 20;
+                        
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: 'smooth'
+                        });
+                        
+                        // إغلاق القائمة على الجوال
+                        if (navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            menuToggle.classList.remove('active');
+                        }
+                    }
+                });
+            });
+
+            // عدادات الإحصائيات
+            const counters = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.getAttribute('data-count'));
+                        animateCounter(entry.target, target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            counters.forEach(counter => observer.observe(counter));
+
+            // إرسال النموذج
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                sendMessage();
+            });
+
+            function sendMessage() {
+                var messageStatus = document.getElementById('message_status');
+                var submitButton = document.getElementById('submitButton');
+
+                // 1. التحقق من صحة الكابتشا أولاً
+                const userCaptcha = document.getElementById('captchaInput').value;
+                if (userCaptcha !== window.currentCaptcha) {
+                    messageStatus.innerHTML = "❌ كود التحقق غير صحيح. حاول مرة أخرى.";
+                    messageStatus.className = 'error';
+                    generateCaptcha();
+                    document.getElementById('captchaInput').value = '';
+                    return;
+                }
+
+                // 2. إعداد الواجهة وتعطيل الزر
+                messageStatus.innerHTML = '<span style="color: #007bff;">جاري الإرسال، لحظة من فضلك...</span>';
+                messageStatus.className = '';
+                submitButton.disabled = true;
+                submitButton.innerHTML = "جاري الإرسال...";
+
+                // 3. تجميع البيانات
+                var name = document.getElementById('name').value;
+                var phone = document.getElementById('phone').value;
+                var service = document.getElementById('service').value;
+                var subject = document.getElementById('subject').value;
+                var message = document.getElementById('message').value;
+
+                // 4. التحقق من البيانات
+                if (!name || !phone || !service || !subject || !message) {
+                    messageStatus.innerHTML = "❌ الرجاء تعبئة جميع الحقول المطلوبة.";
+                    messageStatus.className = 'error';
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = "إرسال الرسالة";
+                    return;
+                }
+
+                // 5. إعداد البيانات للإرسال
+                const formData = {
+                    id: 'msg_' + Date.now(),
+                    name: name,
+                    phone: phone,
+                    service: service,
+                    subject: subject,
+                    message: message,
+                    timestamp: new Date().toISOString(),
+                    source: "موقع محمد - مصمم إعلانات",
+                    read: false,
+                    status: "جديد"
+                };
+
+                // 6. حفظ الرسالة في localStorage
+                saveMessage(formData);
                 
-                // إضافة الرسالة الجديدة
-                existingMessages.push(formData);
-                
-                // حفظ الرسائل المحدثة في localStorage
-                localStorage.setItem('mohamed_messages', JSON.stringify(existingMessages));
-                
-                console.log('تم حفظ الرسالة بنجاح:', formData);
-            } catch (error) {
-                console.error('خطأ في حفظ الرسالة:', error);
+                // محاكاة الإرسال الناجح
+                setTimeout(() => {
+                    messageStatus.innerHTML = "✅ تم إرسال رسالتك بنجاح! هرد عليك في أقرب وقت.";
+                    messageStatus.className = 'success';
+                    document.getElementById('contactForm').reset();
+                    generateCaptcha();
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = "إرسال الرسالة";
+                }, 1500);
             }
-        }
 
-        // 🔗 عرض رابط إدارة الرسائل (للمطور فقط)
-        function showAdminLink() {
-            // هذا الرابط يظهر فقط للمطور
-            const adminLink = document.createElement('div');
-            adminLink.style.marginTop = '10px';
-            adminLink.style.padding = '10px';
-            adminLink.style.background = '#f8f9fa';
-            adminLink.style.borderRadius = '4px';
-            adminLink.style.textAlign = 'center';
-            adminLink.innerHTML = `
-                <small>
-                    <a href="Message_board.html" target="_blank" style="color: #666; text-decoration: none;">
-                        🔗 عرض الرسائل في لوحة التحكم
-                    </a>
-                </small>
-            `;
-            document.getElementById('message_status').appendChild(adminLink);
-        }
+            // حفظ الرسالة في localStorage
+            function saveMessage(formData) {
+                try {
+                    let existingMessages = JSON.parse(localStorage.getItem('mohamed_messages') || '[]');
+                    existingMessages.push(formData);
+                    localStorage.setItem('mohamed_messages', JSON.stringify(existingMessages));
+                    console.log('تم حفظ الرسالة بنجاح:', formData);
+                } catch (error) {
+                    console.error('خطأ في حفظ الرسالة:', error);
+                }
+            }
+        });
     </script>
 </body>
 </html>
