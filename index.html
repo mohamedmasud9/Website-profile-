@@ -3,926 +3,1868 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محمد | مصمم جرافيك</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;600;800;900&family=IBM+Plex+Sans+Arabic:wght@100;300;500;700&display=swap" rel="stylesheet">
-    
-    <!-- حماية CSP (Content Security Policy) -->
-    <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' https://cdn.tailwindcss.com https://unpkg.com/lucide@latest 'unsafe-inline';
-        style-src 'self' https://fonts.googleapis.com https://cdn.tailwindcss.com 'unsafe-inline';
-        font-src 'self' https://fonts.gstatic.com;
-        connect-src 'self';
-        img-src 'self' data:;
-        frame-ancestors 'none';
-        base-uri 'self';
-        form-action 'self';
-    ">
-    
-    <!-- حماية إضافية -->
-    <meta http-equiv="X-Content-Type-Options" content="nosniff">
-    <meta http-equiv="X-Frame-Options" content="DENY">
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
-    
+    <title>محمد | مصمم إعلانات سوشيال ميديا</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Custom Styles to supplement Tailwind */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0a0a0f;
+            --secondary: #12121a;
+            --accent: #6366f1;
+            --accent-glow: #818cf8;
+            --text: #e2e8f0;
+            --text-muted: #64748b;
+            --gold: #f59e0b;
+        }
+
         html {
             scroll-behavior: smooth;
         }
 
-        /* Animation Keyframes */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-            100% { transform: translateY(0px); }
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--primary);
+            color: var(--text);
+            overflow-x: hidden;
+            cursor: none;
         }
 
-        @keyframes scrollRight {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: transform 0.1s, opacity 0.1s;
+            mix-blend-mode: difference;
         }
 
-        @keyframes scrollLeft {
-            0% { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
+        .cursor-dot {
+            width: 5px;
+            height: 5px;
+            background: var(--accent-glow);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10001;
         }
 
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
+        .cursor.hover {
+            transform: scale(2);
+            background: rgba(99, 102, 241, 0.1);
         }
 
-        .animate-scroll-right {
-            animation: scrollRight 20s linear infinite;
+        /* Noise Overlay */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
         }
 
-        .animate-scroll-left {
-            animation: scrollLeft 20s linear infinite;
+        /* Loading Screen */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: opacity 0.8s, visibility 0.8s;
         }
 
-        /* Fade In Up Animation Classes */
-        .fade-in-up {
+        .loader.hidden {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            visibility: hidden;
         }
 
-        .fade-in-up.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .loader-text {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--gold), var(--accent-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s infinite;
         }
 
-        .fade-in-scale {
-            opacity: 0;
-            transform: scale(0.9);
-            transition: opacity 1s ease-out, transform 1s ease-out;
+        .loader-bar {
+            width: 200px;
+            height: 2px;
+            background: var(--secondary);
+            margin-top: 30px;
+            border-radius: 2px;
+            overflow: hidden;
         }
 
-        .fade-in-scale.visible {
-            opacity: 1;
-            transform: scale(1);
+        .loader-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            animation: loading 2s ease-in-out;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
+        @keyframes loading {
+            0% { width: 0%; }
+            100% { width: 100%; }
         }
 
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 25px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: transparent;
+            transition: all 0.5s;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3b82f6;
-        }
-
-        /* Glass Panel Effect */
-        .glass-panel {
-            background: rgba(0, 0, 0, 0.2);
+        nav.scrolled {
+            background: rgba(10, 10, 15, 0.9);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px 50px;
         }
 
-        /* Enhanced hover effects */
-        .hover-lift {
-            transition: all 0.3s ease;
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
         }
 
-        .hover-lift:hover {
-            transform: translateY(-5px);
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
         }
 
-        /* Smooth transitions for navigation */
-        .nav-link {
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
             position: relative;
-            transition: all 0.3s ease;
+            transition: color 0.3s;
+            padding: 5px 0;
         }
 
-        .nav-link::after {
+        .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             right: 0;
             width: 0;
-            height: 2px;
-            background: #3b82f6;
-            transition: width 0.3s ease;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.3s;
         }
 
-        .nav-link:hover::after {
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
             width: 100%;
         }
 
-        /* Captcha Styles */
-        .captcha-container {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 15px;
+        .menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            z-index: 1001;
         }
 
-        .captcha-text {
-            font-family: 'Courier New', monospace;
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 5px;
-            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+        .menu-btn span {
+            width: 30px;
+            height: 2px;
+            background: var(--text);
+            transition: all 0.3s;
+        }
+
+        .menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 100px 50px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent);
+            top: -200px;
+            right: -200px;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.1), transparent);
+            bottom: -100px;
+            left: -100px;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(129, 140, 248, 0.1), transparent);
+            top: 50%;
+            left: 50%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -50px) scale(1.1); }
+            50% { transform: translate(-30px, 30px) scale(0.9); }
+            75% { transform: translate(-50px, -30px) scale(1.05); }
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+            background-size: 100px 100px;
+            animation: gridMove 30s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(100px); }
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 900px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 25px;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 50px;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+            color: var(--accent-glow);
+            animation: fadeInUp 1s ease 0.5s backwards;
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease 0.7s backwards;
+        }
+
+        .hero-title .line {
+            display: block;
+            overflow: hidden;
+        }
+
+        .hero-title .gradient {
+            background: linear-gradient(135deg, var(--accent), var(--gold), var(--accent-glow));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: blur(0.3px);
+            background-clip: text;
         }
 
-        /* Glow effect on click */
-        .glow-on-click {
-            transition: all 0.3s ease;
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            line-height: 1.8;
+            animation: fadeInUp 1s ease 0.9s backwards;
         }
 
-        .glow-on-click:active {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
-            border-color: #3b82f6;
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease 1.1s backwards;
         }
 
-        /* WhatsApp floating button */
-        .whatsapp-float {
-            position: fixed;
-            bottom: 25px;
-            left: 25px;
-            width: 60px;
+        .btn {
+            padding: 18px 45px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Tajawal', sans-serif;
+            cursor: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+            color: white;
+            border: none;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            animation: fadeInUp 1s ease 1.5s backwards;
+        }
+
+        .scroll-indicator span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        .scroll-line {
+            width: 1px;
             height: 60px;
-            background: #25D366;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            animation: scrollLine 2s infinite;
+        }
+
+        @keyframes scrollLine {
+            0% { transform: scaleY(0); transform-origin: top; }
+            50% { transform: scaleY(1); transform-origin: top; }
+            51% { transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* About Section */
+        .about {
+            padding: 150px 50px;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-tag {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: var(--accent-glow);
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .section-title .highlight {
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .image-container {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(245, 158, 11, 0.2));
+            z-index: 1;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            filter: grayscale(50%);
+            transition: filter 0.5s;
+        }
+
+        .image-container:hover img {
+            filter: grayscale(0%);
+        }
+
+        .image-frame {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid var(--accent);
+            border-radius: 30px;
+            z-index: -1;
+        }
+
+        .experience-badge {
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+            padding: 25px 35px;
+            border-radius: 20px;
+            z-index: 2;
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        }
+
+        .experience-badge .number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        }
+
+        .experience-badge .text {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--text);
+        }
+
+        .about-text p {
+            color: var(--text-muted);
+            line-height: 2;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 25px;
+            background: var(--secondary);
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 150px 50px;
+            background: var(--secondary);
+            position: relative;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--primary);
+            padding: 50px 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--accent);
+            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.2);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .service-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .service-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-glow);
+            text-decoration: none;
+            font-weight: 500;
+            transition: gap 0.3s;
+        }
+
+        .service-link:hover {
+            gap: 20px;
+        }
+
+        /* Design Process Section - NEW */
+        .design-process {
+            padding: 150px 50px;
+            position: relative;
+            background: var(--primary);
+        }
+
+        .process-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-top: 80px;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--gold));
+            z-index: 1;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--secondary);
+            border: 2px solid var(--accent);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
-            transition: all 0.3s ease;
+            margin: 0 auto 30px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            transition: all 0.3s;
         }
 
-        .whatsapp-float:hover {
+        .process-step:hover .step-number {
+            background: var(--accent);
+            color: white;
             transform: scale(1.1);
-            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.6);
         }
-    </style>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        background: 'hsl(240 10% 4%)',
-                        primary: 'hsl(210 100% 50%)',
-                        card: 'hsl(240 10% 6%)',
-                    },
-                    fontFamily: {
-                        sans: ['IBM Plex Sans Arabic', 'sans-serif'],
-                        display: ['Cairo', 'sans-serif'],
-                    }
-                }
+
+        .step-content {
+            max-width: 250px;
+            margin: 0 auto;
+        }
+
+        .step-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--text);
+        }
+
+        .step-content p {
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* FAQ Section - NEW */
+        .faq {
+            padding: 150px 50px;
+            background: var(--secondary);
+            position: relative;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: var(--primary);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .faq-question h3 {
+            font-size: 1.2rem;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .faq-icon {
+            width: 30px;
+            height: 30px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 30px 25px;
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        /* Portfolio Section */
+        .portfolio {
+            padding: 150px 50px;
+            position: relative;
+        }
+
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 12px 30px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .portfolio-item {
+            position: relative;
+            border-radius: 25px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            cursor: pointer;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.7s;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(10, 10, 15, 0.95), transparent);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            transform: translateY(20px);
+            transition: transform 0.5s;
+        }
+
+        .portfolio-overlay p {
+            color: var(--text-muted);
+            transform: translateY(20px);
+            transition: transform 0.5s 0.1s;
+        }
+
+        .portfolio-item:hover .portfolio-overlay h3,
+        .portfolio-item:hover .portfolio-overlay p {
+            transform: translateY(0);
+        }
+
+        /* Testimonials */
+        .testimonials {
+            padding: 150px 50px;
+            background: var(--secondary);
+        }
+
+        .testimonials-slider {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial-card {
+            text-align: center;
+            padding: 60px;
+            background: var(--primary);
+            border-radius: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .testimonial-quote {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 30px;
+            opacity: 0.5;
+        }
+
+        .testimonial-text {
+            font-size: 1.4rem;
+            color: var(--text);
+            line-height: 2;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .author-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .author-info h4 {
+            font-size: 1.2rem;
+            color: var(--text);
+        }
+
+        .author-info span {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 150px 50px;
+            position: relative;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contact-info h3 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--accent-glow);
+        }
+
+        .contact-item-text h4 {
+            font-size: 1rem;
+            color: var(--text);
+            margin-bottom: 5px;
+        }
+
+        .contact-item-text span {
+            color: var(--text-muted);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--secondary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .social-link:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .contact-form {
+            background: var(--secondary);
+            padding: 50px;
+            border-radius: 30px;
+            border: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 18px 25px;
+            background: var(--primary);
+            border: 1px solid rgba(99, 102, 241, 0.1);
+            border-radius: 15px;
+            color: var(--text);
+            font-size: 1rem;
+            font-family: 'Tajawal', sans-serif;
+            transition: border-color 0.3s;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: none;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 45px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px;
+            text-align: center;
+            border-top: 1px solid rgba(99, 102, 241, 0.1);
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .footer-text {
+            color: var(--text-muted);
+        }
+
+        /* Protection Badge */
+        .protection-badge {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: rgba(10, 10, 15, 0.9);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: var(--primary);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: right 0.5s;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav a {
+            font-size: 2rem;
+            color: var(--text);
+            text-decoration: none;
+            margin: 20px 0;
+            transition: color 0.3s;
+        }
+
+        .mobile-nav a:hover {
+            color: var(--accent);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+
+            .process-steps {
+                flex-direction: column;
+                gap: 50px;
+            }
+
+            .process-steps::before {
+                display: none;
             }
         }
-    </script>
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 20px 30px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .menu-btn {
+                display: flex;
+            }
+
+            .hero {
+                padding: 100px 30px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                padding: 15px 35px;
+            }
+
+            .about,
+            .services,
+            .design-process,
+            .faq,
+            .portfolio,
+            .testimonials,
+            .contact {
+                padding: 100px 30px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-card {
+                padding: 40px 30px;
+            }
+
+            .testimonial-text {
+                font-size: 1.1rem;
+            }
+
+            .contact-form {
+                padding: 30px;
+            }
+
+            .cursor,
+            .cursor-dot {
+                display: none;
+            }
+
+            body {
+                cursor: auto;
+            }
+
+            .protection-badge {
+                display: none;
+            }
+        }
+
+        /* Animations on Scroll */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
 </head>
-<body class="bg-background text-white font-sans overflow-x-hidden selection:bg-primary selection:text-white">
+<body>
+    <!-- Noise Overlay -->
+    <div class="noise"></div>
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/201234567890" class="whatsapp-float" target="_blank">
-        <i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
-    </a>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
 
-    <!-- Scroll Progress Bar -->
-    <div id="scroll-progress" class="fixed top-0 right-0 h-1 bg-primary z-50 shadow-[0_0_10px_rgba(59,130,246,0.8)] origin-right transition-transform duration-100 ease-out w-full scale-x-0"></div>
+    <!-- Protection Badge -->
+    <div class="protection-badge">
+        <span>🔒</span>
+        موقع آمن
+    </div>
+
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader-text">M</div>
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+    </div>
 
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-40 px-6 py-4 flex justify-between items-center glass-panel mx-auto max-w-[95%] mt-4 rounded-full border border-white/5 bg-black/20 backdrop-blur-xl">
-        <span class="font-display font-bold text-2xl tracking-tighter text-white">م.</span>
-        <div class="hidden md:flex gap-8 text-sm font-medium text-white/80">
-            <a href="#home" class="nav-link hover:text-primary transition-colors duration-200">الرئيسية</a>
-            <a href="#about" class="nav-link hover:text-primary transition-colors duration-200">عني</a>
-            <a href="#services" class="nav-link hover:text-primary transition-colors duration-200">خدماتي</a>
-            <a href="#work" class="nav-link hover:text-primary transition-colors duration-200">أعمالي</a>
-            <a href="#process" class="nav-link hover:text-primary transition-colors duration-200">عملية التصميم</a>
-            <a href="#testimonials" class="nav-link hover:text-primary transition-colors duration-200">آراء العملاء</a>
-            <a href="#stats" class="nav-link hover:text-primary transition-colors duration-200">إحصائيات</a>
-            <a href="#faq" class="nav-link hover:text-primary transition-colors duration-200">أسئلة شائعة</a>
-            <a href="#contact" class="nav-link hover:text-primary transition-colors duration-200">تواصل معي</a>
+    <nav>
+        <div class="logo">MOHAMED</div>
+        <ul class="nav-links">
+            <li><a href="#home">الرئيسية</a></li>
+            <li><a href="#about">قصتي</a></li>
+            <li><a href="#services">خدماتي</a></li>
+            <li><a href="#design-process">مراحل التصميم</a></li>
+            <li><a href="#faq">الأسئلة الشائعة</a></li>
+            <li><a href="#portfolio">أعمالي</a></li>
+            <li><a href="#contact">تواصل معي</a></li>
+        </ul>
+        <div class="menu-btn">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-        <div class="flex items-center gap-4 text-sm text-white/60">
-            <span>مصمم جرافيك محترف</span>
-            <span class="w-1 h-1 bg-white/40 rounded-full"></span>
-            <span>من مصر</span>
-        </div>
-        <button class="md:hidden text-white">
-            <i data-lucide="menu" class="w-6 h-6"></i>
-        </button>
     </nav>
 
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="min-h-screen flex flex-col justify-center relative overflow-hidden px-6 md:px-12 lg:px-24 py-20">
-            <!-- Background Glow -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] opacity-40 pointer-events-none"></div>
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <a href="#home">الرئيسية</a>
+        <a href="#about">قصتي</a>
+        <a href="#services">خدماتي</a>
+        <a href="#design-process">مراحل التصميم</a>
+        <a href="#faq">الأسئلة الشائعة</a>
+        <a href="#portfolio">أعمالي</a>
+        <a href="#contact">تواصل معي</a>
+    </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center z-10 max-w-7xl mx-auto w-full">
-                <div class="lg:col-span-7 space-y-10 order-2 lg:order-1 text-right fade-in-up">
-                    <div class="relative inline-block">
-                        <h1 class="text-7xl md:text-[8rem] font-display font-black tracking-tighter leading-[0.9] text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-                            مـحـ<hr class="border-0 m-0"/>ـمـد
-                        </h1>
-                        <div class="absolute -bottom-4 right-0 w-32 h-2 bg-primary shadow-[0_0_30px_rgba(59,130,246,1)] rounded-full"></div>
-                    </div>
-                    
-                    <p class="text-xl md:text-3xl font-light text-white/80 leading-relaxed max-w-2xl">
-                        مصمم جرافيك ومخرج فني من مصر.
-                        <br />
-                        أصنع تجارب بصرية للمستقبل.
-                    </p>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg">
+            <div class="floating-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+            <div class="grid-overlay"></div>
+        </div>
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                متاح للمشاريع الجديدة
+            </div>
+            <h1 class="hero-title">
+                <span class="line">أنا <span class="gradient">محمد</span></span>
+                <span class="line">مصمم إعلانات</span>
+                <span class="line"><span class="gradient">سوشيال ميديا</span></span>
+            </h1>
+            <p class="hero-subtitle">
+                أُحوّل أفكارك إلى تصاميم مبهرة تجذب الأنظار وتحقق نتائج استثنائية
+                في عالم التواصل الاجتماعي
+            </p>
+            <div class="hero-buttons">
+                <a href="#portfolio" class="btn btn-primary">استكشف أعمالي</a>
+                <a href="#contact" class="btn btn-secondary">تواصل معي</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>SCROLL</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="section-header">
+            <span class="section-tag">قصتي</span>
+            <h2 class="section-title">رحلتي <span class="highlight">الإبداعية</span></h2>
+        </div>
+        <div class="about-content">
+            <div class="about-image reveal">
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=700&fit=crop" alt="Creative Work">
                 </div>
-
-                <div class="lg:col-span-5 relative aspect-square order-1 lg:order-2 animate-float w-full max-w-md mx-auto fade-in-scale">
-                    <div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-full blur-3xl opacity-40"></div>
-                    <!-- Replaced image with initials -->
-                    <div class="relative w-full h-full flex items-center justify-center text-primary">
-                        <div class="text-9xl md:text-[12rem] font-display font-black opacity-20">م.</div>
+                <div class="image-frame"></div>
+                <div class="experience-badge">
+                    <div class="number">5+</div>
+                    <div class="text">سنوات خبرة</div>
+                </div>
+            </div>
+            <div class="about-text reveal">
+                <h3>مصمم شغوف بصناعة الفرق</h3>
+                <p>
+                    أنا محمد، مصمم إعلانات سوشيال ميديا محترف. بدأت رحلتي في عالم التصميم منذ ٨ سنوات، 
+                    حيث كنت شغوفاً بفنون الخط العربي والتصميم الجرافيكي. تخصصت في تصميم الهويات البصرية 
+                    التي تدمج بين الأصالة العربية والحداثة العالمية.
+                </p>
+                <p>
+                    عملت مع أكثر من ١٠٠ عميل من مختلف أنحاء العالم العربي، وساعدتهم في بناء هوياتهم البصرية.
+                    حصلت على جائزة أفضل تصميم هوية بصرية ٢٠٢٣، وأمتلك شهادة محترف في التصميم الجرافيكي.
+                </p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">تصميم منجز</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">150+</div>
+                        <div class="stat-label">عميل سعيد</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">علامة تجارية</div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce">
-                <i data-lucide="arrow-down" class="w-6 h-6 text-primary"></i>
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-header">
+            <span class="section-tag">خدماتي</span>
+            <h2 class="section-title">ما أقدمه <span class="highlight">لك</span></h2>
+        </div>
+        <div class="services-grid">
+            <div class="service-card reveal">
+                <div class="service-icon">🎨</div>
+                <h3>تصميم إعلانات سوشيال ميديا</h3>
+                <p>تصاميم احترافية ومبتكرة لجميع منصات التواصل الاجتماعي تجذب الجمهور وتحقق التفاعل المطلوب</p>
+                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
             </div>
-        </section>
+            <div class="service-card reveal">
+                <div class="service-icon">✨</div>
+                <h3>تصميم الهوية البصرية</h3>
+                <p>بناء هوية بصرية متكاملة ومميزة تعكس شخصية علامتك التجارية وتبقى في أذهان جمهورك</p>
+                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">📱</div>
+                <h3>تصميم Stories & Reels</h3>
+                <p>محتوى تفاعلي ومتحرك مصمم خصيصاً للقصص والريلز يزيد من تفاعل متابعيك</p>
+                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">🖼️</div>
+                <h3>تصميم البوستات والكفرات</h3>
+                <p>تصاميم جذابة للمنشورات وأغلفة الصفحات تعزز حضورك على منصات التواصل</p>
+                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">📊</div>
+                <h3>تصميم الإنفوجرافيك</h3>
+                <p>تحويل البيانات والمعلومات إلى رسومات بيانية جذابة وسهلة الفهم</p>
+                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
+            </div>
+            <div class="service-card reveal">
+                <div class="service-icon">🎯</div>
+                <h3>استشارات التصميم</h3>
+                <p>نصائح واستراتيجيات لتحسين المحتوى البصري لعلامتك التجارية وزيادة فعاليته</p>
+                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
+            </div>
+        </div>
+    </section>
 
-        <!-- About Section -->
-        <div id="about">
-            <section class="px-6 md:px-12 lg:px-24 py-32 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-[100px] pointer-events-none"></div>
-                
-                <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-16 relative z-10">
-                    <div class="lg:col-span-4">
-                        <div class="sticky top-32">
-                            <span class="inline-block text-sm font-mono font-bold uppercase tracking-wider text-primary border border-primary/30 px-4 py-2 rounded-full bg-primary/5 backdrop-blur-sm">
-                                البيان الشخصي
-                            </span>
-                        </div>
-                    </div>
-                    
-                    <div class="lg:col-span-8 fade-in-up">
-                        <p class="text-3xl md:text-5xl lg:text-6xl font-display font-bold leading-[1.4] text-white/80 mb-16">
-                            أؤمن بأن التصميم هو <span class="text-white/80 inline-block border-b-2 border-primary/50 pb-1">ذكاء مرئي</span>. 
-                            عملي يستكشف التقاطع بين <span class="text-white/80">الخط العربي الكلاسيكي</span> و <span class="text-white/80">الفوضى الرقمية</span>.
-                            أنا لا أصنع أشياء جميلة فحسب؛ بل أصنع تواصلاً بصرياً يسبق عصره.
-                        </p>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 border-t border-white/10 pt-12">
-                            <div class="space-y-6">
-                                <h4 class="text-xl font-display font-bold text-white flex items-center gap-3">
-                                    <span class="w-2 h-2 rounded-full bg-primary"></span>
-                                    الخدمات
-                                </h4>
-                                <ul class="space-y-4 text-white/80 text-lg">
-                                    <li class="flex items-center gap-2 hover:text-white transition-colors duration-300 hover-lift"><span class="h-px w-4 bg-white/20"></span> إخراج فني</li>
-                                    <li class="flex items-center gap-2 hover:text-white transition-colors duration-300 hover-lift"><span class="h-px w-4 bg-white/20"></span> هوية بصرية</li>
-                                    <li class="flex items-center gap-2 hover:text-white transition-colors duration-300 hover-lift"><span class="h-px w-4 bg-white/20"></span> تصميم واجهات</li>
-                                    <li class="flex items-center gap-2 hover:text-white transition-colors duration-300 hover-lift"><span class="h-px w-4 bg-white/20"></span> تصميم ثلاثي الأبعاد</li>
-                                </ul>
-                            </div>
-                            
-                            <div class="space-y-6">
-                                <h4 class="text-xl font-display font-bold text-white flex items-center gap-3">
-                                    <span class="w-2 h-2 rounded-full bg-primary"></span>
-                                    عملاء
-                                </h4>
-                                <ul class="space-y-4 text-white/80 text-lg">
-                                    <li class="flex items-center gap-2 hover:text-white transition-colors duration-300 hover-lift"><span class="h-px w-4 bg-white/20"></span> نيوم</li>
-                                    <li class="flex items-center gap-2 hover:text-white transition-colors duration-300 hover-lift"><span class="h-px w-4 bg-white/20"></span> متحف المستقبل</li>
-                                    <li class="flex items-center gap-2 hover:text-white transition-colors duration-300 hover-lift"><span class="h-px w-4 bg-white/20"></span> مجلة فوج العربية</li>
-                                    <li class="flex items-center gap-2 hover:text-white transition-colors duration-300 hover-lift"><span class="h-px w-4 bg-white/20"></span> أديداس</li>
-                                </ul>
-                            </div>
-                        </div>
+    <!-- Design Process Section -->
+    <section class="design-process" id="design-process">
+        <div class="section-header">
+            <span class="section-tag">مراحل التصميم</span>
+            <h2 class="section-title">كيف <span class="highlight">أعمل</span></h2>
+        </div>
+        <div class="process-container">
+            <div class="process-steps">
+                <div class="process-step reveal">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>الاستشارة والتحليل</h3>
+                        <p>نناقش متطلبات مشروعك وأهدافك، ونحدد معاً الاستراتيجية المناسبة لتحقيق النتائج المرجوة</p>
                     </div>
                 </div>
-            </section>
-        </div>
-
-        <!-- Services Section -->
-        <div id="services">
-            <section class="px-6 md:px-12 lg:px-24 py-32 bg-black/40 relative">
-                <div class="max-w-7xl mx-auto">
-                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-16 text-white">خدماتي</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover-lift fade-in-up glow-on-click">
-                            <i data-lucide="palette" class="w-12 h-12 text-primary mb-4"></i>
-                            <h3 class="text-2xl font-display font-bold mb-4 text-white">تصميم الهوية البصرية</h3>
-                            <p class="text-white/80">تصميم شعارات متكاملة وهوية بصرية تعبر عن روح علامتك التجارية</p>
-                        </div>
-                        <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover-lift fade-in-up glow-on-click" style="animation-delay: 0.2s">
-                            <i data-lucide="layout" class="w-12 h-12 text-primary mb-4"></i>
-                            <h3 class="text-2xl font-display font-bold mb-4 text-white">تصميم الواجهات</h3>
-                            <p class="text-white/80">تصميم واجهات مستخدم جذابة وسهلة الاستخدام لتطبيقات ومواقع الويب</p>
-                        </div>
-                        <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover-lift fade-in-up glow-on-click" style="animation-delay: 0.4s">
-                            <i data-lucide="box" class="w-12 h-12 text-primary mb-4"></i>
-                            <h3 class="text-2xl font-display font-bold mb-4 text-white">تصميم ثلاثي الأبعاد</h3>
-                            <p class="text-white/80">إنشاء تصاميم ثلاثية الأبعاد واقعية للمنتجات والعروض التقديمية</p>
-                        </div>
+                <div class="process-step reveal" style="animation-delay: 0.2s">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>التخطيط والبحث</h3>
+                        <p>أقوم بدراسة السوق والمنافسين، وأضع خطة عمل واضحة تضمن تحقيق أفضل النتائج</p>
                     </div>
                 </div>
-            </section>
-        </div>
-
-        <!-- Work Section with Dual Auto Scroll -->
-        <div id="work">
-            <section class="px-6 md:px-12 lg:px-24 py-32 relative overflow-hidden">
-                <div class="max-w-7xl mx-auto w-full">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 border-b border-white/10 pb-8 gap-4">
-                        <h2 class="text-5xl md:text-7xl font-display font-bold text-white tracking-tight">أعمال مختارة</h2>
-                        <span class="text-base font-mono text-primary/80 pb-2 dir-ltr font-bold">2023 — 2025</span>
+                <div class="process-step reveal" style="animation-delay: 0.4s">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>التصميم الأولي</h3>
+                        <p>أبدأ في إنشاء التصاميم الأولية وأقدمها لك للاطلاع وابداء الملاحظات</p>
                     </div>
+                </div>
+                <div class="process-step reveal" style="animation-delay: 0.6s">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>التطوير والتحسين</h3>
+                        <p>أقوم بتطوير التصاميم بناءً على ملاحظاتك، وأدخل التحسينات اللازمة</p>
+                    </div>
+                </div>
+                <div class="process-step reveal" style="animation-delay: 0.8s">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>التسليم النهائي</h3>
+                        <p>أسلم لك التصاميم النهائية بجودة عالية مع جميع الملفات اللازمة للاستخدام</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="section-header">
+            <span class="section-tag">الأسئلة الشائعة</span>
+            <h2 class="section-title">أسئلة <span class="highlight">متكررة</span></h2>
+        </div>
+        <div class="faq-container">
+            <div class="faq-item reveal">
+                <div class="faq-question">
+                    <h3>كم تستغرق مدة تنفيذ المشروع؟</h3>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>تتراوح المدة بين 3 إلى 14 يوم عمل حسب تعقيد المشروع وحجم العمل المطلوب. المشاريع البسيطة قد تستغرق 3-5 أيام، بينما المشاريع المتوسطة 7-10 أيام، والمشاريع المعقدة قد تصل إلى أسبوعين.</p>
+                </div>
+            </div>
             
-                    <!-- First Auto-scrolling row (Right to Left) -->
-                    <div class="relative overflow-hidden mb-8">
-                        <div class="flex animate-scroll-right space-x-6">
-                            <!-- 5 Projects duplicated for seamless scroll -->
-                            <div class="flex space-x-6">
-                                <!-- Project 1 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">تايبوجرافي</span>
-                                            <h3 class="text-white text-xl font-display font-bold">الخط العربي ٢٠٧٧</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 2 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">هوية بصرية</span>
-                                            <h3 class="text-white text-xl font-display font-bold">ميزون نوار</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 3 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">فن رقمي</span>
-                                            <h3 class="text-white text-xl font-display font-bold">تدفق النيون</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 4 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">تصميم ويب</span>
-                                            <h3 class="text-white text-xl font-display font-bold">بورتfolio</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 5 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">إعلانات</span>
-                                            <h3 class="text-white text-xl font-display font-bold">حملة إعلانية</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Duplicate for seamless loop -->
-                            <div class="flex space-x-6">
-                                <!-- Project 1 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">تايبوجرافي</span>
-                                            <h3 class="text-white text-xl font-display font-bold">الخط العربي ٢٠٧٧</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 2 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">هوية بصرية</span>
-                                            <h3 class="text-white text-xl font-display font-bold">ميزون نوار</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 3 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">فن رقمي</span>
-                                            <h3 class="text-white text-xl font-display font-bold">تدفق النيون</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 4 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">تصميم ويب</span>
-                                            <h3 class="text-white text-xl font-display font-bold">بورتfolio</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 5 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">إعلانات</span>
-                                            <h3 class="text-white text-xl font-display font-bold">حملة إعلانية</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Second Auto-scrolling row (Left to Right) -->
-                    <div class="relative overflow-hidden">
-                        <div class="flex animate-scroll-left space-x-6">
-                            <!-- 5 Projects duplicated for seamless scroll -->
-                            <div class="flex space-x-6">
-                                <!-- Project 6 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">شعار</span>
-                                            <h3 class="text-white text-xl font-display font-bold">شركة تقنية</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 7 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">تصميم تطبيق</span>
-                                            <h3 class="text-white text-xl font-display font-bold">تطبيق جوال</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 8 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">جرافيك</span>
-                                            <h3 class="text-white text-xl font-display font-bold">ملصقات دعائية</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 9 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">هوية</span>
-                                            <h3 class="text-white text-xl font-display font-bold">مطعم</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 10 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">فن</span>
-                                            <h3 class="text-white text-xl font-display font-bold">معرض فني</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Duplicate for seamless loop -->
-                            <div class="flex space-x-6">
-                                <!-- Project 6 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">شعار</span>
-                                            <h3 class="text-white text-xl font-display font-bold">شركة تقنية</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 7 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">تصميم تطبيق</span>
-                                            <h3 class="text-white text-xl font-display font-bold">تطبيق جوال</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 8 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">جرافيك</span>
-                                            <h3 class="text-white text-xl font-display font-bold">ملصقات دعائية</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 9 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">هوية</span>
-                                            <h3 class="text-white text-xl font-display font-bold">مطعم</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-
-                                <!-- Project 10 -->
-                                <div class="group relative overflow-hidden rounded-2xl border border-white/5 bg-white/5 min-w-[280px] h-64 hover-lift glow-on-click">
-                                    <div class="absolute inset-0 z-10 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-6 backdrop-blur-[2px]">
-                                        <div class="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                                            <span class="text-primary font-mono text-sm mb-2 block">فن</span>
-                                            <h3 class="text-white text-xl font-display font-bold">معرض فني</h3>
-                                        </div>
-                                    </div>
-                                    <div class="w-full h-full bg-gradient-to-br from-primary/10 to-primary/5 flex items-center justify-center">
-                                        <div class="text-3xl font-display font-black text-primary/20">م.</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="faq-item reveal" style="animation-delay: 0.1s">
+                <div class="faq-question">
+                    <h3>هل تقدم تعديلات على التصاميم؟</h3>
+                    <div class="faq-icon">+</div>
                 </div>
-            </section>
-        </div>
-
-        <!-- Process Section -->
-        <div id="process">
-            <section class="px-6 md:px-12 lg:px-24 py-32 bg-black/40 relative">
-                <div class="max-w-7xl mx-auto">
-                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-16 text-white">عملية التصميم</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div class="text-center fade-in-up glow-on-click">
-                            <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span class="text-2xl font-bold text-primary">1</span>
-                            </div>
-                            <h3 class="text-xl font-display font-bold mb-2 text-white">الاستكشاف</h3>
-                            <p class="text-white/80">فهم متطلبات العميل وأهداف المشروع</p>
-                        </div>
-                        <div class="text-center fade-in-up glow-on-click" style="animation-delay: 0.1s">
-                            <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span class="text-2xl font-bold text-primary">2</span>
-                            </div>
-                            <h3 class="text-xl font-display font-bold mb-2 text-white">التصميم</h3>
-                            <p class="text-white/80">إنشاء التصاميم الأولية والمفاهيم</p>
-                        </div>
-                        <div class="text-center fade-in-up glow-on-click" style="animation-delay: 0.2s">
-                            <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span class="text-2xl font-bold text-primary">3</span>
-                            </div>
-                            <h3 class="text-xl font-display font-bold mb-2 text-white">التطوير</h3>
-                            <p class="text-white/80">تحسين التصاميم بناءً على الملاحظات</p>
-                        </div>
-                        <div class="text-center fade-in-up glow-on-click" style="animation-delay: 0.3s">
-                            <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span class="text-2xl font-bold text-primary">4</span>
-                            </div>
-                            <h3 class="text-xl font-display font-bold mb-2 text-white">التسليم</h3>
-                            <p class="text-white/80">تسليم المشروع النهائي بجودة عالية</p>
-                        </div>
-                    </div>
+                <div class="faq-answer">
+                    <p>نعم، أقدم 3 جولات من التعديلات المجانية لضمان رضاك التام عن التصميم النهائي. بعد ذلك يمكن طلب تعديلات إضافية برسوم إضافية.</p>
                 </div>
-            </section>
-        </div>
-
-        <!-- Testimonials Section -->
-        <div id="testimonials">
-            <section class="px-6 md:px-12 lg:px-24 py-32 relative">
-                <div class="max-w-7xl mx-auto">
-                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-16 text-white">آراء العملاء</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <div class="bg-white/5 p-6 rounded-2xl border border-white/10 hover-lift fade-in-up glow-on-click">
-                            <div class="flex items-center mb-4">
-                                <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                                    <span class="text-lg font-bold text-primary">ن</span>
-                                </div>
-                                <div class="mr-4">
-                                    <h4 class="font-display font-bold text-white">نورا أحمد</h4>
-                                    <p class="text-white/60 text-sm">مديرة تسويق</p>
-                                </div>
-                            </div>
-                            <p class="text-white/80">"محمد حول رؤيتي إلى واقع مذهل. احترافيته وإبداعه تجاوزا توقعاتي!"</p>
-                        </div>
-                        <div class="bg-white/5 p-6 rounded-2xl border border-white/10 hover-lift fade-in-up glow-on-click" style="animation-delay: 0.2s">
-                            <div class="flex items-center mb-4">
-                                <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                                    <span class="text-lg font-bold text-primary">خ</span>
-                                </div>
-                                <div class="mr-4">
-                                    <h4 class="font-display font-bold text-white">خالد محمد</h4>
-                                    <p class="text-white/60 text-sm">رائد أعمال</p>
-                                </div>
-                            </div>
-                            <p class="text-white/80">"العمل مع محمد كان تجربة رائعة. يلتزم بالمواعيد ويقدم جودة استثنائية."</p>
-                        </div>
-                        <div class="bg-white/5 p-6 rounded-2xl border border-white/10 hover-lift fade-in-up glow-on-click" style="animation-delay: 0.4s">
-                            <div class="flex items-center mb-4">
-                                <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                                    <span class="text-lg font-bold text-primary">س</span>
-                                </div>
-                                <div class="mr-4">
-                                    <h4 class="font-display font-bold text-white">سارة عبدالله</h4>
-                                    <p class="text-white/60 text-sm">مالكة متجر إلكتروني</p>
-                                </div>
-                            </div>
-                            <p class="text-white/80">"التصاميم التي قدمها محمد ساعدت في زيادة مبيعاتي بنسبة 40%."</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Stats Section -->
-        <div id="stats">
-            <section class="px-6 md:px-12 lg:px-24 py-32 bg-black/40 relative">
-                <div class="max-w-7xl mx-auto">
-                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-16 text-white">إحصائيات</h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                        <div class="fade-in-up glow-on-click">
-                            <div class="text-4xl md:text-6xl font-display font-bold text-primary mb-2" id="projectsCount">0</div>
-                            <p class="text-white/80">مشروع مكتمل</p>
-                        </div>
-                        <div class="fade-in-up glow-on-click" style="animation-delay: 0.1s">
-                            <div class="text-4xl md:text-6xl font-display font-bold text-primary mb-2" id="clientsCount">0</div>
-                            <p class="text-white/80">عميل راضٍ</p>
-                        </div>
-                        <div class="fade-in-up glow-on-click" style="animation-delay: 0.2s">
-                            <div class="text-4xl md:text-6xl font-display font-bold text-primary mb-2" id="experienceCount">0</div>
-                            <p class="text-white/80">سنة خبرة</p>
-                        </div>
-                        <div class="fade-in-up glow-on-click" style="animation-delay: 0.3s">
-                            <div class="text-4xl md:text-6xl font-display font-bold text-primary mb-2" id="countriesCount">0</div>
-                            <p class="text-white/80">دولة</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- FAQ Section -->
-        <div id="faq">
-            <section class="px-6 md:px-12 lg:px-24 py-32 relative">
-                <div class="max-w-4xl mx-auto">
-                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-16 text-white">أسئلة شائعة</h2>
-                    <div class="space-y-6">
-                        <div class="bg-white/5 p-6 rounded-2xl border border-white/10 hover-lift fade-in-up glow-on-click">
-                            <h3 class="text-xl font-display font-bold text-white mb-2">كم تستغرق مدة تنفيذ المشروع؟</h3>
-                            <p class="text-white/80">تتراوح المدة بين 3 إلى 14 يوم عمل حسب تعقيد المشروع وحجم العمل المطلوب.</p>
-                        </div>
-                        <div class="bg-white/5 p-6 rounded-2xl border border-white/10 hover-lift fade-in-up glow-on-click" style="animation-delay: 0.1s">
-                            <h3 class="text-xl font-display font-bold text-white mb-2">هل تقدم تعديلات على التصاميم؟</h3>
-                            <p class="text-white/80">نعم، أقدم 3 جولات من التعديلات المجانية لضمان رضاك التام عن التصميم النهائي.</p>
-                        </div>
-                        <div class="bg-white/5 p-6 rounded-2xl border border-white/10 hover-lift fade-in-up glow-on-click" style="animation-delay: 0.2s">
-                            <h3 class="text-xl font-display font-bold text-white mb-2">ما هي طرق الدفع المتاحة؟</h3>
-                            <p class="text-white/80">يمكن الدفع عبر التحويل البنكي، باي بال، أو الدفع نقداً عند التسليم.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
-
-        <!-- Simple Divider -->
-        <div class="w-full h-px bg-white/10"></div>
-
-        <!-- Contact Section -->
-        <div id="contact">
-            <section class="px-6 md:px-12 lg:px-24 py-32 bg-black text-white relative overflow-hidden">
-                <div class="absolute bottom-0 left-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] pointer-events-none -translate-x-1/2 translate-y-1/2"></div>
-         
-                <div class="max-w-7xl mx-auto w-full flex flex-col items-start space-y-20 relative z-10">
-                    <div class="w-full flex justify-between items-end fade-in-up">
-                        <h2 class="text-6xl md:text-[10rem] lg:text-[12rem] font-display font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/5 leading-[0.8] w-full text-center md:text-right">
-                            تواصل معي
-                        </h2>
-                    </div>
-                    
-                    <div class="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
-                    
-                    <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-                        
-                        <!-- Contact Info -->
-                        <div class="space-y-12 order-2 lg:order-1 fade-in-up" style="animation-delay: 0.2s">
-                            <div class="space-y-6">
-                                <p class="text-primary font-sans text-lg tracking-wide flex items-center gap-3">
-                                    <i data-lucide="message-circle" class="w-5 h-5"></i>
-                                    تواصل عبر واتساب
-                                </p>
-                                <a href="https://wa.me/201234567890" class="block text-3xl md:text-5xl lg:text-6xl font-light hover:text-primary transition-colors duration-300 dir-ltr text-right break-all leading-none tracking-tight font-sans">
-                                    +20 123 456 7890
-                                </a>
-                            </div>
-                            
-                            <div class="space-y-8">
-                                <h3 class="text-2xl font-display font-bold text-white">تواصل اجتماعي</h3>
-                                <div class="flex flex-wrap gap-4 md:gap-6">
-                                    <a href="#" class="group flex items-center gap-3 text-lg text-white/80 hover:text-white transition-colors border border-white/10 px-5 py-2 rounded-full hover:bg-white/5 hover:border-primary/50 font-sans hover-lift glow-on-click">
-                                        إنستغرام
-                                        <i data-lucide="arrow-up-left" class="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:-translate-x-1 text-primary"></i>
-                                    </a>
-                                    <a href="#" class="group flex items-center gap-3 text-lg text-white/80 hover:text-white transition-colors border border-white/10 px-5 py-2 rounded-full hover:bg-white/5 hover:border-primary/50 font-sans hover-lift glow-on-click">
-                                        بيهانس
-                                        <i data-lucide="arrow-up-left" class="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:-translate-x-1 text-primary"></i>
-                                    </a>
-                                    <a href="#" class="group flex items-center gap-3 text-lg text-white/80 hover:text-white transition-colors border border-white/10 px-5 py-2 rounded-full hover:bg-white/5 hover:border-primary/50 font-sans hover-lift glow-on-click">
-                                        لينكد إن
-                                        <i data-lucide="arrow-up-left" class="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:-translate-x-1 text-primary"></i>
-                                    </a>
-                                </div>
-                            </div>
+            </div>
             
-                            <div class="pt-8 text-sm text-white/30 font-sans w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-t border-white/5">
-                                <span class="tracking-wide">© ٢٠٢٥ تصميم محمد. جميع الحقوق محفوظة.</span>
-                                <span class="tracking-wide">مصر</span>
-                            </div>
-                        </div>
+            <div class="faq-item reveal" style="animation-delay: 0.2s">
+                <div class="faq-question">
+                    <h3>ما هي طرق الدفع المتاحة؟</h3>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>يمكن الدفع عبر التحويل البنكي، المحافظ الإلكترونية، أو الدفع نقداً عند التسليم. يتم تقسيم المبلغ على دفعتين: 50% مقدماً و50% عند التسليم.</p>
+                </div>
+            </div>
             
-                        <!-- Contact Form -->
-                        <div class="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-6 md:p-8 rounded-2xl order-1 lg:order-2 fade-in-up hover-lift" style="animation-delay: 0.4s">
-                            <h3 class="text-2xl font-display font-bold mb-6 text-white">أرسل رسالة</h3>
-                            <form id="contactForm" class="space-y-6">
-                                <div class="space-y-2">
-                                    <label class="text-white/80 text-base font-sans block">الاسم</label>
-                                    <input type="text" placeholder="اسمك الكريم" class="w-full bg-black/40 border border-white/10 rounded-lg h-12 px-4 text-base focus:border-primary/50 focus:outline-none transition-colors font-sans placeholder-white/20" required>
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-white/80 text-base font-sans block">رقم الواتساب</label>
-                                    <input type="tel" placeholder="+20 123 456 7890" class="w-full bg-black/40 border border-white/10 rounded-lg h-12 px-4 text-base focus:border-primary/50 focus:outline-none transition-colors dir-ltr text-right placeholder:text-right font-sans placeholder-white/20" required>
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-white/80 text-base font-sans block">الرسالة</label>
-                                    <textarea placeholder="أخبرني عن مشروعك..." class="w-full bg-black/40 border border-white/10 rounded-lg min-h-[120px] p-4 text-base focus:border-primary/50 focus:outline-none transition-colors resize-none font-sans placeholder-white/20" required></textarea>
-                                </div>
-                                
-                                <!-- Captcha Section -->
-                                <div class="captcha-container">
-                                    <div class="flex items-center justify-between mb-3">
-                                        <span class="text-white/80 text-sm">أدخل النص الظاهر في الصورة:</span>
-                                        <button type="button" id="refreshCaptcha" class="text-primary hover:text-primary/80 transition-colors">
-                                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
-                                        </button>
-                                    </div>
-                                    <div class="bg-black/60 p-4 rounded-lg mb-3 text-center">
-                                        <span id="captchaText" class="captcha-text">A3B8C2</span>
-                                    </div>
-                                    <input type="text" id="captchaInput" placeholder="أدخل النص هنا" class="w-full bg-black/40 border border-white/10 rounded-lg h-12 px-4 text-base focus:border-primary/50 focus:outline-none transition-colors font-sans placeholder-white/20 text-center" required>
-                                </div>
-                                
-                                <button type="submit" class="w-full h-14 text-lg font-bold bg-primary hover:bg-primary/80 text-white rounded-xl transition-all duration-300 hover:scale-[1.02] shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] font-display flex items-center justify-center gap-2 hover-lift glow-on-click">
-                                    إرسال الرسالة
-                                    <i data-lucide="send" class="w-4 h-4"></i>
-                                </button>
-                            </form>
+            <div class="faq-item reveal" style="animation-delay: 0.3s">
+                <div class="faq-question">
+                    <h3>هل أحصل على ملفات التصميم الأصلية؟</h3>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>نعم، تحصل على جميع ملفات التصميم الأصلية (PSD, AI) بالإضافة إلى الملفات الجاهزة للاستخدام (PNG, JPG, PDF) حسب احتياجاتك.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item reveal" style="animation-delay: 0.4s">
+                <div class="faq-question">
+                    <h3>هل يمكنني طلب تصميم عاجل؟</h3>
+                    <div class="faq-icon">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>نعم، أقدم خدمة التصميم العاجل مع رسوم إضافية حسب سرعة التنفيذ المطلوبة. يمكن تنفيذ المشاريع العاجلة خلال 24-48 ساعة.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio" id="portfolio">
+        <div class="section-header">
+            <span class="section-tag">معرض أعمالي</span>
+            <h2 class="section-title">أعمال <span class="highlight">مختارة</span></h2>
+        </div>
+        <div class="portfolio-filter">
+            <button class="filter-btn active">الكل</button>
+            <button class="filter-btn">سوشيال ميديا</button>
+            <button class="filter-btn">هوية بصرية</button>
+            <button class="filter-btn">إعلانات</button>
+        </div>
+        <div class="portfolio-grid">
+            <div class="portfolio-item reveal">
+                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=450&fit=crop" alt="Project 1">
+                <div class="portfolio-overlay">
+                    <h3>حملة إعلانية</h3>
+                    <p>تصميم سوشيال ميديا</p>
+                </div>
+            </div>
+            <div class="portfolio-item reveal">
+                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=450&fit=crop" alt="Project 2">
+                <div class="portfolio-overlay">
+                    <h3>هوية بصرية</h3>
+                    <p>براند كامل</p>
+                </div>
+            </div>
+            <div class="portfolio-item reveal">
+                <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=450&fit=crop" alt="Project 3">
+                <div class="portfolio-overlay">
+                    <h3>تصميم إعلان</h3>
+                    <p>منتج جديد</p>
+                </div>
+            </div>
+            <div class="portfolio-item reveal">
+                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&h=450&fit=crop" alt="Project 4">
+                <div class="portfolio-overlay">
+                    <h3>محتوى تفاعلي</h3>
+                    <p>Stories & Reels</p>
+                </div>
+            </div>
+            <div class="portfolio-item reveal">
+                <img src="https://images.unsplash.com/photo-1613909207039-6b173b755cc1?w=600&h=450&fit=crop" alt="Project 5">
+                <div class="portfolio-overlay">
+                    <h3>تصميم بوستات</h3>
+                    <p>حملة موسمية</p>
+                </div>
+            </div>
+            <div class="portfolio-item reveal">
+                <img src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&h=450&fit=crop" alt="Project 6">
+                <div class="portfolio-overlay">
+                    <h3>إنفوجرافيك</h3>
+                    <p>تقرير سنوي</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="section-header">
+            <span class="section-tag">آراء العملاء</span>
+            <h2 class="section-title">ماذا يقولون <span class="highlight">عني</span></h2>
+        </div>
+        <div class="testimonials-slider">
+            <div class="testimonial-card reveal">
+                <div class="testimonial-quote">"</div>
+                <p class="testimonial-text">
+                    محمد مصمم استثنائي! تصاميمه ساعدتنا في زيادة التفاعل على منصاتنا بنسبة 300%.
+                    دقة في المواعيد وإبداع لا محدود. أنصح بالتعامل معه بشدة.
+                </p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">أ</div>
+                    <div class="author-info">
+                        <h4>أحمد محمود</h4>
+                        <span>مدير تسويق - شركة تقنية</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="section-header">
+            <span class="section-tag">تواصل معي</span>
+            <h2 class="section-title">لنبدأ مشروعك <span class="highlight">معاً</span></h2>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info reveal">
+                <h3>هل لديك فكرة مشروع؟</h3>
+                <p>
+                    أنا دائماً متحمس للعمل على مشاريع جديدة ومبتكرة. 
+                    تواصل معي ودعنا نحول أفكارك إلى تصاميم تتحدث عنك.
+                </p>
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-item-text">
+                            <h4>البريد الإلكتروني</h4>
+                            <span>mohamed@design.com</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-item-text">
+                            <h4>الهاتف</h4>
+                            <span>+20 123 456 7890</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-item-text">
+                            <h4>الموقع</h4>
+                            <span>القاهرة، مصر</span>
                         </div>
                     </div>
                 </div>
-            </section>
+                <div class="social-links">
+                    <a href="#" class="social-link">𝕏</a>
+                    <a href="#" class="social-link">in</a>
+                    <a href="#" class="social-link">Be</a>
+                    <a href="#" class="social-link">IG</a>
+                </div>
+            </div>
+            <form class="contact-form reveal">
+                <div class="form-group">
+                    <label>الاسم الكامل</label>
+                    <input type="text" placeholder="أدخل اسمك">
+                </div>
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" placeholder="أدخل بريدك الإلكتروني">
+                </div>
+                <div class="form-group">
+                    <label>نوع الخدمة</label>
+                    <input type="text" placeholder="ما الخدمة التي تحتاجها؟">
+                </div>
+                <div class="form-group">
+                    <label>تفاصيل المشروع</label>
+                    <textarea placeholder="اخبرني عن مشروعك..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">إرسال الرسالة</button>
+            </form>
         </div>
-    </main>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">MOHAMED</div>
+        <p class="footer-text">© 2024 محمد - جميع الحقوق محفوظة | صُنع بـ ❤️</p>
+    </footer>
 
     <script>
-        // Initialize Lucide Icons
-        lucide.createIcons();
-
-        // Scroll Progress Bar
-        window.addEventListener('scroll', () => {
-            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = scrollTop / scrollHeight;
-            document.getElementById('scroll-progress').style.transform = `scaleX(${scrolled})`;
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.loader').classList.add('hidden');
+            }, 2000);
         });
 
-        // Intersection Observer for Animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: "0px 0px -50px 0px"
-        };
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Only animate once
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+        });
+
+        document.querySelectorAll('a, button, .portfolio-item').forEach(el => {
+            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        });
+
+        // Navigation Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile Menu
+        const menuBtn = document.querySelector('.menu-btn');
+        const mobileNav = document.querySelector('.mobile-nav');
+
+        menuBtn.addEventListener('click', () => {
+            menuBtn.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.classList.remove('active');
+                mobileNav.classList.remove('active');
+            });
+        });
+
+        // Reveal on Scroll
+        const reveals = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const revealPoint = 150;
+
+                if (elementTop < windowHeight - revealPoint) {
+                    el.classList.add('active');
                 }
             });
-        }, observerOptions);
+        };
 
-        // Observe elements
-        document.querySelectorAll('.fade-in-up, .fade-in-scale').forEach(el => {
-            observer.observe(el);
-        });
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
 
-        // Navigation smooth scrolling
+        // Smooth Scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
@@ -934,157 +1876,199 @@
             });
         });
 
-        // Stats Counter Animation
-        function animateCounter(element, target, duration = 2000) {
-            let start = 0;
-            const increment = target / (duration / 16);
+        // Portfolio Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+
+        // Form Submit
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('شكراً لتواصلك! سأرد عليك في أقرب وقت.');
+        });
+
+        // Parallax Effect on Shapes
+        document.addEventListener('mousemove', (e) => {
+            const shapes = document.querySelectorAll('.shape');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 20;
+                const x = (mouseX - 0.5) * speed;
+                const y = (mouseY - 0.5) * speed;
+                shape.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Counter Animation
+        const animateCounter = (el, target) => {
+            let current = 0;
+            const increment = target / 100;
             const timer = setInterval(() => {
-                start += increment;
-                if (start >= target) {
-                    element.textContent = target;
+                current += increment;
+                if (current >= target) {
+                    el.textContent = target + '+';
                     clearInterval(timer);
                 } else {
-                    element.textContent = Math.floor(start);
+                    el.textContent = Math.floor(current) + '+';
                 }
-            }, 16);
-        }
+            }, 20);
+        };
 
-        // Initialize stats when section is visible
+        const observerOptions = {
+            threshold: 0.5
+        };
+
         const statsObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    animateCounter(document.getElementById('projectsCount'), 150);
-                    animateCounter(document.getElementById('clientsCount'), 89);
-                    animateCounter(document.getElementById('experienceCount'), 5);
-                    animateCounter(document.getElementById('countriesCount'), 12);
+                    const statNumbers = entry.target.querySelectorAll('.stat-number');
+                    statNumbers.forEach(stat => {
+                        const target = parseInt(stat.textContent);
+                        animateCounter(stat, target);
+                    });
                     statsObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.5 });
+        }, observerOptions);
 
-        const statsSection = document.getElementById('stats');
-        if (statsSection) {
-            statsObserver.observe(statsSection);
+        const statsGrid = document.querySelector('.stats-grid');
+        if (statsGrid) {
+            statsObserver.observe(statsGrid);
         }
 
-        // Captcha System
-        function generateCaptcha() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
-            let captcha = '';
-            for (let i = 0; i < 6; i++) {
-                captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+        // Protection Systems
+        class ProtectionSystem {
+            constructor() {
+                this.initProtection();
+                this.initMonitoring();
+                this.initDataProtection();
             }
-            return captcha;
+            
+            // حماية حقوق الملكية
+            initProtection() {
+                // منع نسخ النصوص
+                document.addEventListener('copy', (e) => {
+                    e.preventDefault();
+                    this.showProtectionAlert('لا يمكن نسخ المحتوى المحمي بحقوق الملكية');
+                });
+                
+                // منع حفظ الصور
+                document.addEventListener('contextmenu', (e) => {
+                    if (e.target.tagName === 'IMG') {
+                        e.preventDefault();
+                        this.showProtectionAlert('لا يمكن حفظ الصور المحمية بحقوق الملكية');
+                    }
+                });
+                
+                // منع سحب الصور
+                document.addEventListener('dragstart', (e) => {
+                    if (e.target.tagName === 'IMG') {
+                        e.preventDefault();
+                    }
+                });
+            }
+            
+            // نظام مراقبة الاختراقات
+            initMonitoring() {
+                // مراقبة فتح أدوات المطورين
+                let devtools = false;
+                const threshold = 160;
+                
+                setInterval(() => {
+                    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                    
+                    if (!devtools && (widthThreshold || heightThreshold)) {
+                        devtools = true;
+                        this.logSecurityEvent('محاولة فتح أدوات المطورين');
+                    }
+                }, 1000);
+                
+                // مراقبة النقر بزر الماوس الأيمن
+                document.addEventListener('contextmenu', (e) => {
+                    this.logSecurityEvent('نقر بزر الماوس الأيمن', {
+                        x: e.clientX,
+                        y: e.clientY
+                    });
+                });
+            }
+            
+            // حماية البيانات
+            initDataProtection() {
+                // تنظيف البيانات عند إغلاق الصفحة
+                window.addEventListener('beforeunload', () => {
+                    this.cleanSensitiveData();
+                });
+            }
+            
+            // طرق مساعدة
+            showProtectionAlert(message) {
+                const alert = document.createElement('div');
+                alert.className = 'fixed top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg z-50';
+                alert.textContent = message;
+                document.body.appendChild(alert);
+                
+                setTimeout(() => {
+                    alert.remove();
+                }, 3000);
+            }
+            
+            logSecurityEvent(event, data = {}) {
+                const timestamp = new Date().toISOString();
+                console.warn(`🔒 حدث أمني: ${event}`, {
+                    timestamp,
+                    ...data
+                });
+            }
+            
+            cleanSensitiveData() {
+                // تنظيف البيانات الحساسة من الذاكرة
+                localStorage.removeItem('temp_form_data');
+            }
         }
-
-        let currentCaptcha = generateCaptcha();
-        document.getElementById('captchaText').textContent = currentCaptcha;
-
-        document.getElementById('refreshCaptcha').addEventListener('click', () => {
-            currentCaptcha = generateCaptcha();
-            document.getElementById('captchaText').textContent = currentCaptcha;
-            document.getElementById('captchaInput').value = '';
+        
+        // تهيئة أنظمة الحماية
+        document.addEventListener('DOMContentLoaded', () => {
+            const securitySystem = new ProtectionSystem();
         });
 
-        // Contact Form Handling with Security
-        document.getElementById('contactForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Security: Input validation
-            const formData = new FormData(e.target);
-            const name = document.querySelector('input[type="text"]').value.trim();
-            const whatsapp = document.querySelector('input[type="tel"]').value.trim();
-            const message = document.querySelector('textarea').value.trim();
-            const captchaInput = document.getElementById('captchaInput').value.trim();
-
-            // Security: Basic validation
-            if (!name || !whatsapp || !message || !captchaInput) {
-                alert('يرجى ملء جميع الحقول');
-                return;
-            }
-
-            // Security: Captcha validation
-            if (captchaInput !== currentCaptcha) {
-                alert('رمز التحقق غير صحيح، يرجى المحاولة مرة أخرى');
-                currentCaptcha = generateCaptcha();
-                document.getElementById('captchaText').textContent = currentCaptcha;
-                document.getElementById('captchaInput').value = '';
-                return;
-            }
-
-            // Security: WhatsApp number validation
-            const whatsappRegex = /^[\+]?[0-9\s\-\(\)]{10,}$/;
-            if (!whatsappRegex.test(whatsapp)) {
-                alert('يرجى إدخال رقم واتساب صحيح');
-                return;
-            }
-
-            // Security: Message length validation
-            if (message.length < 10) {
-                alert('الرسالة قصيرة جداً، يرجى كتابة رسالة أكثر تفصيلاً');
-                return;
-            }
-
-            const button = e.target.querySelector('button');
-            const originalText = button.innerHTML;
-            
-            try {
-                button.innerHTML = 'جاري الإرسال...';
-                button.disabled = true;
-
-                // Here you would typically send the data to your server
-                // For now, we'll simulate a successful submission
-                await new Promise(resolve => setTimeout(resolve, 2000));
-                
-                button.innerHTML = 'تم الإرسال بنجاح ✓';
-                button.classList.remove('bg-primary');
-                button.classList.add('bg-green-600');
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.classList.add('bg-primary');
-                    button.classList.remove('bg-green-600');
-                    button.disabled = false;
-                    e.target.reset();
-                    // Refresh captcha after successful submission
-                    currentCaptcha = generateCaptcha();
-                    document.getElementById('captchaText').textContent = currentCaptcha;
-                }, 3000);
-                
-            } catch (error) {
-                button.innerHTML = 'خطأ في الإرسال ❌';
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.disabled = false;
-                }, 3000);
-            }
-        });
-
-        // Add glow effect on click for all interactive elements
-        document.querySelectorAll('.glow-on-click').forEach(element => {
-            element.addEventListener('mousedown', function() {
-                this.style.boxShadow = '0 0 20px rgba(59, 130, 246, 0.8)';
-                this.style.borderColor = '#3b82f6';
-            });
-            
-            element.addEventListener('mouseup', function() {
-                this.style.boxShadow = '';
-                this.style.borderColor = '';
-            });
-            
-            element.addEventListener('mouseleave', function() {
-                this.style.boxShadow = '';
-                this.style.borderColor = '';
-            });
-        });
-
-        // Security: Prevent right-click context menu
-        document.addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
-
-        // Security: Console protection
-        console.log('%c⚠️ هذا الموقع محمي بأقوى أنظمة الحماية', 'color: #ff0000; font-size: 16px; font-weight: bold;');
+        // رسالة حماية في الكونسول
+        console.log(`
+        ╔═══════════════════════════════════════╗
+        ║          🔒 نظام حماية نشط           ║
+        ║                                       ║
+        ║  هذا الموقع محمي بحقوق الملكية       ║
+        ║  ويخضع لمراقبة أمنية مستمرة          ║
+        ║                                       ║
+        ║  جميع الحقوق محفوظة © 2024           ║
+        ╚═══════════════════════════════════════╝
+        `);
     </script>
 </body>
     </html>
