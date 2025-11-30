@@ -3,1868 +3,1450 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محمد | مصمم إعلانات سوشيال ميديا</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <title>محمد | مصمم إعلانات محترف</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;400;600;800;900&family=IBM+Plex+Sans+Arabic:wght@100;300;500;700&display=swap" rel="stylesheet">
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         :root {
-            --primary: #0a0a0f;
-            --secondary: #12121a;
-            --accent: #6366f1;
-            --accent-glow: #818cf8;
-            --text: #e2e8f0;
-            --text-muted: #64748b;
-            --gold: #f59e0b;
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
         }
 
         html {
             scroll-behavior: smooth;
         }
 
-        body {
-            font-family: 'Tajawal', sans-serif;
-            background: var(--primary);
-            color: var(--text);
-            overflow-x: hidden;
-            cursor: none;
-        }
-
-        /* Custom Cursor */
-        .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000;
-            transition: transform 0.1s, opacity 0.1s;
-            mix-blend-mode: difference;
-        }
-
-        .cursor-dot {
-            width: 5px;
-            height: 5px;
-            background: var(--accent-glow);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10001;
-        }
-
-        .cursor.hover {
-            transform: scale(2);
-            background: rgba(99, 102, 241, 0.1);
-        }
-
-        /* Noise Overlay */
-        .noise {
+        /* Simple and Clean Loading Screen */
+        #loading-screen {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-        }
-
-        /* Loading Screen */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--primary);
-            z-index: 10000;
+            background: #0a0a0a;
             display: flex;
-            align-items: center;
-            justify-content: center;
             flex-direction: column;
-            transition: opacity 0.8s, visibility 0.8s;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
-        .loader.hidden {
+        #loading-screen.fade-out {
             opacity: 0;
             visibility: hidden;
         }
 
-        .loader-text {
+        .loading-content {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .loading-logo {
             font-size: 4rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--gold), var(--accent-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: pulse 2s infinite;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
         }
 
-        .loader-bar {
-            width: 200px;
-            height: 2px;
-            background: var(--secondary);
+        .loading-badge {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            display: inline-block;
+            font-size: 0.9rem;
+        }
+
+        .loading-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 30px;
+        }
+
+        .quran-verse {
+            background: rgba(255, 255, 255, 0.05);
+            border-right: 3px solid var(--primary);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(59, 130, 246, 0.3);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+
+        .enter-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .enter-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .loading-footer {
             margin-top: 30px;
-            border-radius: 2px;
-            overflow: hidden;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
         }
 
-        .loader-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), var(--gold));
-            animation: loading 2s ease-in-out;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        @keyframes loading {
-            0% { width: 0%; }
-            100% { width: 100%; }
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .loading-logo {
+                font-size: 3rem;
+            }
+            
+            .loading-title {
+                font-size: 1.7rem;
+            }
+            
+            .loading-text {
+                font-size: 1rem;
+            }
+            
+            .quran-verse {
+                font-size: 1.1rem;
+                padding: 15px;
+            }
+            
+            .enter-btn {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .loading-logo {
+                font-size: 2.5rem;
+            }
+            
+            .loading-title {
+                font-size: 1.5rem;
+            }
+            
+            .loading-text {
+                font-size: 0.95rem;
+            }
+            
+            .quran-verse {
+                font-size: 1rem;
+                padding: 12px;
+            }
+            
+            .loading-badge {
+                font-size: 0.8rem;
+                padding: 6px 15px;
+            }
+        }
+
+        /* Animation Keyframes */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+            50% { box-shadow: 0 0 25px rgba(59, 130, 246, 0.8); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 25px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            background: transparent;
-            transition: all 0.5s;
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
         }
 
-        nav.scrolled {
-            background: rgba(10, 10, 15, 0.9);
-            backdrop-filter: blur(20px);
-            padding: 15px 50px;
+        .animate-glow {
+            animation: glow 2s ease-in-out infinite;
         }
 
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
+        .animate-fadeIn {
+            animation: fadeIn 0.8s ease-out forwards;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
+        .animate-slideInUp {
+            animation: slideInUp 0.8s ease-out forwards;
         }
 
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            position: relative;
-            transition: color 0.3s;
-            padding: 5px 0;
+        .animate-pulse-slow {
+            animation: pulse 3s ease-in-out infinite;
         }
 
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 0;
-            height: 1px;
-            background: var(--accent);
-            transition: width 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .menu-btn {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .menu-btn span {
-            width: 30px;
-            height: 2px;
-            background: var(--text);
-            transition: all 0.3s;
-        }
-
-        .menu-btn.active span:nth-child(1) {
-            transform: rotate(45deg) translate(6px, 6px);
-        }
-
-        .menu-btn.active span:nth-child(2) {
+        /* Fade In Up Animation */
+        .fade-in-up {
             opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .menu-btn.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(6px, -6px);
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            padding: 100px 50px;
-        }
-
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .floating-shapes {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .shape {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            animation: float 20s infinite ease-in-out;
-        }
-
-        .shape-1 {
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.15), transparent);
-            top: -200px;
-            right: -200px;
-            animation-delay: 0s;
-        }
-
-        .shape-2 {
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.1), transparent);
-            bottom: -100px;
-            left: -100px;
-            animation-delay: -5s;
-        }
-
-        .shape-3 {
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(129, 140, 248, 0.1), transparent);
-            top: 50%;
-            left: 50%;
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(50px, -50px) scale(1.1); }
-            50% { transform: translate(-30px, 30px) scale(0.9); }
-            75% { transform: translate(-50px, -30px) scale(1.05); }
-        }
-
-        .grid-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
-            background-size: 100px 100px;
-            animation: gridMove 30s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
-            100% { transform: perspective(500px) rotateX(60deg) translateY(100px); }
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 10;
-            max-width: 900px;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 25px;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 50px;
-            margin-bottom: 30px;
-            font-size: 0.9rem;
-            color: var(--accent-glow);
-            animation: fadeInUp 1s ease 0.5s backwards;
-        }
-
-        .badge-dot {
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
             width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: blink 2s infinite;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
         }
 
-        .hero-title {
-            font-size: clamp(3rem, 8vw, 6rem);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 20px;
-            animation: fadeInUp 1s ease 0.7s backwards;
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+            transition: background 0.3s ease;
         }
 
-        .hero-title .line {
-            display: block;
-            overflow: hidden;
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
 
-        .hero-title .gradient {
-            background: linear-gradient(135deg, var(--accent), var(--gold), var(--accent-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        /* Glass Panel Effect */
+        .glass-panel {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .hero-subtitle {
-            font-size: 1.3rem;
-            color: var(--text-muted);
-            max-width: 600px;
-            margin: 0 auto 50px;
-            line-height: 1.8;
-            animation: fadeInUp 1s ease 0.9s backwards;
+        .glass-bot {
+            background: rgba(59, 130, 246, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
         }
 
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fadeInUp 1s ease 1.1s backwards;
-        }
-
-        .btn {
-            padding: 18px 45px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-            font-family: 'Tajawal', sans-serif;
-            cursor: none;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
-            color: white;
-            border: none;
-            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.4);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--text);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            animation: fadeInUp 1s ease 1.5s backwards;
-        }
-
-        .scroll-indicator span {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 60px;
-            background: linear-gradient(to bottom, var(--accent), transparent);
-            animation: scrollLine 2s infinite;
-        }
-
-        @keyframes scrollLine {
-            0% { transform: scaleY(0); transform-origin: top; }
-            50% { transform: scaleY(1); transform-origin: top; }
-            51% { transform-origin: bottom; }
-            100% { transform: scaleY(0); transform-origin: bottom; }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* About Section */
-        .about {
-            padding: 150px 50px;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 80px;
-        }
-
-        .section-tag {
-            display: inline-block;
-            padding: 8px 20px;
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            color: var(--accent-glow);
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        .section-title {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 800;
-            margin-bottom: 20px;
-        }
-
-        .section-title .highlight {
-            background: linear-gradient(135deg, var(--accent), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .about-image {
-            position: relative;
-        }
-
-        .image-container {
-            position: relative;
-            border-radius: 30px;
-            overflow: hidden;
-        }
-
-        .image-container::before {
+        .glass-bot::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(245, 158, 11, 0.2));
-            z-index: 1;
-        }
-
-        .image-container img {
-            width: 100%;
-            height: 500px;
-            object-fit: cover;
-            filter: grayscale(50%);
-            transition: filter 0.5s;
-        }
-
-        .image-container:hover img {
-            filter: grayscale(0%);
-        }
-
-        .image-frame {
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 100%;
-            height: 100%;
-            border: 2px solid var(--accent);
-            border-radius: 30px;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 50%;
             z-index: -1;
         }
 
-        .experience-badge {
-            position: absolute;
-            bottom: -30px;
-            left: -30px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
-            padding: 25px 35px;
-            border-radius: 20px;
-            z-index: 2;
-            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+        /* Enhanced hover effects */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        .experience-badge .number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: white;
-            line-height: 1;
+        .hover-lift:hover {
+            transform: translateY(-8px);
         }
 
-        .experience-badge .text {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .about-text h3 {
-            font-size: 2rem;
-            margin-bottom: 25px;
-            color: var(--text);
-        }
-
-        .about-text p {
-            color: var(--text-muted);
-            line-height: 2;
-            margin-bottom: 30px;
-            font-size: 1.1rem;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .stat-item {
-            text-align: center;
-            padding: 25px;
-            background: var(--secondary);
-            border-radius: 20px;
-            border: 1px solid rgba(99, 102, 241, 0.1);
-            transition: all 0.3s;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-10px);
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.1);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
-
-        /* Services Section */
-        .services {
-            padding: 150px 50px;
-            background: var(--secondary);
+        /* Smooth transitions for navigation */
+        .nav-link {
             position: relative;
+            transition: all 0.3s ease;
         }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .service-card {
-            background: var(--primary);
-            padding: 50px 40px;
-            border-radius: 30px;
-            border: 1px solid rgba(99, 102, 241, 0.1);
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
+        .nav-link::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), transparent);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .service-card:hover::before {
-            opacity: 1;
-        }
-
-        .service-card:hover {
-            transform: translateY(-15px);
-            border-color: var(--accent);
-            box-shadow: 0 30px 60px rgba(99, 102, 241, 0.2);
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 30px;
-            font-size: 2rem;
-            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
-        }
-
-        .service-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--text);
-        }
-
-        .service-card p {
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 25px;
-        }
-
-        .service-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--accent-glow);
-            text-decoration: none;
-            font-weight: 500;
-            transition: gap 0.3s;
-        }
-
-        .service-link:hover {
-            gap: 20px;
-        }
-
-        /* Design Process Section - NEW */
-        .design-process {
-            padding: 150px 50px;
-            position: relative;
-            background: var(--primary);
-        }
-
-        .process-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .process-steps {
-            display: flex;
-            justify-content: space-between;
-            position: relative;
-            margin-top: 80px;
-        }
-
-        .process-steps::before {
-            content: '';
-            position: absolute;
-            top: 40px;
-            left: 0;
+            bottom: -5px;
             right: 0;
+            width: 0;
             height: 2px;
-            background: linear-gradient(90deg, var(--accent), var(--gold));
-            z-index: 1;
-        }
-
-        .process-step {
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            flex: 1;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            background: var(--secondary);
-            border: 2px solid var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 30px;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent);
-            transition: all 0.3s;
-        }
-
-        .process-step:hover .step-number {
-            background: var(--accent);
-            color: white;
-            transform: scale(1.1);
-        }
-
-        .step-content {
-            max-width: 250px;
-            margin: 0 auto;
-        }
-
-        .step-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: var(--text);
-        }
-
-        .step-content p {
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-
-        /* FAQ Section - NEW */
-        .faq {
-            padding: 150px 50px;
-            background: var(--secondary);
-            position: relative;
-        }
-
-        .faq-container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .faq-item {
             background: var(--primary);
-            border-radius: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(99, 102, 241, 0.1);
-            overflow: hidden;
-            transition: all 0.3s;
+            transition: width 0.3s ease;
         }
 
-        .faq-item:hover {
-            border-color: var(--accent);
-        }
-
-        .faq-question {
-            padding: 25px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .faq-question:hover {
-            background: rgba(99, 102, 241, 0.05);
-        }
-
-        .faq-question h3 {
-            font-size: 1.2rem;
-            color: var(--text);
-            margin: 0;
-        }
-
-        .faq-icon {
-            width: 30px;
-            height: 30px;
-            background: var(--accent);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1rem;
-            transition: transform 0.3s;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            padding: 0 30px;
-            max-height: 0;
-            overflow: hidden;
-            transition: all 0.3s;
-        }
-
-        .faq-item.active .faq-answer {
-            padding: 0 30px 25px;
-            max-height: 200px;
-        }
-
-        .faq-answer p {
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin: 0;
-        }
-
-        /* Portfolio Section */
-        .portfolio {
-            padding: 150px 50px;
-            position: relative;
-        }
-
-        .portfolio-filter {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 60px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 12px 30px;
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 50px;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            font-family: 'Tajawal', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .filter-btn:hover,
-        .filter-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: white;
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .portfolio-item {
-            position: relative;
-            border-radius: 25px;
-            overflow: hidden;
-            aspect-ratio: 4/3;
-            cursor: pointer;
-        }
-
-        .portfolio-item img {
+        .nav-link:hover::after {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.7s;
         }
 
-        .portfolio-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(10, 10, 15, 0.95), transparent);
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 40px;
-            opacity: 0;
-            transition: opacity 0.5s;
+        /* Glow effect on click */
+        .glow-on-click {
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .portfolio-item:hover img {
-            transform: scale(1.1);
+        .glow-on-click:active {
+            animation: glow 0.5s ease;
+            box-shadow: 0 0 25px rgba(59, 130, 246, 0.8) !important;
+            border-color: var(--primary) !important;
         }
 
-        .portfolio-item:hover .portfolio-overlay {
-            opacity: 1;
-        }
-
-        .portfolio-overlay h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            transform: translateY(20px);
-            transition: transform 0.5s;
-        }
-
-        .portfolio-overlay p {
-            color: var(--text-muted);
-            transform: translateY(20px);
-            transition: transform 0.5s 0.1s;
-        }
-
-        .portfolio-item:hover .portfolio-overlay h3,
-        .portfolio-item:hover .portfolio-overlay p {
-            transform: translateY(0);
-        }
-
-        /* Testimonials */
-        .testimonials {
-            padding: 150px 50px;
-            background: var(--secondary);
-        }
-
-        .testimonials-slider {
-            max-width: 900px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .testimonial-card {
-            text-align: center;
-            padding: 60px;
-            background: var(--primary);
-            border-radius: 30px;
-            border: 1px solid rgba(99, 102, 241, 0.1);
-        }
-
-        .testimonial-quote {
-            font-size: 4rem;
-            color: var(--accent);
-            margin-bottom: 30px;
-            opacity: 0.5;
-        }
-
-        .testimonial-text {
-            font-size: 1.4rem;
-            color: var(--text);
-            line-height: 2;
-            margin-bottom: 40px;
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .author-avatar {
+        /* Chat Bot Styles - Improved */
+        .chat-bot {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
             width: 70px;
             height: 70px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--gold));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .author-info h4 {
-            font-size: 1.2rem;
-            color: var(--text);
-        }
-
-        .author-info span {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 150px 50px;
-            position: relative;
-        }
-
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .contact-info h3 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-        }
-
-        .contact-info p {
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 40px;
-            font-size: 1.1rem;
-        }
-
-        .contact-details {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .contact-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(99, 102, 241, 0.1);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3rem;
-            color: var(--accent-glow);
-        }
-
-        .contact-item-text h4 {
-            font-size: 1rem;
-            color: var(--text);
-            margin-bottom: 5px;
-        }
-
-        .contact-item-text span {
-            color: var(--text-muted);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 40px;
-        }
-
-        .social-link {
-            width: 50px;
-            height: 50px;
-            background: var(--secondary);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            text-decoration: none;
-            transition: all 0.3s;
-            font-size: 1.2rem;
-        }
-
-        .social-link:hover {
-            background: var(--accent);
-            color: white;
-            transform: translateY(-5px);
-        }
-
-        .contact-form {
-            background: var(--secondary);
-            padding: 50px;
-            border-radius: 30px;
-            border: 1px solid rgba(99, 102, 241, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 10px;
-            color: var(--text);
-            font-weight: 500;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 18px 25px;
-            background: var(--primary);
-            border: 1px solid rgba(99, 102, 241, 0.1);
-            border-radius: 15px;
-            color: var(--text);
-            font-size: 1rem;
-            font-family: 'Tajawal', sans-serif;
-            transition: border-color 0.3s;
-            outline: none;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            border-color: var(--accent);
-        }
-
-        .form-group textarea {
-            height: 150px;
-            resize: none;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--accent), var(--accent-glow));
-            border: none;
-            border-radius: 15px;
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 600;
-            font-family: 'Tajawal', sans-serif;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 15px 35px rgba(99, 102, 241, 0.3);
-        }
-
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 45px rgba(99, 102, 241, 0.4);
-        }
-
-        /* Footer */
-        footer {
-            padding: 50px;
-            text-align: center;
-            border-top: 1px solid rgba(99, 102, 241, 0.1);
-        }
-
-        .footer-logo {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), var(--gold));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-        }
-
-        .footer-text {
-            color: var(--text-muted);
-        }
-
-        /* Protection Badge */
-        .protection-badge {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            background: rgba(10, 10, 15, 0.9);
-            color: white;
-            padding: 10px 15px;
-            border-radius: 20px;
-            font-size: 12px;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(99, 102, 241, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
         }
 
-        /* Mobile Navigation */
-        .mobile-nav {
+        .chat-bot:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.6);
+        }
+
+        .chat-window {
             position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            height: 100vh;
-            background: var(--primary);
-            z-index: 999;
-            display: flex;
+            bottom: 110px;
+            left: 25px;
+            width: 380px;
+            max-width: 90vw;
+            height: 520px;
+            max-height: 70vh;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 20px;
+            z-index: 1001;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            display: none;
             flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 20px;
+            color: white;
+            font-weight: bold;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #0f0f0f;
+        }
+
+        .chat-input {
+            padding: 15px;
+            border-top: 1px solid #333;
+            background: #1a1a1a;
+        }
+
+        .chat-input-container {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .chat-input-field {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 16px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .chat-send-btn {
+            background: var(--primary);
+            border: none;
+            border-radius: 12px;
+            width: 44px;
+            height: 44px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            transition: right 0.5s;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        .mobile-nav.active {
-            right: 0;
+        .chat-send-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
         }
 
-        .mobile-nav a {
-            font-size: 2rem;
-            color: var(--text);
-            text-decoration: none;
-            margin: 20px 0;
-            transition: color 0.3s;
+        .chat-send-btn:active {
+            transform: scale(0.95);
         }
 
-        .mobile-nav a:hover {
-            color: var(--accent);
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .about-content {
-                grid-template-columns: 1fr;
-                gap: 60px;
-            }
-
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-
-            .portfolio-grid {
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            }
-
-            .process-steps {
-                flex-direction: column;
-                gap: 50px;
-            }
-
-            .process-steps::before {
-                display: none;
-            }
+        .chat-send-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
         }
 
         @media (max-width: 768px) {
-            nav {
-                padding: 20px 30px;
+            .chat-bot {
+                width: 60px;
+                height: 60px;
+                bottom: 20px;
+                left: 20px;
+            }
+            
+            .chat-window {
+                left: 5vw;
+                width: 90vw;
+                height: 60vh;
             }
 
-            .nav-links {
-                display: none;
-            }
-
-            .menu-btn {
-                display: flex;
-            }
-
-            .hero {
-                padding: 100px 30px;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-            }
-
-            .btn {
-                padding: 15px 35px;
-            }
-
-            .about,
-            .services,
-            .design-process,
-            .faq,
-            .portfolio,
-            .testimonials,
-            .contact {
-                padding: 100px 30px;
-            }
-
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .testimonial-card {
-                padding: 40px 30px;
-            }
-
-            .testimonial-text {
-                font-size: 1.1rem;
-            }
-
-            .contact-form {
-                padding: 30px;
-            }
-
-            .cursor,
-            .cursor-dot {
-                display: none;
-            }
-
-            body {
-                cursor: auto;
-            }
-
-            .protection-badge {
-                display: none;
+            .chat-input {
+                padding: 12px;
             }
         }
 
-        /* Animations on Scroll */
-        .reveal {
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* New Coupon Styles - Simple and Clean */
+        .simple-coupon {
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px dashed rgba(59, 130, 246, 0.5);
+            color: var(--primary);
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin: 0 auto;
+            max-width: 250px;
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        .simple-coupon:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* Math Captcha */
+        .math-captcha {
+            font-family: 'Cairo', monospace;
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--primary), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Section Backgrounds */
+        .section-gradient {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(139, 92, 246, 0.05));
+        }
+
+        /* Box Glow Effect */
+        .box-glow {
+            transition: all 0.3s ease;
+        }
+
+        .box-glow:focus {
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+            border-color: var(--primary);
+        }
+
+        /* Service Card */
+        .service-card {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        /* Design Steps Styles */
+        .step-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Idea Generator Styles */
+        .idea-generator {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Game Styles */
+        .game-option {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-option:hover {
+            transform: scale(1.05);
+        }
+
+        /* FAQ Styles */
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            padding: 20px 0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: var(--primary);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding: 0 0 0 20px;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-bottom: 20px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Payment Methods Styles */
+        .payment-method {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .payment-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .status-available {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .status-coming {
+            background: rgba(234, 179, 8, 0.2);
+            color: #eab308;
+            border: 1px solid rgba(234, 179, 8, 0.3);
+        }
+
+        /* Light Mode Styles */
+        .light {
+            --primary: #1d4ed8;
+            --primary-dark: #1e40af;
+        }
+
+        .light body {
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        .light .bg-background {
+            background: #f8fafc;
+        }
+
+        .light .text-white {
+            color: #1e293b;
+        }
+
+        .light .bg-white\\/5 {
+            background: rgba(30, 41, 59, 0.05);
+        }
+
+        .light .border-white\\/10 {
+            border-color: rgba(30, 41, 59, 0.1);
+        }
+
+        .light .text-white\\/80 {
+            color: rgba(30, 41, 59, 0.8);
+        }
+
+        .light .glass-panel {
+            background: rgba(248, 250, 252, 0.8);
+            border: 1px solid rgba(30, 41, 59, 0.1);
+        }
+
+        /* Motivation Panel */
+        #motivationPanel {
+            transition: all 0.3s ease;
         }
     </style>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: 'hsl(240 10% 4%)',
+                        primary: 'hsl(210 100% 50%)',
+                        card: 'hsl(240 10% 6%)',
+                    },
+                    fontFamily: {
+                        sans: ['IBM Plex Sans Arabic', 'Cairo', 'sans-serif'],
+                        display: ['Cairo', 'IBM Plex Sans Arabic', 'sans-serif'],
+                    },
+                    animation: {
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'glow-pulse': 'glow 3s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
 </head>
-<body>
-    <!-- Noise Overlay -->
-    <div class="noise"></div>
+<body class="bg-background text-white font-sans overflow-x-hidden selection:bg-primary selection:text-white" style="font-family: 'IBM Plex Sans Arabic', 'Cairo', sans-serif;">
 
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-dot"></div>
-
-    <!-- Protection Badge -->
-    <div class="protection-badge">
-        <span>🔒</span>
-        موقع آمن
-    </div>
-
-    <!-- Loader -->
-    <div class="loader">
-        <div class="loader-text">M</div>
-        <div class="loader-bar">
-            <div class="loader-progress"></div>
+    <!-- Simple Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">م.</div>
+            <div class="loading-badge">النسخة التجريبية</div>
+            <h1 class="loading-title">الموقع تحت الاختبار</h1>
+            <p class="loading-text">
+                نعمل حالياً على تطوير وتحسين الموقع. 
+                نعتذر عن أي أخطاء قد تواجهها أثناء التصفح.
+            </p>
+            
+            <div class="quran-verse">
+                ﴿وَأَن لَّيْسَ لِلْإِنسَانِ إِلَّا مَا سَعَىٰ﴾
+                <br>
+                <span style="font-size: 1rem; color: rgba(255,255,255,0.7);">سورة النجم - الآية 39</span>
+            </div>
+            
+            <div class="loading-spinner"></div>
+            <button class="enter-btn" id="enter-site">
+                <span>الدخول إلى الموقع</span>
+                <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            </button>
+            <div class="loading-footer">
+                شكراً لتفهمك وصبرك
+            </div>
         </div>
     </div>
+
+    <!-- لوحة تحفيزية -->
+    <div class="fixed top-20 right-4 z-40 bg-primary/20 backdrop-blur-lg border border-primary/30 rounded-xl p-4 hidden" id="motivationPanel">
+        <div class="flex items-center gap-3">
+            <i data-lucide="target" class="w-6 h-6 text-primary"></i>
+            <div>
+                <div class="text-white font-bold text-sm">هدف اليوم: 5 عملاء جدد</div>
+                <div class="w-32 bg-white/20 rounded-full h-2 mt-1">
+                    <div class="bg-primary h-2 rounded-full" style="width: 60%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Bot Button -->
+    <div class="chat-bot glass-bot animate-glow" id="chatBotButton">
+        <i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
+    </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div class="flex items-center gap-3">
+                <i data-lucide="bot" class="w-6 h-6"></i>
+                <span>مساعد محمد الآلي</span>
+            </div>
+            <p class="text-sm opacity-80 mt-1">أساعدك في استفساراتك عن التصميم الإعلاني</p>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="text-center text-white/60 py-8">
+                <i data-lucide="message-circle" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
+                <p>مرحباً! أنا مساعد محمد الآلي</p>
+                <p class="text-sm mt-2">أسألني عن خدمات التصميم الإعلاني</p>
+            </div>
+        </div>
+        <div class="chat-input">
+            <div class="chat-input-container">
+                <input type="text" placeholder="اكتب استفسارك هنا..." id="chatInput" class="chat-input-field">
+                <button id="sendChatMessage" class="chat-send-btn">
+                    <i data-lucide="send" class="w-5 h-5 text-white"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" class="fixed top-0 right-0 h-1 bg-primary z-50 shadow-[0_0_10px_rgba(59,130,246,0.8)] origin-right transition-transform duration-100 ease-out w-full scale-x-0"></div>
 
     <!-- Navigation -->
-    <nav>
-        <div class="logo">MOHAMED</div>
-        <ul class="nav-links">
-            <li><a href="#home">الرئيسية</a></li>
-            <li><a href="#about">قصتي</a></li>
-            <li><a href="#services">خدماتي</a></li>
-            <li><a href="#design-process">مراحل التصميم</a></li>
-            <li><a href="#faq">الأسئلة الشائعة</a></li>
-            <li><a href="#portfolio">أعمالي</a></li>
-            <li><a href="#contact">تواصل معي</a></li>
-        </ul>
-        <div class="menu-btn">
-            <span></span>
-            <span></span>
-            <span></span>
+    <nav class="fixed top-0 left-0 w-full z-40 px-6 py-4 flex justify-between items-center glass-panel mx-auto max-w-[95%] mt-4 rounded-full border border-white/5 bg-black/20 backdrop-blur-xl">
+        <span class="font-display font-bold text-2xl tracking-tighter text-white">م.</span>
+        <div class="hidden md:flex gap-8 text-sm font-medium text-white/80">
+            <a href="#home" class="nav-link hover:text-primary transition-colors duration-200">الرئيسية</a>
+            <a href="#services" class="nav-link hover:text-primary transition-colors duration-200">خدماتي</a>
+            <a href="#importance" class="nav-link hover:text-primary transition-colors duration-200">أهمية التصميم</a>
+            <a href="#portfolio" class="nav-link hover:text-primary transition-colors duration-200">معرض الأعمال</a>
+            <a href="#offers" class="nav-link hover:text-primary transition-colors duration-200">عروض خاصة</a>
+            <a href="#faq" class="nav-link hover:text-primary transition-colors duration-200">الأسئلة الشائعة</a>
+            <a href="#payment" class="nav-link hover:text-primary transition-colors duration-200">طرق الدفع</a>
+            <a href="#contact" class="nav-link hover:text-primary transition-colors duration-200">اتصل بي</a>
         </div>
+        <div class="flex items-center gap-4">
+            <!-- زر الوضع النهاري/الليلي -->
+            <button id="themeToggle" class="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors">
+                <i data-lucide="moon" class="w-5 h-5" id="themeIcon"></i>
+            </button>
+            <div class="flex items-center gap-4 text-sm text-white/60">
+                <span>مصمم إعلانات محترف</span>
+                <span class="w-1 h-1 bg-white/40 rounded-full"></span>
+                <span>من مصر</span>
+            </div>
+        </div>
+        <button class="md:hidden text-white">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
     </nav>
 
-    <!-- Mobile Navigation -->
-    <div class="mobile-nav">
-        <a href="#home">الرئيسية</a>
-        <a href="#about">قصتي</a>
-        <a href="#services">خدماتي</a>
-        <a href="#design-process">مراحل التصميم</a>
-        <a href="#faq">الأسئلة الشائعة</a>
-        <a href="#portfolio">أعمالي</a>
-        <a href="#contact">تواصل معي</a>
-    </div>
+    <main class="pt-10">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex flex-col justify-center relative overflow-hidden px-6 md:px-12 lg:px-24 py-10">
+            <!-- Background Glow -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] opacity-40 pointer-events-none"></div>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-bg">
-            <div class="floating-shapes">
-                <div class="shape shape-1"></div>
-                <div class="shape shape-2"></div>
-                <div class="shape shape-3"></div>
-            </div>
-            <div class="grid-overlay"></div>
-        </div>
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="badge-dot"></span>
-                متاح للمشاريع الجديدة
-            </div>
-            <h1 class="hero-title">
-                <span class="line">أنا <span class="gradient">محمد</span></span>
-                <span class="line">مصمم إعلانات</span>
-                <span class="line"><span class="gradient">سوشيال ميديا</span></span>
-            </h1>
-            <p class="hero-subtitle">
-                أُحوّل أفكارك إلى تصاميم مبهرة تجذب الأنظار وتحقق نتائج استثنائية
-                في عالم التواصل الاجتماعي
-            </p>
-            <div class="hero-buttons">
-                <a href="#portfolio" class="btn btn-primary">استكشف أعمالي</a>
-                <a href="#contact" class="btn btn-secondary">تواصل معي</a>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <span>SCROLL</span>
-            <div class="scroll-line"></div>
-        </div>
-    </section>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center z-10 max-w-7xl mx-auto w-full">
+                <div class="lg:col-span-7 space-y-8 order-2 lg:order-1 text-right fade-in-up">
+                    <div class="relative inline-block">
+                        <h1 class="text-6xl md:text-[7rem] font-display font-black tracking-tighter leading-[0.9] text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
+                            محمد
+                        </h1>
+                        <div class="absolute -bottom-3 right-0 w-28 h-2 bg-primary shadow-[0_0_30px_rgba(59,130,246,1)] rounded-full"></div>
+                    </div>
+                    
+                    <p class="text-xl md:text-2xl font-light text-white/80 leading-relaxed max-w-2xl">
+                        مصمم إعلانات محترف من مصر
+                        <br />
+                        أصمم لك إعلانات تجذب العملاء وتزيد المبيعات
+                    </p>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="section-header">
-            <span class="section-tag">قصتي</span>
-            <h2 class="section-title">رحلتي <span class="highlight">الإبداعية</span></h2>
-        </div>
-        <div class="about-content">
-            <div class="about-image reveal">
-                <div class="image-container">
-                    <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&h=700&fit=crop" alt="Creative Work">
-                </div>
-                <div class="image-frame"></div>
-                <div class="experience-badge">
-                    <div class="number">5+</div>
-                    <div class="text">سنوات خبرة</div>
-                </div>
-            </div>
-            <div class="about-text reveal">
-                <h3>مصمم شغوف بصناعة الفرق</h3>
-                <p>
-                    أنا محمد، مصمم إعلانات سوشيال ميديا محترف. بدأت رحلتي في عالم التصميم منذ ٨ سنوات، 
-                    حيث كنت شغوفاً بفنون الخط العربي والتصميم الجرافيكي. تخصصت في تصميم الهويات البصرية 
-                    التي تدمج بين الأصالة العربية والحداثة العالمية.
-                </p>
-                <p>
-                    عملت مع أكثر من ١٠٠ عميل من مختلف أنحاء العالم العربي، وساعدتهم في بناء هوياتهم البصرية.
-                    حصلت على جائزة أفضل تصميم هوية بصرية ٢٠٢٣، وأمتلك شهادة محترف في التصميم الجرافيكي.
-                </p>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">تصميم منجز</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">150+</div>
-                        <div class="stat-label">عميل سعيد</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">50+</div>
-                        <div class="stat-label">علامة تجارية</div>
+                    <div class="flex gap-4 flex-wrap">
+                        <a href="#contact" class="bg-primary hover:bg-primary/80 text-white font-display font-bold px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover-lift glow-on-click">
+                            ابدأ مشروعك الآن
+                        </a>
+                        <a href="#portfolio" class="border border-white/20 hover:border-primary text-white font-display font-bold px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105 hover-lift glow-on-click">
+                            شاهد أعمالي
+                        </a>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="section-header">
-            <span class="section-tag">خدماتي</span>
-            <h2 class="section-title">ما أقدمه <span class="highlight">لك</span></h2>
-        </div>
-        <div class="services-grid">
-            <div class="service-card reveal">
-                <div class="service-icon">🎨</div>
-                <h3>تصميم إعلانات سوشيال ميديا</h3>
-                <p>تصاميم احترافية ومبتكرة لجميع منصات التواصل الاجتماعي تجذب الجمهور وتحقق التفاعل المطلوب</p>
-                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
+                <div class="lg:col-span-5 relative aspect-square order-1 lg:order-2 animate-float w-full max-w-md mx-auto fade-in-scale">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-full blur-3xl opacity-40"></div>
+                    <div class="relative w-full h-full flex items-center justify-center">
+                        <!-- Removed the large "م." -->
+                    </div>
+                </div>
             </div>
-            <div class="service-card reveal">
-                <div class="service-icon">✨</div>
-                <h3>تصميم الهوية البصرية</h3>
-                <p>بناء هوية بصرية متكاملة ومميزة تعكس شخصية علامتك التجارية وتبقى في أذهان جمهورك</p>
-                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-icon">📱</div>
-                <h3>تصميم Stories & Reels</h3>
-                <p>محتوى تفاعلي ومتحرك مصمم خصيصاً للقصص والريلز يزيد من تفاعل متابعيك</p>
-                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-icon">🖼️</div>
-                <h3>تصميم البوستات والكفرات</h3>
-                <p>تصاميم جذابة للمنشورات وأغلفة الصفحات تعزز حضورك على منصات التواصل</p>
-                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-icon">📊</div>
-                <h3>تصميم الإنفوجرافيك</h3>
-                <p>تحويل البيانات والمعلومات إلى رسومات بيانية جذابة وسهلة الفهم</p>
-                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
-            </div>
-            <div class="service-card reveal">
-                <div class="service-icon">🎯</div>
-                <h3>استشارات التصميم</h3>
-                <p>نصائح واستراتيجيات لتحسين المحتوى البصري لعلامتك التجارية وزيادة فعاليته</p>
-                <a href="#contact" class="service-link">اطلب الخدمة ←</a>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Design Process Section -->
-    <section class="design-process" id="design-process">
-        <div class="section-header">
-            <span class="section-tag">مراحل التصميم</span>
-            <h2 class="section-title">كيف <span class="highlight">أعمل</span></h2>
-        </div>
-        <div class="process-container">
-            <div class="process-steps">
-                <div class="process-step reveal">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3>الاستشارة والتحليل</h3>
-                        <p>نناقش متطلبات مشروعك وأهدافك، ونحدد معاً الاستراتيجية المناسبة لتحقيق النتائج المرجوة</p>
-                    </div>
-                </div>
-                <div class="process-step reveal" style="animation-delay: 0.2s">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3>التخطيط والبحث</h3>
-                        <p>أقوم بدراسة السوق والمنافسين، وأضع خطة عمل واضحة تضمن تحقيق أفضل النتائج</p>
-                    </div>
-                </div>
-                <div class="process-step reveal" style="animation-delay: 0.4s">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3>التصميم الأولي</h3>
-                        <p>أبدأ في إنشاء التصاميم الأولية وأقدمها لك للاطلاع وابداء الملاحظات</p>
-                    </div>
-                </div>
-                <div class="process-step reveal" style="animation-delay: 0.6s">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3>التطوير والتحسين</h3>
-                        <p>أقوم بتطوير التصاميم بناءً على ملاحظاتك، وأدخل التحسينات اللازمة</p>
-                    </div>
-                </div>
-                <div class="process-step reveal" style="animation-delay: 0.8s">
-                    <div class="step-number">5</div>
-                    <div class="step-content">
-                        <h3>التسليم النهائي</h3>
-                        <p>أسلم لك التصاميم النهائية بجودة عالية مع جميع الملفات اللازمة للاستخدام</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq" id="faq">
-        <div class="section-header">
-            <span class="section-tag">الأسئلة الشائعة</span>
-            <h2 class="section-title">أسئلة <span class="highlight">متكررة</span></h2>
-        </div>
-        <div class="faq-container">
-            <div class="faq-item reveal">
-                <div class="faq-question">
-                    <h3>كم تستغرق مدة تنفيذ المشروع؟</h3>
-                    <div class="faq-icon">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>تتراوح المدة بين 3 إلى 14 يوم عمل حسب تعقيد المشروع وحجم العمل المطلوب. المشاريع البسيطة قد تستغرق 3-5 أيام، بينما المشاريع المتوسطة 7-10 أيام، والمشاريع المعقدة قد تصل إلى أسبوعين.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item reveal" style="animation-delay: 0.1s">
-                <div class="faq-question">
-                    <h3>هل تقدم تعديلات على التصاميم؟</h3>
-                    <div class="faq-icon">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>نعم، أقدم 3 جولات من التعديلات المجانية لضمان رضاك التام عن التصميم النهائي. بعد ذلك يمكن طلب تعديلات إضافية برسوم إضافية.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item reveal" style="animation-delay: 0.2s">
-                <div class="faq-question">
-                    <h3>ما هي طرق الدفع المتاحة؟</h3>
-                    <div class="faq-icon">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>يمكن الدفع عبر التحويل البنكي، المحافظ الإلكترونية، أو الدفع نقداً عند التسليم. يتم تقسيم المبلغ على دفعتين: 50% مقدماً و50% عند التسليم.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item reveal" style="animation-delay: 0.3s">
-                <div class="faq-question">
-                    <h3>هل أحصل على ملفات التصميم الأصلية؟</h3>
-                    <div class="faq-icon">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>نعم، تحصل على جميع ملفات التصميم الأصلية (PSD, AI) بالإضافة إلى الملفات الجاهزة للاستخدام (PNG, JPG, PDF) حسب احتياجاتك.</p>
-                </div>
-            </div>
-            
-            <div class="faq-item reveal" style="animation-delay: 0.4s">
-                <div class="faq-question">
-                    <h3>هل يمكنني طلب تصميم عاجل؟</h3>
-                    <div class="faq-icon">+</div>
-                </div>
-                <div class="faq-answer">
-                    <p>نعم، أقدم خدمة التصميم العاجل مع رسوم إضافية حسب سرعة التنفيذ المطلوبة. يمكن تنفيذ المشاريع العاجلة خلال 24-48 ساعة.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Portfolio Section -->
-    <section class="portfolio" id="portfolio">
-        <div class="section-header">
-            <span class="section-tag">معرض أعمالي</span>
-            <h2 class="section-title">أعمال <span class="highlight">مختارة</span></h2>
-        </div>
-        <div class="portfolio-filter">
-            <button class="filter-btn active">الكل</button>
-            <button class="filter-btn">سوشيال ميديا</button>
-            <button class="filter-btn">هوية بصرية</button>
-            <button class="filter-btn">إعلانات</button>
-        </div>
-        <div class="portfolio-grid">
-            <div class="portfolio-item reveal">
-                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=450&fit=crop" alt="Project 1">
-                <div class="portfolio-overlay">
-                    <h3>حملة إعلانية</h3>
-                    <p>تصميم سوشيال ميديا</p>
-                </div>
-            </div>
-            <div class="portfolio-item reveal">
-                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=450&fit=crop" alt="Project 2">
-                <div class="portfolio-overlay">
-                    <h3>هوية بصرية</h3>
-                    <p>براند كامل</p>
-                </div>
-            </div>
-            <div class="portfolio-item reveal">
-                <img src="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=600&h=450&fit=crop" alt="Project 3">
-                <div class="portfolio-overlay">
-                    <h3>تصميم إعلان</h3>
-                    <p>منتج جديد</p>
-                </div>
-            </div>
-            <div class="portfolio-item reveal">
-                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&h=450&fit=crop" alt="Project 4">
-                <div class="portfolio-overlay">
-                    <h3>محتوى تفاعلي</h3>
-                    <p>Stories & Reels</p>
-                </div>
-            </div>
-            <div class="portfolio-item reveal">
-                <img src="https://images.unsplash.com/photo-1613909207039-6b173b755cc1?w=600&h=450&fit=crop" alt="Project 5">
-                <div class="portfolio-overlay">
-                    <h3>تصميم بوستات</h3>
-                    <p>حملة موسمية</p>
-                </div>
-            </div>
-            <div class="portfolio-item reveal">
-                <img src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&h=450&fit=crop" alt="Project 6">
-                <div class="portfolio-overlay">
-                    <h3>إنفوجرافيك</h3>
-                    <p>تقرير سنوي</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <div class="section-header">
-            <span class="section-tag">آراء العملاء</span>
-            <h2 class="section-title">ماذا يقولون <span class="highlight">عني</span></h2>
-        </div>
-        <div class="testimonials-slider">
-            <div class="testimonial-card reveal">
-                <div class="testimonial-quote">"</div>
-                <p class="testimonial-text">
-                    محمد مصمم استثنائي! تصاميمه ساعدتنا في زيادة التفاعل على منصاتنا بنسبة 300%.
-                    دقة في المواعيد وإبداع لا محدود. أنصح بالتعامل معه بشدة.
-                </p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">أ</div>
-                    <div class="author-info">
-                        <h4>أحمد محمود</h4>
-                        <span>مدير تسويق - شركة تقنية</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="section-header">
-            <span class="section-tag">تواصل معي</span>
-            <h2 class="section-title">لنبدأ مشروعك <span class="highlight">معاً</span></h2>
-        </div>
-        <div class="contact-container">
-            <div class="contact-info reveal">
-                <h3>هل لديك فكرة مشروع؟</h3>
-                <p>
-                    أنا دائماً متحمس للعمل على مشاريع جديدة ومبتكرة. 
-                    تواصل معي ودعنا نحول أفكارك إلى تصاميم تتحدث عنك.
-                </p>
-                <div class="contact-details">
-                    <div class="contact-item">
-                        <div class="contact-icon">📧</div>
-                        <div class="contact-item-text">
-                            <h4>البريد الإلكتروني</h4>
-                            <span>mohamed@design.com</span>
+        <!-- Services Section -->
+        <div id="services">
+            <section class="px-6 md:px-12 lg:px-24 py-20 bg-black/40 relative">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-12 text-white">خدماتي</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="service-card bg-white/5 p-6 rounded-2xl hover-lift fade-in-up glow-on-click">
+                            <i data-lucide="megaphone" class="w-12 h-12 text-primary mb-4"></i>
+                            <h3 class="text-2xl font-display font-bold mb-4 text-white">إعلانات وسائل التواصل</h3>
+                            <p class="text-white/80">تصميم إعلانات جذابة لفيسبوك، إنستجرام، تويتر ولينكدإن</p>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📱</div>
-                        <div class="contact-item-text">
-                            <h4>الهاتف</h4>
-                            <span>+20 123 456 7890</span>
+                        <div class="service-card bg-white/5 p-6 rounded-2xl hover-lift fade-in-up glow-on-click" style="animation-delay: 0.1s">
+                            <i data-lucide="palette" class="w-12 h-12 text-primary mb-4"></i>
+                            <h3 class="text-2xl font-display font-bold mb-4 text-white">هوية بصرية</h3>
+                            <p class="text-white/80">تصميم شعار وألوان وخطوط تعبر عن شخصية علامتك التجارية</p>
                         </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">📍</div>
-                        <div class="contact-item-text">
-                            <h4>الموقع</h4>
-                            <span>القاهرة، مصر</span>
+                        <div class="service-card bg-white/5 p-6 rounded-2xl hover-lift fade-in-up glow-on-click" style="animation-delay: 0.2s">
+                            <i data-lucide="image" class="w-12 h-12 text-primary mb-4"></i>
+                            <h3 class="text-2xl font-display font-bold mb-4 text-white">بانرات إعلانية</h3>
+                            <p class="text-white/80">تصميم مواد دعائية مطبوعة ورقمية للمعارض والمحلات</p>
+                        </div>
+                        <div class="service-card bg-white/5 p-6 rounded-2xl hover-lift fade-in-up glow-on-click" style="animation-delay: 0.3s">
+                            <i data-lucide="smartphone" class="w-12 h-12 text-primary mb-4"></i>
+                            <h3 class="text-2xl font-display font-bold mb-4 text-white">إعلانات الموبايل</h3>
+                            <p class="text-white/80">تصميم إعلانات مخصصة للتطبيقات والموبايل</p>
+                        </div>
+                        <div class="service-card bg-white/5 p-6 rounded-2xl hover-lift fade-in-up glow-on-click" style="animation-delay: 0.4s">
+                            <i data-lucide="video" class="w-12 h-12 text-primary mb-4"></i>
+                            <h3 class="text-2xl font-display font-bold mb-4 text-white">موشن جرافيك</h3>
+                            <p class="text-white/80">تحويل تصاميمك الثابتة إلى فيديوهات إعلانية قصيرة</p>
+                        </div>
+                        <div class="service-card bg-white/5 p-6 rounded-2xl hover-lift fade-in-up glow-on-click" style="animation-delay: 0.5s">
+                            <i data-lucide="shopping-cart" class="w-12 h-12 text-primary mb-4"></i>
+                            <h3 class="text-2xl font-display font-bold mb-4 text-white">إعلانات المتاجر</h3>
+                            <p class="text-white/80">تصميم إعلانات تظهر منتجاتك بأفضل صورة وتشجع على الشراء</p>
                         </div>
                     </div>
                 </div>
-                <div class="social-links">
-                    <a href="#" class="social-link">𝕏</a>
-                    <a href="#" class="social-link">in</a>
-                    <a href="#" class="social-link">Be</a>
-                    <a href="#" class="social-link">IG</a>
-                </div>
-            </div>
-            <form class="contact-form reveal">
-                <div class="form-group">
-                    <label>الاسم الكامل</label>
-                    <input type="text" placeholder="أدخل اسمك">
-                </div>
-                <div class="form-group">
-                    <label>البريد الإلكتروني</label>
-                    <input type="email" placeholder="أدخل بريدك الإلكتروني">
-                </div>
-                <div class="form-group">
-                    <label>نوع الخدمة</label>
-                    <input type="text" placeholder="ما الخدمة التي تحتاجها؟">
-                </div>
-                <div class="form-group">
-                    <label>تفاصيل المشروع</label>
-                    <textarea placeholder="اخبرني عن مشروعك..."></textarea>
-                </div>
-                <button type="submit" class="submit-btn">إرسال الرسالة</button>
-            </form>
+            </section>
         </div>
-    </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="footer-logo">MOHAMED</div>
-        <p class="footer-text">© 2024 محمد - جميع الحقوق محفوظة | صُنع بـ ❤️</p>
-    </footer>
+        <!-- Importance Section -->
+        <div id="importance">
+            <section class="px-6 md:px-12 lg:px-24 py-20 section-gradient relative">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-12 text-white">كيف يؤثر التصميم على عملك؟</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                        <div class="fade-in-up">
+                            <div class="bg-white/5 p-6 rounded-2xl border border-white/10 hover-lift">
+                                <h3 class="text-2xl font-display font-bold text-white mb-4 flex items-center gap-3">
+                                    <i data-lucide="trending-up" class="w-8 h-8 text-green-400"></i>
+                                    زيادة المبيعات
+                                </h3>
+                                <div class="space-y-3 text-white/80 text-lg">
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="check-circle" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
+                                        <span>الإعلانات الجذابة تزيد التحويلات بنسبة تصل إلى 40%</span>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="check-circle" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
+                                        <span>تحسين تجربة العميل تزيد من معدلات الاحتفاظ بالعملاء</span>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="check-circle" class="w-6 h-6 text-green-400 mt-1 flex-shrink-0"></i>
+                                        <span>التصميم المحترف يبني الثقة في علامتك التجارية</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="fade-in-up" style="animation-delay: 0.2s">
+                            <div class="bg-white/5 p-6 rounded-2xl border border-white/10 hover-lift">
+                                <h3 class="text-2xl font-display font-bold text-white mb-4 flex items-center gap-3">
+                                    <i data-lucide="users" class="w-8 h-8 text-blue-400"></i>
+                                    تميز عن المنافسة
+                                </h3>
+                                <div class="space-y-3 text-white/80 text-lg">
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="star" class="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0"></i>
+                                        <span>التصميم الفريد يجعلك تبرز بين المنافسين</span>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="star" class="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0"></i>
+                                        <span>الهوية البصرية المتسقة تبني صورة مهنية قوية</span>
+                                    </div>
+                                    <div class="flex items-start gap-3">
+                                        <i data-lucide="star" class="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0"></i>
+                                        <span>التصميم الجيد يجعل رسالتك تصل بشكل أسرع</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Design Steps Section -->
+                    <div class="mt-16 fade-in-up">
+                        <h3 class="text-4xl font-display font-bold text-center mb-8 text-white">خطوات تصميم الإعلان الناجح</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+                            <div class="step-card fade-in-up">
+                                <div class="step-number">1</div>
+                                <h4 class="text-xl font-display font-bold text-white mb-3">فهم المتطلبات</h4>
+                                <p class="text-white/70">أدرس مشروعك وأهدافك بدقة لفهم احتياجاتك</p>
+                            </div>
+                            <div class="step-card fade-in-up" style="animation-delay: 0.1s">
+                                <div class="step-number">2</div>
+                                <h4 class="text-xl font-display font-bold text-white mb-3">التخطيط والاستراتيجية</h4>
+                                <p class="text-white/70">أضع خطة تصميمية تناسب جمهورك المستهدف</p>
+                            </div>
+                            <div class="step-card fade-in-up" style="animation-delay: 0.2s">
+                                <div class="step-number">3</div>
+                                <h4 class="text-xl font-display font-bold text-white mb-3">التنفيذ والإبداع</h4>
+                                <p class="text-white/70">أنفذ التصميم بأحدث الأدوات وأعلى معايير الجودة</p>
+                            </div>
+                            <div class="step-card fade-in-up" style="animation-delay: 0.3s">
+                                <div class="step-number">4</div>
+                                <h4 class="text-xl font-display font-bold text-white mb-3">التسليم والمتابعة</h4>
+                                <p class="text-white/70">أسلم التصميم النهائي مع متابعة للتأكد من رضاك</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Portfolio Section -->
+        <div id="portfolio">
+            <section class="px-6 md:px-12 lg:px-24 py-20 relative overflow-hidden">
+                <div class="max-w-7xl mx-auto w-full text-center">
+                    <h2 class="text-5xl md:text-7xl font-display font-bold mb-12 text-white">معرض الأعمال</h2>
+            
+                    <div class="max-w-2xl mx-auto fade-in-up">
+                        <div class="bg-white/5 p-8 rounded-2xl border border-white/10 hover-lift glow-on-click mb-8">
+                            <i data-lucide="award" class="w-20 h-20 text-primary mx-auto mb-4"></i>
+                            <h3 class="text-2xl font-display font-bold text-white mb-4">أعمالي على Behance</h3>
+                            <p class="text-white/80 text-lg mb-6">اطلع على نماذج من تصاميمي الإعلانية للشركات والعلامات التجارية</p>
+                            <a href="https://www.behance.net/your-profile" target="_blank" class="inline-flex items-center gap-3 bg-primary hover:bg-primary/80 text-white font-display font-bold text-lg px-6 py-3 rounded-xl transition-all duration-300 hover:scale-105 shadow-lg hover-lift glow-on-click">
+                                <i data-lucide="external-link" class="w-5 h-5"></i>
+                                زيارة Behance
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Special Offers Section -->
+        <div id="offers">
+            <section class="px-6 md:px-12 lg:px-24 py-20 relative overflow-hidden section-gradient">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-12 text-white">عروض خاصة</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                        <!-- العرض محدود الوقت -->
+                        <div class="fade-in-up">
+                            <div class="bg-gradient-to-br from-red-500/10 to-pink-500/10 p-6 rounded-2xl border border-red-500/20 hover-lift">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <i data-lucide="zap" class="w-8 h-8 text-red-400"></i>
+                                    <h3 class="text-2xl font-display font-bold text-white">عرض لمدة 24 ساعة</h3>
+                                </div>
+                                
+                                <p class="text-white/80 mb-4">احصل على تصميم مجاني مع كل طلب اليوم فقط!</p>
+                                
+                                <div class="bg-black/40 p-4 rounded-lg mb-4">
+                                    <div class="text-center">
+                                        <div id="countdown" class="text-2xl font-mono font-bold text-red-400 mb-2">
+                                            23:59:59
+                                        </div>
+                                        <div class="text-white/60 text-sm">متبقي على انتهاء العرض</div>
+                                    </div>
+                                </div>
+                                
+                                <button class="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-lg transition-colors animate-pulse">
+                                    احصل على العرض الآن
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- الكوبون -->
+                        <div class="fade-in-up" style="animation-delay: 0.2s">
+                            <div class="bg-gradient-to-br from-green-500/10 to-emerald-500/10 p-6 rounded-2xl border border-green-500/20 hover-lift">
+                                <div class="flex items-center gap-4 mb-4">
+                                    <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center">
+                                        <i data-lucide="tag" class="w-6 h-6 text-green-400"></i>
+                                    </div>
+                                    <h3 class="text-2xl font-display font-bold text-white">كود الخصم</h3>
+                                </div>
+                                <p class="text-white/80 mb-6">استخدم الكود التالي للحصول على خصم 25% على أول طلب</p>
+                                <div class="text-center">
+                                    <div class="simple-coupon glow-on-click" id="couponCode">
+                                        WELCOME25
+                                    </div>
+                                    <p class="text-white/60 mt-4">انسخ الكود واستخدمه عند الطلب</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- FAQ Section -->
+        <div id="faq">
+            <section class="px-6 md:px-12 lg:px-24 py-20 relative">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-12 text-white">الأسئلة الشائعة</h2>
+                    
+                    <div class="max-w-4xl mx-auto space-y-4">
+                        <div class="faq-item fade-in-up">
+                            <div class="faq-question">
+                                <h3 class="text-xl font-bold">كم تستغرق مدة تصميم الإعلان؟</h3>
+                                <i data-lucide="chevron-down" class="w-5 h-5 faq-icon transition-transform"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p class="text-white/70">تختلف مدة التصميم حسب نوع الإعلان وتعقيده، لكن في المتوسط:</p>
+                                <ul class="list-disc pr-5 mt-2 space-y-2 text-white/70">
+                                    <li>إعلانات وسائل التواصل: 1-3 أيام</li>
+                                    <li>الهوية البصرية: 5-7 أيام</li>
+                                    <li>الموشن جرافيك: 3-5 أيام</li>
+                                    <li>البانرات الإعلانية: 1-2 أيام</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in-up" style="animation-delay: 0.1s">
+                            <div class="faq-question">
+                                <h3 class="text-xl font-bold">هل يمكنني طلب تعديلات على التصميم؟</h3>
+                                <i data-lucide="chevron-down" class="w-5 h-5 faq-icon transition-transform"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p class="text-white/70">نعم، أقدم 3 جولات تعديل مجانية لكل تصميم لضمان رضاك التام عن العمل النهائي.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in-up" style="animation-delay: 0.2s">
+                            <div class="faq-question">
+                                <h3 class="text-xl font-bold">ما هي أنواع الملفات التي سأستلمها؟</h3>
+                                <i data-lucide="chevron-down" class="w-5 h-5 faq-icon transition-transform"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p class="text-white/70">ستستلم جميع الملفات اللازمة لاستخدام التصميم:</p>
+                                <ul class="list-disc pr-5 mt-2 space-y-2 text-white/70">
+                                    <li>ملفات JPG و PNG للاستخدام الرقمي</li>
+                                    <li>ملفات PDF للطباعة (إذا لزم الأمر)</li>
+                                    <li>ملفات المصدر (PSD، AI) حسب الطلب</li>
+                                    <li>ملفات متوافقة مع منصات التواصل الاجتماعي</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in-up" style="animation-delay: 0.3s">
+                            <div class="faq-question">
+                                <h3 class="text-xl font-bold">هل يمكنني الحصول على خصم للمشاريع الكبيرة؟</h3>
+                                <i data-lucide="chevron-down" class="w-5 h-5 faq-icon transition-transform"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p class="text-white/70">نعم، أقدم خصومات خاصة للعملاء الدائمين والمشاريع الكبيرة. تواصل معي لمناقشة تفاصيل مشروعك والحصول على عرض سعر مخصص.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item fade-in-up" style="animation-delay: 0.4s">
+                            <div class="faq-question">
+                                <h3 class="text-xl font-bold">هل أحتاج لتوفير محتوى نصي للتصميم؟</h3>
+                                <i data-lucide="chevron-down" class="w-5 h-5 faq-icon transition-transform"></i>
+                            </div>
+                            <div class="faq-answer">
+                                <p class="text-white/70">يفضل توفير المحتوى النصي مسبقاً، لكن يمكنني مساعدتك في صياغة النصوص الإعلانية المناسبة إذا لزم الأمر.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Payment Methods Section -->
+        <div id="payment">
+            <section class="px-6 md:px-12 lg:px-24 py-20 bg-black/40 relative">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-12 text-white">طرق الدفع</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="payment-method fade-in-up">
+                            <i data-lucide="smartphone" class="w-12 h-12 text-green-500 mb-4"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">فودافون كاش</h3>
+                            <p class="text-white/70">الدفع عبر فودافون كاش</p>
+                            <span class="payment-status status-available">متاح</span>
+                        </div>
+                        
+                        <div class="payment-method fade-in-up" style="animation-delay: 0.1s">
+                            <i data-lucide="credit-card" class="w-12 h-12 text-blue-500 mb-4"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">انستا باي</h3>
+                            <p class="text-white/70">الدفع عبر تطبيق انستا باي</p>
+                            <span class="payment-status status-coming">قريباً</span>
+                        </div>
+                        
+                        <div class="payment-method fade-in-up" style="animation-delay: 0.2s">
+                            <i data-lucide="banknote" class="w-12 h-12 text-purple-500 mb-4"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">تحويل بنكي</h3>
+                            <p class="text-white/70">تحويل بنكي للعملاء خارج مصر</p>
+                            <span class="payment-status status-coming">قريباً</span>
+                        </div>
+                        
+                        <div class="payment-method fade-in-up" style="animation-delay: 0.3s">
+                            <i data-lucide="bitcoin" class="w-12 h-12 text-yellow-500 mb-4"></i>
+                            <h3 class="text-xl font-bold text-white mb-2">عملات رقمية</h3>
+                            <p class="text-white/70">الدفع بالبتكوين أو الإيثريوم</p>
+                            <span class="payment-status status-coming">قريباً</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12 text-center fade-in-up" style="animation-delay: 0.4s">
+                        <div class="bg-white/5 p-6 rounded-2xl border border-white/10 max-w-2xl mx-auto">
+                            <i data-lucide="info" class="w-12 h-12 text-primary mx-auto mb-4"></i>
+                            <h3 class="text-2xl font-bold text-white mb-4">معلومات مهمة</h3>
+                            <p class="text-white/70 mb-2">يبدأ العمل على المشروع بعد استلام الدفعة الأولى (50%)</p>
+                            <p class="text-white/70">يتم تسليم العمل النهائي بعد استلام باقي المبلغ</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Tools Section -->
+        <div id="tools">
+            <section class="px-6 md:px-12 lg:px-24 py-20 relative">
+                <div class="max-w-7xl mx-auto">
+                    <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-12 text-white">أدوات مجانية</h2>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- المساعد الذكي للكتابة -->
+                        <div class="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 p-6 rounded-2xl border border-cyan-500/20">
+                            <div class="flex items-center gap-4 mb-6">
+                                <i data-lucide="pen-tool" class="w-8 h-8 text-cyan-400"></i>
+                                <h3 class="text-2xl font-display font-bold text-white">مساعد الكتابة الإعلانية</h3>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <input type="text" id="productName" placeholder="اسم المنتج أو الخدمة" class="w-full bg-black/40 border border-white/10 rounded-lg h-12 px-4 text-base focus:border-primary/50 focus:outline-none transition-colors">
+                                
+                                <select id="adType" class="w-full bg-black/40 border border-white/10 rounded-lg h-12 px-4 text-base focus:border-primary/50 focus:outline-none transition-colors">
+                                    <option value="facebook">منشور فيسبوك</option>
+                                    <option value="instagram">انستجرام ستوري</option>
+                                    <option value="twitter">تغريدة</option>
+                                    <option value="adwords">إعلان جوجل</option>
+                                </select>
+                                
+                                <button id="generateCopy" class="w-full bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2">
+                                    <i data-lucide="sparkles" class="w-5 h-5"></i>
+                                    توليد نص إعلاني
+                                </button>
+                                
+                                <div id="copyResult" class="bg-black/40 p-4 rounded-lg hidden">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="font-bold text-white">النص الإعلاني المقترح:</h4>
+                                        <button id="copyText" class="text-cyan-400 hover:text-cyan-300 text-sm flex items-center gap-1">
+                                            <i data-lucide="copy" class="w-4 h-4"></i>
+                                            نسخ
+                                        </button>
+                                    </div>
+                                    <p id="generatedCopy" class="text-white/80 whitespace-pre-line"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- اللعبة التفاعلية -->
+                        <div class="bg-gradient-to-br from-purple-500/10 to-pink-500/10 p-6 rounded-2xl border border-purple-500/20">
+                            <div class="flex items-center gap-4 mb-6">
+                                <i data-lucide="gamepad-2" class="w-8 h-8 text-purple-400"></i>
+                                <h3 class="text-2xl font-display font-bold text-white">اختبر ذوقك الإعلاني</h3>
+                            </div>
+                            
+                            <div id="gameContainer" class="text-center">
+                                <p class="text-white/80 mb-4">اختر التصميم الأكثر جاذبية:</p>
+                                <div class="grid grid-cols-2 gap-4 mb-6">
+                                    <div class="game-option bg-blue-500/20 p-4 rounded-xl cursor-pointer hover:bg-blue-500/30 transition-colors" data-correct="true">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg mx-auto mb-2"></div>
+                                        <span class="text-white text-sm">التصميم أ</span>
+                                    </div>
+                                    <div class="game-option bg-red-500/20 p-4 rounded-xl cursor-pointer hover:bg-red-500/30 transition-colors">
+                                        <div class="w-20 h-20 bg-gradient-to-br from-red-400 to-red-600 rounded-lg mx-auto mb-2"></div>
+                                        <span class="text-white text-sm">التصميم ب</span>
+                                    </div>
+                                </div>
+                                <div id="gameResult" class="hidden"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Contact Section -->
+        <div id="contact">
+            <section class="px-6 md:px-12 lg:px-24 py-20 bg-black text-white relative overflow-hidden">
+                <div class="absolute bottom-0 left-0 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[150px] pointer-events-none -translate-x-1/2 translate-y-1/2"></div>
+         
+                <div class="max-w-7xl mx-auto w-full flex flex-col items-start space-y-16 relative z-10">
+                    <div class="w-full flex justify-between items-end fade-in-up">
+                        <h2 class="text-6xl md:text-[8rem] lg:text-[10rem] font-display font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/5 leading-[0.8] w-full text-center md:text-right">
+                            اتصل بي
+                        </h2>
+                    </div>
+                    
+                    <div class="w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                    
+                    <div class="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+                        
+                        <!-- Contact Info -->
+                        <div class="space-y-10 order-2 lg:order-1 fade-in-up" style="animation-delay: 0.2s">
+                            <div class="space-y-6">
+                                <p class="text-primary text-lg tracking-wide flex items-center gap-3">
+                                    <i data-lucide="message-circle" class="w-5 h-5"></i>
+                                    راسلني على الواتساب
+                                </p>
+                                <a href="https://wa.me/201234567890" class="block text-3xl md:text-4xl lg:text-5xl font-light hover:text-primary transition-colors duration-300 dir-ltr text-right break-all leading-none tracking-tight">
+                                    +20 123 456 7890
+                                </a>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <h3 class="text-2xl font-display font-bold text-white">تابعني على وسائل التواصل</h3>
+                                <div class="flex flex-wrap gap-4 md:gap-6">
+                                    <a href="https://www.behance.net/your-profile" target="_blank" class="group flex items-center gap-3 text-lg text-white/80 hover:text-white transition-colors border border-white/10 px-5 py-2 rounded-full hover:bg-white/5 hover:border-primary/50 hover-lift glow-on-click">
+                                        Behance
+                                        <i data-lucide="arrow-up-left" class="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:-translate-x-1 text-primary"></i>
+                                    </a>
+                                    <a href="#" class="group flex items-center gap-3 text-lg text-white/80 hover:text-white transition-colors border border-white/10 px-5 py-2 rounded-full hover:bg-white/5 hover:border-primary/50 hover-lift glow-on-click">
+                                        Instagram
+                                        <i data-lucide="arrow-up-left" class="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:-translate-x-1 text-primary"></i>
+                                    </a>
+                                    <a href="#" class="group flex items-center gap-3 text-lg text-white/80 hover:text-white transition-colors border border-white/10 px-5 py-2 rounded-full hover:bg-white/5 hover:border-primary/50 hover-lift glow-on-click">
+                                        Facebook
+                                        <i data-lucide="arrow-up-left" class="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:-translate-x-1 text-primary"></i>
+                                    </a>
+                                </div>
+                            </div>
+            
+                            <div class="pt-6 text-sm text-white/30 w-full flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-t border-white/5">
+                                <span class="tracking-wide">© ٢٠٢٥ محمد - مصمم إعلانات. جميع الحقوق محفوظة.</span>
+                                <span class="tracking-wide">يحظر نسخ أو إعادة إنتاج أي جزء من هذا الموقع دون إذن كتابي.</span>
+                            </div>
+                        </div>
+            
+                        <!-- Contact Form -->
+                        <div class="w-full bg-white/5 backdrop-blur-sm border border-white/10 p-6 md:p-8 rounded-2xl order-1 lg:order-2 fade-in-up hover-lift" style="animation-delay: 0.4s">
+                            <h3 class="text-2xl font-display font-bold mb-6 text-white">أرسل لي رسالة</h3>
+                            <form id="contactForm" class="space-y-6">
+                                <div class="space-y-2">
+                                    <label class="text-white/80 text-base block">اسمك</label>
+                                    <input type="text" placeholder="أدخل اسمك الكريم" class="w-full bg-black/40 border border-white/10 rounded-lg h-12 px-4 text-base focus:border-primary/50 focus:outline-none transition-colors placeholder-white/30 box-glow glow-on-click" required>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-white/80 text-base block">رقم الواتساب</label>
+                                    <input type="tel" placeholder="+20 123 456 7890" class="w-full bg-black/40 border border-white/10 rounded-lg h-12 px-4 text-base focus:border-primary/50 focus:outline-none transition-colors dir-ltr text-right placeholder:text-right placeholder-white/30 box-glow glow-on-click" required>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-white/80 text-base block">البلد</label>
+                                    <select class="w-full bg-black/40 border border-white/10 rounded-lg h-12 px-4 text-base focus:border-primary/50 focus:outline-none transition-colors placeholder-white/30 box-glow glow-on-click" id="countrySelect" required>
+                                        <option value="">اختر بلدك</option>
+                                        <option value="مصر">مصر</option>
+                                        <option value="السعودية">السعودية</option>
+                                        <option value="الإمارات">الإمارات</option>
+                                        <option value="الكويت">الكويت</option>
+                                        <option value="قطر">قطر</option>
+                                        <option value="عمان">عمان</option>
+                                        <option value="البحرين">البحرين</option>
+                                        <option value="الأردن">الأردن</option>
+                                        <option value="لبنان">لبنان</option>
+                                        <option value="العراق">العراق</option>
+                                        <option value="دول أخرى">دول أخرى</option>
+                                    </select>
+                                </div>
+                                <div id="otherCountryContainer" class="space-y-2 hidden">
+                                    <label class="text-white/80 text-base block">اسم الدولة</label>
+                                    <input type="text" id="otherCountryInput" placeholder="أدخل اسم الدولة" class="w-full bg-black/40 border border-white/10 rounded-lg h-12 px-4 text-base focus:border-primary/50 focus:outline-none transition-colors placeholder-white/30 box-glow glow-on-click">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-white/80 text-base block">الرسالة</label>
+                                    <textarea placeholder="أخبرني عن مشروعك..." class="w-full bg-black/40 border border-white/10 rounded-lg min-h-[120px] p-4 text-base focus:border-primary/50 focus:outline-none transition-colors resize-none placeholder-white/30 box-glow glow-on-click" required></textarea>
+                                </div>
+                                
+                                <!-- Math Captcha Section -->
+                                <div class="bg-black/30 p-4 rounded-xl border border-white/10">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-white/80 text-sm">حل المسألة للتأكد أنك لست روبوت:</span>
+                                        <button type="button" id="refreshCaptcha" class="text-primary hover:text-primary/80 transition-colors glow-on-click">
+                                            <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                                        </button>
+                                    </div>
+                                    <div class="bg-black/60 p-4 rounded-lg mb-3 text-center">
+                                        <span id="mathCaptcha" class="math-captcha">5 + 3 = ?</span>
+                                    </div>
+                                    <input type="text" id="captchaInput" placeholder="أدخل الناتج هنا" class="w-full bg-black/40 border border-white/10 rounded-lg h-12 px-4 text-base focus:border-primary/50 focus:outline-none transition-colors text-center placeholder-white/30 box-glow glow-on-click" required>
+                                </div>
+                                
+                                <button type="submit" class="w-full h-14 text-lg font-bold bg-primary hover:bg-primary/80 text-white rounded-xl transition-all duration-300 hover:scale-105 shadow-lg font-display flex items-center justify-center gap-2 hover-lift glow-on-click">
+                                    إرسال الرسالة
+                                    <i data-lucide="send" class="w-4 h-4"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
 
     <script>
-        // Loader
-        window.addEventListener('load', () => {
+        // ========== إدارة شاشة التحميل البسيطة ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // تهيئة أيقونات Lucide
+            lucide.createIcons();
+            
+            const loadingScreen = document.getElementById('loading-screen');
+            const enterBtn = document.getElementById('enter-site');
+            
+            // زر الدخول إلى الموقع
+            enterBtn.addEventListener('click', function() {
+                loadingScreen.classList.add('fade-out');
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                }, 500);
+            });
+            
+            // الدخول التلقائي بعد 10 ثواني
             setTimeout(() => {
-                document.querySelector('.loader').classList.add('hidden');
-            }, 2000);
+                if (loadingScreen.style.display !== 'none') {
+                    loadingScreen.classList.add('fade-out');
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                    }, 500);
+                }
+            }, 10000); // 10 ثواني
         });
 
-        // Custom Cursor
-        const cursor = document.querySelector('.cursor');
-        const cursorDot = document.querySelector('.cursor-dot');
-
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursorDot.style.left = e.clientX + 'px';
-            cursorDot.style.top = e.clientY + 'px';
+        // ========== حماية الموقع ==========
+        // حماية من النسخ
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            alert('المحتوى محمي بحقوق الملكية');
         });
 
-        document.querySelectorAll('a, button, .portfolio-item').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+        // حماية من النقر الأيمن
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            alert('المحتوى محمي بحقوق الملكية');
         });
 
-        // Navigation Scroll Effect
-        window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
-            if (window.scrollY > 100) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
+        // حماية من فحص الكود
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
+                e.preventDefault();
+                alert('المحتوى محمي بحقوق الملكية');
             }
         });
 
-        // Mobile Menu
-        const menuBtn = document.querySelector('.menu-btn');
-        const mobileNav = document.querySelector('.mobile-nav');
+        // ========== تهيئة أيقونات Lucide ==========
+        lucide.createIcons();
 
-        menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('active');
-            mobileNav.classList.toggle('active');
+        // ========== شريط التقدم ==========
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = scrollTop / scrollHeight;
+            document.getElementById('scroll-progress').style.transform = `scaleX(${scrolled})`;
         });
 
-        document.querySelectorAll('.mobile-nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuBtn.classList.remove('active');
-                mobileNav.classList.remove('active');
-            });
-        });
-
-        // Reveal on Scroll
-        const reveals = document.querySelectorAll('.reveal');
-
-        const revealOnScroll = () => {
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const elementTop = el.getBoundingClientRect().top;
-                const revealPoint = 150;
-
-                if (elementTop < windowHeight - revealPoint) {
-                    el.classList.add('active');
-                }
-            });
+        // ========== الأنيميشن ==========
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
         };
 
-        window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll();
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // إضافة أنيميشن إضافية للعناصر
+                    if (entry.target.classList.contains('animate-on-scroll')) {
+                        entry.target.classList.add('animate-fadeIn');
+                    }
+                }
+            });
+        }, observerOptions);
 
-        // Smooth Scroll
+        // Observe elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // ========== التنقل السلس ==========
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
@@ -1876,199 +1458,445 @@
             });
         });
 
-        // Portfolio Filter
-        const filterBtns = document.querySelectorAll('.filter-btn');
+        // ========== الشات بوت - إصلاح كامل ==========
+        const chatBotButton = document.getElementById('chatBotButton');
+        const chatWindow = document.getElementById('chatWindow');
+        const chatInput = document.getElementById('chatInput');
+        const sendChatMessage = document.getElementById('sendChatMessage');
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            
-            question.addEventListener('click', () => {
-                // Close all other items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item) {
-                        otherItem.classList.remove('active');
-                    }
-                });
-                
-                // Toggle current item
-                item.classList.toggle('active');
-            });
-        });
-
-        // Form Submit
-        document.querySelector('.contact-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert('شكراً لتواصلك! سأرد عليك في أقرب وقت.');
-        });
-
-        // Parallax Effect on Shapes
-        document.addEventListener('mousemove', (e) => {
-            const shapes = document.querySelectorAll('.shape');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-
-            shapes.forEach((shape, index) => {
-                const speed = (index + 1) * 20;
-                const x = (mouseX - 0.5) * speed;
-                const y = (mouseY - 0.5) * speed;
-                shape.style.transform = `translate(${x}px, ${y}px)`;
-            });
-        });
-
-        // Counter Animation
-        const animateCounter = (el, target) => {
-            let current = 0;
-            const increment = target / 100;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    el.textContent = target + '+';
-                    clearInterval(timer);
-                } else {
-                    el.textContent = Math.floor(current) + '+';
-                }
-            }, 20);
-        };
-
-        const observerOptions = {
-            threshold: 0.5
-        };
-
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const statNumbers = entry.target.querySelectorAll('.stat-number');
-                    statNumbers.forEach(stat => {
-                        const target = parseInt(stat.textContent);
-                        animateCounter(stat, target);
-                    });
-                    statsObserver.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        const statsGrid = document.querySelector('.stats-grid');
-        if (statsGrid) {
-            statsObserver.observe(statsGrid);
+        // تحسين تجربة المستخدم للشات بوت
+        function toggleChat() {
+            if (chatWindow.style.display === 'flex') {
+                chatWindow.style.display = 'none';
+            } else {
+                chatWindow.style.display = 'flex';
+                // إضافة رسالة ترحيبية
+                const chatMessages = document.getElementById('chatMessages');
+                chatMessages.innerHTML = `
+                    <div class="bg-primary/20 p-4 rounded-2xl rounded-tr-none max-w-[80%] mb-4">
+                        <p>مرحباً! أنا مساعد محمد الآلي.</p>
+                        <p class="text-sm mt-1">كيف يمكنني مساعدتك في التصميم الإعلاني اليوم؟</p>
+                    </div>
+                `;
+                // التركيز على حقل الإدخال
+                chatInput.focus();
+            }
         }
 
-        // Protection Systems
-        class ProtectionSystem {
-            constructor() {
-                this.initProtection();
-                this.initMonitoring();
-                this.initDataProtection();
-            }
-            
-            // حماية حقوق الملكية
-            initProtection() {
-                // منع نسخ النصوص
-                document.addEventListener('copy', (e) => {
-                    e.preventDefault();
-                    this.showProtectionAlert('لا يمكن نسخ المحتوى المحمي بحقوق الملكية');
-                });
+        // إرسال رسالة
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (message) {
+                // إضافة رسالة المستخدم
+                const chatMessages = document.getElementById('chatMessages');
+                const userMessageDiv = document.createElement('div');
+                userMessageDiv.className = 'bg-white/10 p-4 rounded-2xl rounded-tl-none max-w-[80%] mb-4 ml-auto';
+                userMessageDiv.innerHTML = `<p>${message}</p>`;
+                chatMessages.appendChild(userMessageDiv);
                 
-                // منع حفظ الصور
-                document.addEventListener('contextmenu', (e) => {
-                    if (e.target.tagName === 'IMG') {
-                        e.preventDefault();
-                        this.showProtectionAlert('لا يمكن حفظ الصور المحمية بحقوق الملكية');
-                    }
-                });
+                // مسح حقل الإدخال
+                chatInput.value = '';
                 
-                // منع سحب الصور
-                document.addEventListener('dragstart', (e) => {
-                    if (e.target.tagName === 'IMG') {
-                        e.preventDefault();
-                    }
-                });
-            }
-            
-            // نظام مراقبة الاختراقات
-            initMonitoring() {
-                // مراقبة فتح أدوات المطورين
-                let devtools = false;
-                const threshold = 160;
+                // إظهار مؤشر كتابة البوت
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'bg-primary/20 p-4 rounded-2xl rounded-tr-none max-w-[80%] mb-4';
+                typingIndicator.innerHTML = `<div class="flex items-center gap-2"><div class="w-2 h-2 bg-white/60 rounded-full animate-pulse"></div><div class="w-2 h-2 bg-white/60 rounded-full animate-pulse" style="animation-delay: 0.2s"></div><div class="w-2 h-2 bg-white/60 rounded-full animate-pulse" style="animation-delay: 0.4s"></div></div>`;
+                chatMessages.appendChild(typingIndicator);
                 
-                setInterval(() => {
-                    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-                    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                // التمرير للأسفل
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // محاكاة رد البوت بعد تأخير
+                setTimeout(() => {
+                    // إزالة مؤشر الكتابة
+                    typingIndicator.remove();
                     
-                    if (!devtools && (widthThreshold || heightThreshold)) {
-                        devtools = true;
-                        this.logSecurityEvent('محاولة فتح أدوات المطورين');
-                    }
-                }, 1000);
-                
-                // مراقبة النقر بزر الماوس الأيمن
-                document.addEventListener('contextmenu', (e) => {
-                    this.logSecurityEvent('نقر بزر الماوس الأيمن', {
-                        x: e.clientX,
-                        y: e.clientY
-                    });
-                });
+                    const responses = [
+                        "شكراً على رسالتك! كيف يمكنني مساعدتك في التصميم الإعلاني؟",
+                        "أهلاً بك! أخبرني أكثر عن مشروعك لكي أساعدك بشكل أفضل",
+                        "تصميم الإعلانات يحتاج لفهم الهدف والجمهور المستهدف، هل يمكنك مشاركة التفاصيل؟",
+                        "لدي خبرة في تصميم جميع أنواع الإعلانات، ما هو نوع الإعلان الذي تريده؟",
+                        "سأكون سعيداً بمساعدتك! ما هي فكرة الإعلان التي تريد تنفيذها؟"
+                    ];
+                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                    
+                    const botMessageDiv = document.createElement('div');
+                    botMessageDiv.className = 'bg-primary/20 p-4 rounded-2xl rounded-tr-none max-w-[80%] mb-4';
+                    botMessageDiv.innerHTML = `<p>${randomResponse}</p>`;
+                    chatMessages.appendChild(botMessageDiv);
+                    
+                    // التمرير للأسفل
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 1500);
             }
-            
-            // حماية البيانات
-            initDataProtection() {
-                // تنظيف البيانات عند إغلاق الصفحة
-                window.addEventListener('beforeunload', () => {
-                    this.cleanSensitiveData();
-                });
+        }
+
+        // إضافة مستمعي الأحداث للشات بوت
+        chatBotButton.addEventListener('click', toggleChat);
+        sendChatMessage.addEventListener('click', sendMessage);
+        
+        // إرسال بالضغط على Enter
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
             }
-            
-            // طرق مساعدة
-            showProtectionAlert(message) {
-                const alert = document.createElement('div');
-                alert.className = 'fixed top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg z-50';
-                alert.textContent = message;
-                document.body.appendChild(alert);
+        });
+
+        // إغلاق الشات عند النقر خارج النافذة
+        document.addEventListener('click', (e) => {
+            if (!chatBotButton.contains(e.target) && !chatWindow.contains(e.target)) {
+                chatWindow.style.display = 'none';
+            }
+        });
+
+        // ========== الكوبون ==========
+        const couponCode = document.getElementById('couponCode');
+        couponCode.addEventListener('click', function() {
+            // نسخ للحافظة
+            navigator.clipboard.writeText('WELCOME25').then(() => {
+                // عرض رسالة النسخ
+                const originalText = this.textContent;
+                this.textContent = 'تم النسخ!';
+                this.style.background = 'rgba(16, 185, 129, 0.2)';
+                this.style.borderColor = '#10b981';
+                this.style.color = '#10b981';
                 
                 setTimeout(() => {
-                    alert.remove();
-                }, 3000);
-            }
-            
-            logSecurityEvent(event, data = {}) {
-                const timestamp = new Date().toISOString();
-                console.warn(`🔒 حدث أمني: ${event}`, {
-                    timestamp,
-                    ...data
-                });
-            }
-            
-            cleanSensitiveData() {
-                // تنظيف البيانات الحساسة من الذاكرة
-                localStorage.removeItem('temp_form_data');
-            }
-        }
-        
-        // تهيئة أنظمة الحماية
-        document.addEventListener('DOMContentLoaded', () => {
-            const securitySystem = new ProtectionSystem();
+                    this.textContent = originalText;
+                    this.style.background = 'rgba(59, 130, 246, 0.1)';
+                    this.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+                    this.style.color = 'var(--primary)';
+                }, 2000);
+            });
         });
 
-        // رسالة حماية في الكونسول
-        console.log(`
-        ╔═══════════════════════════════════════╗
-        ║          🔒 نظام حماية نشط           ║
-        ║                                       ║
-        ║  هذا الموقع محمي بحقوق الملكية       ║
-        ║  ويخضع لمراقبة أمنية مستمرة          ║
-        ║                                       ║
-        ║  جميع الحقوق محفوظة © 2024           ║
-        ╚═══════════════════════════════════════╝
-        `);
+        // ========== المساعد الذكي للكتابة ==========
+        document.getElementById('generateCopy').addEventListener('click', function() {
+            const productName = document.getElementById('productName').value;
+            const adType = document.getElementById('adType').value;
+            
+            if (!productName) {
+                alert('يرجى إدخال اسم المنتج');
+                return;
+            }
+            
+            const copies = {
+                facebook: `🎯 ${productName} - الحل الأمثل لمشكلتك!
+        
+✨ لماذا تختار ${productName}؟
+✅ جودة عالية
+✅ سعر مميز  
+✅ نتائج مضمونة
+
+🚀 اطلب الآن واستمتع بأفضل العروض!
+👇 اضغط على الرابط في التعليقات`,
+
+                instagram: `🌟 اكتشف ${productName}!
+        
+الجودة التي تستحقها بسعر يناسبك 💫
+ابدأ رحلتك نحو التميز الآن 🚀
+
+👉 اسحب لليسار لمزيد من التفاصيل
+#${productName.replace(/\s/g, '')} #جودة #تميز`,
+
+                twitter: `🔥 ${productName} يغير قواعد اللعبة!
+        
+جرب الفرق بنفسك ⚡
+جودة × احترافية × نتائج
+
+💎 للطلب والاستفسار: 
+#${productName.replace(/\s/g, '')}`,
+
+                adwords: `${productName} | الحل الاحترافي | نتائج مضمونة
+                
+احصل على أفضل ${productName} بخدمة مميزة وجودة عالية. اطلب الآن!`
+            };
+            
+            document.getElementById('generatedCopy').textContent = copies[adType];
+            document.getElementById('copyResult').classList.remove('hidden');
+            
+            // إضافة أنيميشن
+            document.getElementById('copyResult').classList.add('animate-slideInUp');
+            
+            // إعادة تهيئة الأيقونات
+            lucide.createIcons();
+        });
+
+        // نسخ النص
+        document.getElementById('copyText').addEventListener('click', function() {
+            const text = document.getElementById('generatedCopy').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = this.innerHTML;
+                this.innerHTML = '<i data-lucide="check" class="w-4 h-4"></i> تم النسخ!';
+                lucide.createIcons();
+                
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                    lucide.createIcons();
+                }, 2000);
+            });
+        });
+
+        // ========== اللعبة التفاعلية ==========
+        document.querySelectorAll('.game-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                const resultDiv = document.getElementById('gameResult');
+                
+                if (isCorrect) {
+                    resultDiv.innerHTML = `
+                        <div class="bg-green-500/20 p-4 rounded-xl border border-green-500/30 animate-fadeIn">
+                            <i data-lucide="trophy" class="w-8 h-8 text-green-400 mx-auto mb-2"></i>
+                            <p class="text-green-400 font-bold">ممتاز! ذوقك رائع في التصميم</p>
+                            <p class="text-white/70 text-sm mt-2">هذا التصميم يتبع مبادئ الجذب البصري الصحيحة</p>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="bg-orange-500/20 p-4 rounded-xl border border-orange-500/30 animate-fadeIn">
+                            <i data-lucide="lightbulb" class="w-8 h-8 text-orange-400 mx-auto mb-2"></i>
+                            <p class="text-orange-400 font-bold">جيد، ولكن يمكنك تطوير ذوقك</p>
+                            <p class="text-white/70 text-sm mt-2">جرب خدمة الاستشارة المجانية لتحسين ذوقك الإعلاني</p>
+                            <button class="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg mt-2 text-sm font-bold">
+                                احجز استشارة مجانية
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                resultDiv.classList.remove('hidden');
+                lucide.createIcons();
+            });
+        });
+
+        // ========== الأسئلة الشائعة ==========
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqItem = this.parentElement;
+                faqItem.classList.toggle('active');
+            });
+        });
+
+        // ========== العرض محدود الوقت ==========
+        function startCountdown() {
+            const countdownElement = document.getElementById('countdown');
+            let timeLeft = 24 * 60 * 60; // 24 ساعة بالثواني
+
+            const timer = setInterval(() => {
+                const hours = Math.floor(timeLeft / 3600);
+                const minutes = Math.floor((timeLeft % 3600) / 60);
+                const seconds = timeLeft % 60;
+
+                countdownElement.textContent = 
+                    `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    countdownElement.textContent = "انتهى العرض!";
+                    countdownElement.classList.add('text-gray-400');
+                }
+                
+                timeLeft--;
+            }, 1000);
+        }
+
+        startCountdown();
+
+        // ========== الوضع النهاري/الليلي ==========
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('light');
+            
+            if (document.documentElement.classList.contains('light')) {
+                themeIcon.setAttribute('data-lucide', 'sun');
+                localStorage.setItem('theme', 'light');
+            } else {
+                themeIcon.setAttribute('data-lucide', 'moon');
+                localStorage.setItem('theme', 'dark');
+            }
+            
+            lucide.createIcons();
+        });
+
+        // استعادة الوضع المحفوظ
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.documentElement.classList.add('light');
+            themeIcon.setAttribute('data-lucide', 'sun');
+            lucide.createIcons();
+        }
+
+        // ========== نظام الكابتشا ==========
+        let currentMathProblem = '';
+        let currentMathAnswer = 0;
+
+        function generateMathCaptcha() {
+            const num1 = Math.floor(Math.random() * 10) + 1;
+            const num2 = Math.floor(Math.random() * 10) + 1;
+            const operators = ['+', '-', '*'];
+            const operator = operators[Math.floor(Math.random() * operators.length)];
+            
+            let answer;
+            switch(operator) {
+                case '+': answer = num1 + num2; break;
+                case '-': answer = num1 - num2; break;
+                case '*': answer = num1 * num2; break;
+            }
+            
+            currentMathProblem = `${num1} ${operator} ${num2} = ?`;
+            currentMathAnswer = answer;
+            
+            document.getElementById('mathCaptcha').textContent = currentMathProblem;
+        }
+
+        generateMathCaptcha();
+
+        document.getElementById('refreshCaptcha').addEventListener('click', () => {
+            generateMathCaptcha();
+            document.getElementById('captchaInput').value = '';
+        });
+
+        // ========== نموذج الاتصال ==========
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // الحصول على قيم النموذج
+            const name = document.querySelector('#contactForm input[type="text"]').value.trim();
+            const whatsapp = document.querySelector('#contactForm input[type="tel"]').value.trim();
+            const country = document.getElementById('countrySelect').value;
+            const otherCountry = document.getElementById('otherCountryInput') ? document.getElementById('otherCountryInput').value.trim() : '';
+            const message = document.querySelector('#contactForm textarea').value.trim();
+            const captchaInput = document.getElementById('captchaInput').value.trim();
+
+            // التحقق الأساسي
+            if (!name || !whatsapp || !country || !message || !captchaInput) {
+                alert('يرجى ملء جميع الحقول.');
+                return;
+            }
+
+            // إذا تم اختيار "دول أخرى" يجب إدخال اسم الدولة
+            if (country === 'دول أخرى' && !otherCountry) {
+                alert('يرجى إدخال اسم الدولة.');
+                return;
+            }
+
+            // التحقق من الكابتشا
+            if (parseInt(captchaInput) !== currentMathAnswer) {
+                alert('الإجابة غير صحيحة. حاول مرة أخرى.');
+                generateMathCaptcha();
+                document.getElementById('captchaInput').value = '';
+                return;
+            }
+
+            const button = e.target.querySelector('button');
+            const originalText = button.innerHTML;
+            
+            try {
+                button.innerHTML = 'جاري الإرسال... <i data-lucide="loader" class="w-5 h-5 animate-spin"></i>';
+                button.disabled = true;
+
+                // محاكاة إرسال النموذج
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                button.innerHTML = 'تم الإرسال! <i data-lucide="check" class="w-5 h-5"></i>';
+                button.classList.remove('bg-primary');
+                button.classList.add('bg-green-600');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.add('bg-primary');
+                    button.classList.remove('bg-green-600');
+                    button.disabled = false;
+                    e.target.reset();
+                    // إخفاء حقل الدولة الإضافي
+                    document.getElementById('otherCountryContainer').classList.add('hidden');
+                    // تحديث الكابتشا بعد الإرسال الناجح
+                    generateMathCaptcha();
+                }, 3000);
+                
+            } catch (error) {
+                button.innerHTML = 'حدث خطأ! <i data-lucide="x" class="w-5 h-5"></i>';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 3000);
+            }
+        });
+
+        // ========== إظهار/إخفاء حقل الدولة الإضافي ==========
+        document.getElementById('countrySelect').addEventListener('change', function() {
+            const otherCountryContainer = document.getElementById('otherCountryContainer');
+            if (this.value === 'دول أخرى') {
+                otherCountryContainer.classList.remove('hidden');
+            } else {
+                otherCountryContainer.classList.add('hidden');
+            }
+        });
+
+        // ========== إظهار اللوحة التحفيزية ==========
+        setTimeout(() => {
+            document.getElementById('motivationPanel').classList.remove('hidden');
+            document.getElementById('motivationPanel').classList.add('animate-slideInUp');
+        }, 5000);
+
+        // ========== تأثيرات الجلو ==========
+        document.querySelectorAll('.glow-on-click').forEach(element => {
+            element.addEventListener('mousedown', function() {
+                this.style.boxShadow = '0 0 25px rgba(59, 130, 246, 0.8)';
+                this.style.borderColor = '#3b82f6';
+            });
+            
+            element.addEventListener('mouseup', function() {
+                this.style.boxShadow = '';
+                this.style.borderColor = '';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+                this.style.borderColor = '';
+            });
+        });
+
+        // تأثير الجلو للحقول
+        document.querySelectorAll('.box-glow').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.boxShadow = '0 0 0 3px rgba(59, 130, 246, 0.3)';
+                this.style.borderColor = '#3b82f6';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.boxShadow = '';
+                this.style.borderColor = '';
+            });
+        });
+
+        // ========== تحسينات للجوال ==========
+        function handleMobileView() {
+            // إضافة فئة للجسم للتحقق من عرض الجوال
+            if (window.innerWidth < 768) {
+                document.body.classList.add('mobile-view');
+            } else {
+                document.body.classList.remove('mobile-view');
+            }
+        }
+
+        // استدعاء الدالة عند التحميل وعند تغيير حجم النافذة
+        handleMobileView();
+        window.addEventListener('resize', handleMobileView);
+
+        // ========== إضافة أنيميشن عند التمرير ==========
+        function addScrollAnimations() {
+            const animatedElements = document.querySelectorAll('.service-card, .step-card, .payment-method');
+            
+            animatedElements.forEach(el => {
+                el.classList.add('animate-on-scroll');
+            });
+        }
+
+        // استدعاء الدالة بعد تحميل الصفحة
+        setTimeout(addScrollAnimations, 1000);
     </script>
 </body>
-    </html>
+            </html>
