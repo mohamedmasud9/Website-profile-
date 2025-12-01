@@ -212,6 +212,50 @@
             50% { transform: scale(1.05); }
         }
 
+        @keyframes arrowRise {
+            0% { 
+                transform: translateY(50px) rotate(45deg);
+                opacity: 0;
+            }
+            70% {
+                opacity: 1;
+            }
+            100% { 
+                transform: translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes barRise {
+            0% { 
+                height: 0;
+                opacity: 0;
+            }
+            100% { 
+                opacity: 1;
+            }
+        }
+
+        @keyframes counter {
+            from { 
+                content: "0%";
+            }
+            to { 
+                content: attr(data-value);
+            }
+        }
+
+        @keyframes stockChartRise {
+            0% {
+                transform: translateY(100px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
         .animate-float {
             animation: float 6s ease-in-out infinite;
         }
@@ -230,6 +274,18 @@
 
         .animate-pulse-slow {
             animation: pulse 3s ease-in-out infinite;
+        }
+
+        .animate-arrow-rise {
+            animation: arrowRise 1.5s ease-out forwards;
+        }
+
+        .animate-bar-rise {
+            animation: barRise 2s ease-out forwards;
+        }
+
+        .animate-stock-chart {
+            animation: stockChartRise 1.5s ease-out forwards;
         }
 
         /* Fade In Up Animation */
@@ -332,7 +388,7 @@
             border-color: var(--primary) !important;
         }
 
-        /* Chat Bot Styles - Improved */
+        /* Chat Bot Styles - Disabled */
         .chat-bot {
             position: fixed;
             bottom: 25px;
@@ -347,11 +403,13 @@
             box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
             transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             cursor: pointer;
+            background: rgba(107, 114, 128, 0.3);
+            border: 1px solid rgba(107, 114, 128, 0.5);
         }
 
         .chat-bot:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 35px rgba(59, 130, 246, 0.6);
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(107, 114, 128, 0.6);
         }
 
         .chat-window {
@@ -373,7 +431,7 @@
         }
 
         .chat-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: linear-gradient(135deg, #4b5563, #374151);
             padding: 20px;
             color: white;
             font-weight: bold;
@@ -391,57 +449,6 @@
             padding: 15px;
             border-top: 1px solid #333;
             background: #1a1a1a;
-        }
-
-        .chat-input-container {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .chat-input-field {
-            flex: 1;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 12px 16px;
-            color: white;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .chat-input-field:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
-        }
-
-        .chat-send-btn {
-            background: var(--primary);
-            border: none;
-            border-radius: 12px;
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .chat-send-btn:hover {
-            background: var(--primary-dark);
-            transform: scale(1.05);
-        }
-
-        .chat-send-btn:active {
-            transform: scale(0.95);
-        }
-
-        .chat-send-btn:disabled {
-            background: #666;
-            cursor: not-allowed;
-            transform: none;
         }
 
         @media (max-width: 768px) {
@@ -680,9 +687,181 @@
             border: 1px solid rgba(30, 41, 59, 0.1);
         }
 
-        /* Motivation Panel */
-        #motivationPanel {
+        /* Stock Chart Styles - Improved */
+        .stock-chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .stock-chart {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        .stock-chart-line {
+            fill: none;
+            stroke: url(#chart-gradient);
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .stock-chart-point {
+            fill: var(--primary);
+            stroke: white;
+            stroke-width: 2;
+            cursor: pointer;
             transition: all 0.3s ease;
+        }
+
+        .stock-chart-point:hover {
+            fill: white;
+            stroke: var(--primary);
+            transform: scale(1.2);
+        }
+
+        .stock-chart-grid {
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 1;
+            stroke-dasharray: 4;
+        }
+
+        .stock-chart-axis {
+            stroke: rgba(255, 255, 255, 0.3);
+            stroke-width: 2;
+        }
+
+        .stock-chart-arrow {
+            position: absolute;
+            right: 40px;
+            top: 50px;
+            width: 50px;
+            height: 50px;
+            border-right: 5px solid #22c55e;
+            border-top: 5px solid #22c55e;
+            transform: rotate(45deg);
+            animation: arrowRise 1.5s ease-out forwards;
+        }
+
+        .stock-chart-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: white;
+            background: linear-gradient(45deg, #3b82f6, #22c55e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stock-chart-description {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .stock-chart-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            padding: 0 10px;
+        }
+
+        .stock-chart-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            text-align: center;
+            width: 60px;
+        }
+
+        .stock-chart-value {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .stock-chart-value::after {
+            content: '';
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid rgba(0, 0, 0, 0.8);
+        }
+
+        @media (max-width: 768px) {
+            .stock-chart-container {
+                height: 350px;
+                padding: 1.5rem;
+            }
+            
+            .stock-chart {
+                height: 250px;
+            }
+            
+            .stock-chart-arrow {
+                width: 40px;
+                height: 40px;
+                right: 20px;
+                top: 40px;
+            }
+            
+            .stock-chart-title {
+                font-size: 1.5rem;
+            }
+            
+            .stock-chart-label {
+                font-size: 12px;
+                width: 50px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stock-chart-container {
+                height: 300px;
+                padding: 1rem;
+            }
+            
+            .stock-chart {
+                height: 200px;
+            }
+            
+            .stock-chart-arrow {
+                width: 30px;
+                height: 30px;
+                right: 15px;
+                top: 30px;
+            }
+            
+            .stock-chart-title {
+                font-size: 1.3rem;
+            }
+            
+            .stock-chart-label {
+                font-size: 10px;
+                width: 40px;
+            }
         }
     </style>
     <script>
@@ -738,46 +917,31 @@
         </div>
     </div>
 
-    <!-- لوحة تحفيزية -->
-    <div class="fixed top-20 right-4 z-40 bg-primary/20 backdrop-blur-lg border border-primary/30 rounded-xl p-4 hidden" id="motivationPanel">
-        <div class="flex items-center gap-3">
-            <i data-lucide="target" class="w-6 h-6 text-primary"></i>
-            <div>
-                <div class="text-white font-bold text-sm">هدف اليوم: 5 عملاء جدد</div>
-                <div class="w-32 bg-white/20 rounded-full h-2 mt-1">
-                    <div class="bg-primary h-2 rounded-full" style="width: 60%"></div>
-                </div>
-            </div>
-        </div>
+    <!-- Chat Bot Button - Disabled -->
+    <div class="chat-bot" id="chatBotButton" title="المساعد الآلي متوقف مؤقتاً للتطوير">
+        <i data-lucide="message-circle" class="w-8 h-8 text-gray-400"></i>
     </div>
 
-    <!-- Chat Bot Button -->
-    <div class="chat-bot glass-bot animate-glow" id="chatBotButton">
-        <i data-lucide="message-circle" class="w-8 h-8 text-white"></i>
-    </div>
-
-    <!-- Chat Window -->
+    <!-- Chat Window - Disabled -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
             <div class="flex items-center gap-3">
                 <i data-lucide="bot" class="w-6 h-6"></i>
-                <span>مساعد محمد الآلي</span>
+                <span>مساعد محمد الآلي - متوقف مؤقتاً</span>
             </div>
-            <p class="text-sm opacity-80 mt-1">أساعدك في استفساراتك عن التصميم الإعلاني</p>
+            <p class="text-sm opacity-80 mt-1">جاري تطوير وتحسين المساعد الآلي، سيتم تفعيله قريباً</p>
         </div>
         <div class="chat-messages" id="chatMessages">
-            <div class="text-center text-white/60 py-8">
-                <i data-lucide="message-circle" class="w-12 h-12 mx-auto mb-3 opacity-40"></i>
-                <p>مرحباً! أنا مساعد محمد الآلي</p>
-                <p class="text-sm mt-2">أسألني عن خدمات التصميم الإعلاني</p>
+            <div class="text-center text-white/60 py-12">
+                <i data-lucide="wrench" class="w-16 h-16 mx-auto mb-4 opacity-40"></i>
+                <p class="text-xl font-bold text-white/80 mb-2">المساعد الآلي متوقف مؤقتاً</p>
+                <p class="text-white/60">جاري تطوير وتحسين المساعد الآلي لخدمتكم بشكل أفضل</p>
+                <p class="text-sm text-white/40 mt-4">سيتم تفعيل الخدمة قريباً</p>
             </div>
         </div>
         <div class="chat-input">
-            <div class="chat-input-container">
-                <input type="text" placeholder="اكتب استفسارك هنا..." id="chatInput" class="chat-input-field">
-                <button id="sendChatMessage" class="chat-send-btn">
-                    <i data-lucide="send" class="w-5 h-5 text-white"></i>
-                </button>
+            <div class="bg-gray-800/50 p-4 rounded-xl text-center">
+                <p class="text-gray-400 text-sm">الخدمة غير متاحة حالياً للتطوير</p>
             </div>
         </div>
     </div>
@@ -900,6 +1064,31 @@
             <section class="px-6 md:px-12 lg:px-24 py-20 section-gradient relative">
                 <div class="max-w-7xl mx-auto">
                     <h2 class="text-5xl md:text-7xl font-display font-bold text-center mb-12 text-white">كيف يؤثر التصميم على عملك؟</h2>
+                    
+                    <!-- Stock Chart Section - Improved -->
+                    <div class="stock-chart-container fade-in-up mb-12 animate-stock-chart">
+                        <div class="stock-chart-title">ارتفاع المبيعات بعد تطبيق التصاميم الإعلانية المحترفة</div>
+                        
+                        <div class="stock-chart" id="stockChart">
+                            <!-- سيتم إضافة SVG هنا -->
+                        </div>
+                        
+                        <div class="stock-chart-labels">
+                            <div class="stock-chart-label">قبل</div>
+                            <div class="stock-chart-label">شهر 1</div>
+                            <div class="stock-chart-label">شهر 2</div>
+                            <div class="stock-chart-label">شهر 3</div>
+                            <div class="stock-chart-label">شهر 4</div>
+                            <div class="stock-chart-label">شهر 5</div>
+                            <div class="stock-chart-label">شهر 6</div>
+                        </div>
+                        
+                        <div class="stock-chart-arrow"></div>
+                        
+                        <div class="stock-chart-description">
+                            الرسم البياني يوضح التقدم المستمر في المبيعات بعد تطبيق استراتيجية التصميم الإعلاني المحترف
+                        </div>
+                    </div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
                         <div class="fade-in-up">
@@ -1435,6 +1624,11 @@
                     if (entry.target.classList.contains('animate-on-scroll')) {
                         entry.target.classList.add('animate-fadeIn');
                     }
+                    
+                    // تفعيل الرسم البياني عند الظهور
+                    if (entry.target.id === 'importance' || entry.target.classList.contains('stock-chart-container')) {
+                        setTimeout(createStockChart, 500);
+                    }
                 }
             });
         }, observerOptions);
@@ -1443,6 +1637,163 @@
         document.querySelectorAll('.fade-in-up').forEach(el => {
             observer.observe(el);
         });
+
+        // ========== الرسم البياني للأسهم - محسّن ==========
+        function createStockChart() {
+            const chartContainer = document.getElementById('stockChart');
+            if (!chartContainer) return;
+            
+            // بيانات المبيعات
+            const salesData = [
+                { month: 0, value: 30, label: "قبل التصميم" },
+                { month: 1, value: 45, label: "شهر 1" },
+                { month: 2, value: 65, label: "شهر 2" },
+                { month: 3, value: 85, label: "شهر 3" },
+                { month: 4, value: 70, label: "شهر 4" },
+                { month: 5, value: 90, label: "شهر 5" },
+                { month: 6, value: 95, label: "شهر 6" }
+            ];
+            
+            // أبعاد الرسم البياني
+            const width = chartContainer.clientWidth;
+            const height = 300;
+            const margin = { top: 20, right: 40, bottom: 30, left: 40 };
+            const chartWidth = width - margin.left - margin.right;
+            const chartHeight = height - margin.top - margin.bottom;
+            
+            // إنشاء SVG
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("width", "100%");
+            svg.setAttribute("height", "100%");
+            svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+            
+            // تعريف التدرج اللوني
+            const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+            const gradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+            gradient.setAttribute("id", "chart-gradient");
+            gradient.setAttribute("x1", "0%");
+            gradient.setAttribute("y1", "0%");
+            gradient.setAttribute("x2", "100%");
+            gradient.setAttribute("y2", "0%");
+            
+            const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+            stop1.setAttribute("offset", "0%");
+            stop1.setAttribute("stop-color", "#3b82f6");
+            stop1.setAttribute("stop-opacity", "1");
+            
+            const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+            stop2.setAttribute("offset", "100%");
+            stop2.setAttribute("stop-color", "#22c55e");
+            stop2.setAttribute("stop-opacity", "1");
+            
+            gradient.appendChild(stop1);
+            gradient.appendChild(stop2);
+            defs.appendChild(gradient);
+            svg.appendChild(defs);
+            
+            // مجموعة الرسم
+            const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            g.setAttribute("transform", `translate(${margin.left}, ${margin.top})`);
+            
+            // إنشاء الشبكة
+            for (let i = 0; i <= 4; i++) {
+                const y = (chartHeight / 4) * i;
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", "0");
+                line.setAttribute("y1", y);
+                line.setAttribute("x2", chartWidth);
+                line.setAttribute("y2", y);
+                line.setAttribute("class", "stock-chart-grid");
+                g.appendChild(line);
+            }
+            
+            // محور Y
+            const yAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            yAxis.setAttribute("x1", "0");
+            yAxis.setAttribute("y1", "0");
+            yAxis.setAttribute("x2", "0");
+            yAxis.setAttribute("y2", chartHeight);
+            yAxis.setAttribute("class", "stock-chart-axis");
+            g.appendChild(yAxis);
+            
+            // محور X
+            const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            xAxis.setAttribute("x1", "0");
+            xAxis.setAttribute("y1", chartHeight);
+            xAxis.setAttribute("x2", chartWidth);
+            xAxis.setAttribute("y2", chartHeight);
+            xAxis.setAttribute("class", "stock-chart-axis");
+            g.appendChild(xAxis);
+            
+            // إنشاء خط الرسم البياني
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute("class", "stock-chart-line");
+            path.setAttribute("stroke-width", "4");
+            path.setAttribute("fill", "none");
+            
+            // حساب النقاط
+            const points = salesData.map((data, i) => {
+                const x = (chartWidth / (salesData.length - 1)) * i;
+                const y = chartHeight - (chartHeight * (data.value / 100));
+                return { x, y, data };
+            });
+            
+            // إنشاء مسار SVG
+            let pathData = `M ${points[0].x} ${points[0].y}`;
+            for (let i = 1; i < points.length; i++) {
+                const prev = points[i - 1];
+                const curr = points[i];
+                const controlX1 = prev.x + (curr.x - prev.x) / 3;
+                const controlX2 = prev.x + (curr.x - prev.x) * 2 / 3;
+                pathData += ` C ${controlX1} ${prev.y}, ${controlX2} ${curr.y}, ${curr.x} ${curr.y}`;
+            }
+            
+            path.setAttribute("d", pathData);
+            g.appendChild(path);
+            
+            // إضافة النقاط
+            points.forEach(point => {
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute("cx", point.x);
+                circle.setAttribute("cy", point.y);
+                circle.setAttribute("r", "6");
+                circle.setAttribute("class", "stock-chart-point");
+                circle.setAttribute("data-value", point.data.value);
+                circle.setAttribute("data-label", point.data.label);
+                
+                // إنشاء أداة تلميح
+                const tooltip = document.createElement("div");
+                tooltip.className = "stock-chart-value";
+                tooltip.style.left = `${point.x + margin.left}px`;
+                tooltip.style.top = `${point.y + margin.top - 40}px`;
+                tooltip.textContent = `${point.data.value}% - ${point.data.label}`;
+                chartContainer.parentElement.appendChild(tooltip);
+                
+                circle.addEventListener("mouseenter", function() {
+                    tooltip.style.opacity = "1";
+                    this.setAttribute("r", "8");
+                });
+                
+                circle.addEventListener("mouseleave", function() {
+                    tooltip.style.opacity = "0";
+                    this.setAttribute("r", "6");
+                });
+                
+                g.appendChild(circle);
+            });
+            
+            svg.appendChild(g);
+            chartContainer.innerHTML = '';
+            chartContainer.appendChild(svg);
+            
+            // إضافة أنيميشن للخط
+            setTimeout(() => {
+                path.style.strokeDasharray = path.getTotalLength();
+                path.style.strokeDashoffset = path.getTotalLength();
+                path.style.transition = "stroke-dashoffset 2s ease-out";
+                path.style.strokeDashoffset = "0";
+            }, 500);
+        }
 
         // ========== التنقل السلس ==========
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1458,87 +1809,27 @@
             });
         });
 
-        // ========== الشات بوت - إصلاح كامل ==========
+        // ========== الشات بوت - معطل مؤقتاً ==========
         const chatBotButton = document.getElementById('chatBotButton');
         const chatWindow = document.getElementById('chatWindow');
-        const chatInput = document.getElementById('chatInput');
-        const sendChatMessage = document.getElementById('sendChatMessage');
 
-        // تحسين تجربة المستخدم للشات بوت
-        function toggleChat() {
+        // فتح نافذة الشات بوت المعطل
+        chatBotButton.addEventListener('click', function() {
             if (chatWindow.style.display === 'flex') {
                 chatWindow.style.display = 'none';
             } else {
                 chatWindow.style.display = 'flex';
-                // إضافة رسالة ترحيبية
+                // إظهار رسالة الخدمة المعطلة
                 const chatMessages = document.getElementById('chatMessages');
                 chatMessages.innerHTML = `
-                    <div class="bg-primary/20 p-4 rounded-2xl rounded-tr-none max-w-[80%] mb-4">
-                        <p>مرحباً! أنا مساعد محمد الآلي.</p>
-                        <p class="text-sm mt-1">كيف يمكنني مساعدتك في التصميم الإعلاني اليوم؟</p>
+                    <div class="text-center text-white/60 py-12">
+                        <i data-lucide="wrench" class="w-16 h-16 mx-auto mb-4 opacity-40"></i>
+                        <p class="text-xl font-bold text-white/80 mb-2">المساعد الآلي متوقف مؤقتاً</p>
+                        <p class="text-white/60">جاري تطوير وتحسين المساعد الآلي لخدمتكم بشكل أفضل</p>
+                        <p class="text-sm text-white/40 mt-4">سيتم تفعيل الخدمة قريباً</p>
                     </div>
                 `;
-                // التركيز على حقل الإدخال
-                chatInput.focus();
-            }
-        }
-
-        // إرسال رسالة
-        function sendMessage() {
-            const message = chatInput.value.trim();
-            if (message) {
-                // إضافة رسالة المستخدم
-                const chatMessages = document.getElementById('chatMessages');
-                const userMessageDiv = document.createElement('div');
-                userMessageDiv.className = 'bg-white/10 p-4 rounded-2xl rounded-tl-none max-w-[80%] mb-4 ml-auto';
-                userMessageDiv.innerHTML = `<p>${message}</p>`;
-                chatMessages.appendChild(userMessageDiv);
-                
-                // مسح حقل الإدخال
-                chatInput.value = '';
-                
-                // إظهار مؤشر كتابة البوت
-                const typingIndicator = document.createElement('div');
-                typingIndicator.className = 'bg-primary/20 p-4 rounded-2xl rounded-tr-none max-w-[80%] mb-4';
-                typingIndicator.innerHTML = `<div class="flex items-center gap-2"><div class="w-2 h-2 bg-white/60 rounded-full animate-pulse"></div><div class="w-2 h-2 bg-white/60 rounded-full animate-pulse" style="animation-delay: 0.2s"></div><div class="w-2 h-2 bg-white/60 rounded-full animate-pulse" style="animation-delay: 0.4s"></div></div>`;
-                chatMessages.appendChild(typingIndicator);
-                
-                // التمرير للأسفل
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-                
-                // محاكاة رد البوت بعد تأخير
-                setTimeout(() => {
-                    // إزالة مؤشر الكتابة
-                    typingIndicator.remove();
-                    
-                    const responses = [
-                        "شكراً على رسالتك! كيف يمكنني مساعدتك في التصميم الإعلاني؟",
-                        "أهلاً بك! أخبرني أكثر عن مشروعك لكي أساعدك بشكل أفضل",
-                        "تصميم الإعلانات يحتاج لفهم الهدف والجمهور المستهدف، هل يمكنك مشاركة التفاصيل؟",
-                        "لدي خبرة في تصميم جميع أنواع الإعلانات، ما هو نوع الإعلان الذي تريده؟",
-                        "سأكون سعيداً بمساعدتك! ما هي فكرة الإعلان التي تريد تنفيذها؟"
-                    ];
-                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                    
-                    const botMessageDiv = document.createElement('div');
-                    botMessageDiv.className = 'bg-primary/20 p-4 rounded-2xl rounded-tr-none max-w-[80%] mb-4';
-                    botMessageDiv.innerHTML = `<p>${randomResponse}</p>`;
-                    chatMessages.appendChild(botMessageDiv);
-                    
-                    // التمرير للأسفل
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 1500);
-            }
-        }
-
-        // إضافة مستمعي الأحداث للشات بوت
-        chatBotButton.addEventListener('click', toggleChat);
-        sendChatMessage.addEventListener('click', sendMessage);
-        
-        // إرسال بالضغط على Enter
-        chatInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendMessage();
+                lucide.createIcons();
             }
         });
 
@@ -1551,24 +1842,26 @@
 
         // ========== الكوبون ==========
         const couponCode = document.getElementById('couponCode');
-        couponCode.addEventListener('click', function() {
-            // نسخ للحافظة
-            navigator.clipboard.writeText('WELCOME25').then(() => {
-                // عرض رسالة النسخ
-                const originalText = this.textContent;
-                this.textContent = 'تم النسخ!';
-                this.style.background = 'rgba(16, 185, 129, 0.2)';
-                this.style.borderColor = '#10b981';
-                this.style.color = '#10b981';
-                
-                setTimeout(() => {
-                    this.textContent = originalText;
-                    this.style.background = 'rgba(59, 130, 246, 0.1)';
-                    this.style.borderColor = 'rgba(59, 130, 246, 0.5)';
-                    this.style.color = 'var(--primary)';
-                }, 2000);
+        if (couponCode) {
+            couponCode.addEventListener('click', function() {
+                // نسخ للحافظة
+                navigator.clipboard.writeText('WELCOME25').then(() => {
+                    // عرض رسالة النسخ
+                    const originalText = this.textContent;
+                    this.textContent = 'تم النسخ!';
+                    this.style.background = 'rgba(16, 185, 129, 0.2)';
+                    this.style.borderColor = '#10b981';
+                    this.style.color = '#10b981';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = 'rgba(59, 130, 246, 0.1)';
+                        this.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+                        this.style.color = 'var(--primary)';
+                    }, 2000);
+                });
             });
-        });
+        }
 
         // ========== المساعد الذكي للكتابة ==========
         document.getElementById('generateCopy').addEventListener('click', function() {
@@ -1835,12 +2128,6 @@
             }
         });
 
-        // ========== إظهار اللوحة التحفيزية ==========
-        setTimeout(() => {
-            document.getElementById('motivationPanel').classList.remove('hidden');
-            document.getElementById('motivationPanel').classList.add('animate-slideInUp');
-        }, 5000);
-
         // ========== تأثيرات الجلو ==========
         document.querySelectorAll('.glow-on-click').forEach(element => {
             element.addEventListener('mousedown', function() {
@@ -1897,6 +2184,12 @@
 
         // استدعاء الدالة بعد تحميل الصفحة
         setTimeout(addScrollAnimations, 1000);
+        
+        // إنشاء الرسم البياني بعد تحميل الصفحة
+        setTimeout(createStockChart, 1500);
+        
+        // تحديث الرسم البياني عند تغيير حجم النافذة
+        window.addEventListener('resize', createStockChart);
     </script>
 </body>
-            </html>
+    </html>
